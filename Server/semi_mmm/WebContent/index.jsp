@@ -12,5 +12,6 @@
 	<a href="/parktg.jsp">박태규 이동</a>
 	<a href="/lees.jsp">이솔 이동</a>
 	<a href="/ey.jsp">황은영 이동</a>
+	<a href="/admin">관리자 페이지로</a>
 </body>
 </html>
