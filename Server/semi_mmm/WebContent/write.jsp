@@ -30,14 +30,12 @@
             <td>내용</td>
             <td>
               <textarea rows="10" cols="30" id="ir1" name="content" style="width:650px; height:350px;"></textarea>
-              
-
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <input type="button" id="save" value="저장"/>
-                <input type="button" id="re" value="취소"/>
+                <input type="button" value="취소"/>
             </td>
         </tr>
 </table>
@@ -77,11 +75,6 @@ nhn.husky.EZCreator.createInIFrame({
 		
 });
 
-
-	$("#re").click(function(){
-		$("textarea").value="";
-		console.log($("textarea").val());
-	});
 
 //저장버튼 클릭시 form 전송
 $("#save").click(function(){
