@@ -4,9 +4,68 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>이미지 게시판</title>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+<section class="container">
+		<h1>사진 게시판</h1>
+		<div id="photo-wrapper" style="padding:100px;"></div>
+		<div id="photo-btn-container" style="text-align:center;">
+			<button class="btn btn-outline-info" id="more-btn" totalCount="${totalCount }"
+			currentCount="0" value="">더보기</button>
+			<!--  <c:if test="${not empty sessionScope.Member }">
+				<button class="btn btn-outline-info" id="write-btn">글쓰기</button>
+			</c:if> -->
+		</div>
+	</section>
+	
+	<script>
+		$("#write-btn").click(function(){
+			location.href="/photoWriteFrm";
+		});
+		
+		function fn_more(start){
+			var param = {start:start};
+			$.ajax({
+				url : "/photoMore",
+				data : param,
+				type : "post",
+				dataType : "json",
+				
+				success : function(data){
+					var html = "";
+					for(var i=0; i<data.length;i++){
+						html += "<div class='border border-dark' style='width:800px; margin:0 auto; margin-bottom:10px;'>";
+						html += "<img src='/upload/photo/"+data[i].photoFilepath+"' width='100%'>";
+						html += "<p class='caption'>"+data[i].photoContent+"</p></div>";
+					}
+					$("#photo-wrapper").append(html);
+					$("#more-btn").val(Number(start)+5);
+					$("#more-btn").attr("currentCount",Number($('#more-btn').attr("currentCount"))+data.length);
+					var totalCount = $("#more-btn").attr("totalCount");
+					var currentCount =  $("#more-btn").attr("currentCount");
+					if(totalCount == currentCount){
+						$("#more-btn").attr("disabled",true);
+						$("#more-btn").css("cursor","not-allowed");
+					}
+				},
+				
+				error : function(){
+					console.log("실패");
+				}
+			});
+		}
+		$(function(){
+			fn_more(1);
+			$("#more-btn").click(function(){
+				fn_more($(this).val());
+			});
+		});
+	</script>
 </body>
 </html>
