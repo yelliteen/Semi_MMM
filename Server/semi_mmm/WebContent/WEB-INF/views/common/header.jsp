@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/content.css">
 <script type="text/javascript" src="/js/header.js"></script>
-
+<style>
+</style>
     <div id="header">
         <div id="navbar">
             <div id="navbar_menu">
