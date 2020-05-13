@@ -18,11 +18,13 @@
 		.contentBox{
 			text-align: center;
             margin: 0 auto;
+            width: 1110px;
 		}
+	
         .context{
             text-align: center;
             margin: 0 auto;
-
+            width: 1110px;
         }
         #ir1{
         	padding-left: 10%;
@@ -52,10 +54,13 @@
     
 <form id="frm" action="insert.jsp" method="post" >
 <table width="100%">
-  
+        <tr>  	  	
+            <td><input type="text" id="title" name="title" style="width:1100px; height: 30px;" placeholder="제목을 입력하세요."/></td>
+        </tr>
+        
         <tr>
             <td>
-              <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:400px;" placeholder="내용을 입력하세요."></textarea>
+              <textarea rows="10" cols="30" id="ir1" name="content" style="width:1100px; height:400px;" placeholder="내용을 입력하세요."></textarea>
             </td>
         </tr>
 </table>
