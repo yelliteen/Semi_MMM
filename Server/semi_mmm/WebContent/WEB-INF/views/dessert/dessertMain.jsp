@@ -9,14 +9,14 @@
 <title>dessertMain</title>
 <style>
 	.container{
-		width:1400px;
 		margin: 0 auto;
-		background-color: gray;
+        overflow: hidden;
+        background-color: gray;
 	}
 	.sell-list{
 		float:left;
-		width: 300px;
-		height: 360px;
+		width: 250px;
+		height: 300px;
 		margin-left: 50px;
 		margin-right: 50px;
 		margin-top: 70px;
@@ -52,7 +52,7 @@
 <body>
 	
 	
-	
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="container">
 		<form action="/dessertMain" method="get">
 			<ul>
