@@ -1,4 +1,4 @@
-package common.vo;
+package desert.model.vo;
 
 public class Product {
 	private int productNo;

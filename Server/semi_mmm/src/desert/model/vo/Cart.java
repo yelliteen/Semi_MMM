@@ -1,4 +1,4 @@
-package common.vo;
+package desert.model.vo;
 
 public class Cart {
 	private int cartNo;

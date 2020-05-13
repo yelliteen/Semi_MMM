@@ -1,4 +1,4 @@
-package common.vo;
+package notice.model.vo;
 
 public class NoticeRecommend {
 	private String noticeRecommendId;

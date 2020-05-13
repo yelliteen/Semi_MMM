@@ -1,4 +1,4 @@
-package common.vo;
+package desert.model.vo;
 
 public class OrderDetail {
 	private int orderNum;

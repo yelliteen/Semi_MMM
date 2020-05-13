@@ -1,4 +1,4 @@
-package common.vo;
+package member.model.vo;
 
 public class Shop {
 	private String shopId;
