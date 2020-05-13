@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/content.css">
 <title>dessertMain</title>
 <style>
-	#content{
+	.container{
 		width:1400px;
 		margin: 0 auto;
 		background-color: gray;
@@ -51,9 +51,9 @@
 </head>
 <body>
 	
-	<div id="wrapper">
-  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-  	<div id="content">
+	
+	
+	<div class="container">
 		<form action="/dessertMain" method="get">
 			<ul>
 				<li class="sell-list"><a href="#">
@@ -80,7 +80,6 @@
 			</ul>
 		</form>
 	</div>
-	</div>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+   <jsp:include page="/WEB-INF/views/common/footer.jsp" /> 
 </body>
 </html>
