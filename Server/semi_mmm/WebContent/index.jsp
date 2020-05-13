@@ -16,8 +16,8 @@
 </head>
 
 <body>
-	<div id="wrapper">
-		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<div class="container">
 		<div id="carousel-area">
 			<div id="demo" class="carousel slide" data-ride="carousel">
 				<!-- Indicators -->
@@ -46,7 +46,6 @@
 				</a>
 			</div>
 		</div>
-	<div id="content">
 		<div id="community">
 		<div id="free-comm"><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
 		<div id="free-comm"><p>이곳을 후기 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
@@ -56,7 +55,6 @@
 		</div>
 	<div id="dessert-show">
 	<p>이곳을 디저트 샵<p></div>
-		</div>
 	</div>
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

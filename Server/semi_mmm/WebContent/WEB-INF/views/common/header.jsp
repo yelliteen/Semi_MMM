@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/content.css">
 <script type="text/javascript" src="/js/header.js"></script>
+
     <div id="header">
         <div id="navbar">
             <div id="navbar_menu">
@@ -38,7 +39,7 @@
                 </c:if>
                 <c:if test="${empty sessionScope.member.memberId }">
                  <span style="font-size:20px;"><a href="/loginFrm" style="text-decoration:none; color:#545454;">로그인</a></span>
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">회원가입</a></span>
+                <span style="font-size:20px;"><a href="/joinFrm" style="text-decoration:none; color:#545454;">회원가입</a></span>
                 </c:if>
             </div>
         </div>
