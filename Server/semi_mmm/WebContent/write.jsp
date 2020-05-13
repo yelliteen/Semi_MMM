@@ -9,6 +9,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>글쓰기</title>
 
+<style>
+
+		.contentBox{
+			text-align: center;
+            margin: 0 auto;
+            width: 1110px;
+		}
+	
+        .context{
+            text-align: center;
+            margin: 0 auto;
+            width: 1110px;
+        }
+        #ir1{
+        	padding-left: 10%;
+        }
+        #title{
+        	font-size: 22px;
+        }
+        .btnst{
+            color: black;
+            background-color: #B6EAFA;
+            width: 100px;
+            height: 50px;
+            border: 0px solid white;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-left: 10px; 
+        }
+        .bigTitle{
+        }
+        
+    </style>
+    
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
 <script type="text/javascript" src="/sm/js/HuskyEZCreator.js" charset="utf-8"></script>
 
@@ -19,35 +53,53 @@
  
 </head>
 <body>
+
+
+<h1 style="text-align: center;">헤더 1</h1>
+<br><hr><br>
+
+<div class="contentBox">
+
+	<div class="bigTitle">강아지 자랑게시판</div>
+
+<div class="context">
+    
 <form id="frm" action="insert.jsp" method="post" >
 <table width="100%">
         <tr>
-            <td>제목</td>
-            <td><input type="text" id="title" name="title" style="width:650px"/></td>
+         	
+         	
+            	<td><input type="text" id="title" name="title" style="width:1100px; height: 30px;" placeholder="제목을 입력하세요."/></td>
+            
         </tr>
         
         <tr>
-            <td>내용</td>
             <td>
-              <textarea rows="10" cols="30" id="ir1" name="content" style="width:650px; height:350px;"></textarea>
+              <textarea rows="10" cols="30" id="ir1" name="content" style="width:1100px; height:400px;" placeholder="내용을 입력하세요."></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="button" id="save" value="저장"/>
-                <input type="button" value="취소"/>
+                <input type="button" class="btnst" id="save" value="게시글 작성"/>
+                <input type="button" class="btnst" value="게시글 취소"/>
             </td>
         </tr>
 </table>
 </form>
 
+</div>
 
+
+</div>
+
+<br><hr><br>
+<h1 style="text-align: center;">푸터 1</h1>
 
 </body>
 
 <script type="text/javascript">
 $(function(){
-	
+		
 var oEditors = [];
 
 // 추가 글꼴 목록
@@ -74,6 +126,7 @@ nhn.husky.EZCreator.createInIFrame({
 	fCreator: "createSEditor2"
 		
 });
+
 
 
 //저장버튼 클릭시 form 전송
