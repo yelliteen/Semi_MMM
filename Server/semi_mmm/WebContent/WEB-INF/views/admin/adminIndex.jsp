@@ -85,8 +85,8 @@ nav a {
 					<div class="collapse" id="collapseLayouts"
 						aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav"> <a class="nav-link"
-							href="/adminNotice">게시글 관리</a> <a class="nav-link"
-							href="/adminComment">댓글 관리</a> </nav>
+							href="/adminNoticeList">게시글 관리</a> <a class="nav-link"
+							href="/adminCommentList">댓글 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapsePages" aria-expanded="false"
@@ -102,8 +102,8 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionPages"> <a class="nav-link"
-							href="/adminQna">질문 관리</a> <a class="nav-link"
-							href="/adminAnswer">응답 관리</a> </nav>
+							href="/adminQnaList">질문 관리</a> <a class="nav-link"
+							href="/adminAnswerList">응답 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapseArticle" aria-expanded="false"
@@ -119,15 +119,15 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionArticle"> <a class="nav-link"
-							href="/adminArticleNotice">게시글 관리</a> <a class="nav-link"
-							href="/adminArticleComment">댓글 관리</a> </nav>
+							href="/adminArticleNoticeList">게시글 관리</a> <a class="nav-link"
+							href="/adminArticleCommentList">댓글 관리</a> </nav>
 					</div>
 					<div class="sb-sidenav-menu-heading">회원관리</div>
-					<a class="nav-link" href="/adminUser">
+					<a class="nav-link" href="/adminUserList">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 일반 회원
-					</a> <a class="nav-link" href="/adminBusiness">
+					</a> <a class="nav-link" href="/adminBusinessList">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
@@ -247,7 +247,7 @@ nav a {
                     <h2>자랑게시판 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>게시글 목록<a href="/adminNotice">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>게시글 목록<a href="/adminNoticeList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -283,7 +283,7 @@ nav a {
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>댓글 목록<a href="/adminComment">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>댓글 목록<a href="/adminCommentList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                     </div>
 				</div>
@@ -291,7 +291,7 @@ nav a {
                     <h2>Q&A 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>질문 목록<a href="/adminQna">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>질문 목록<a href="/adminQnaList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -307,7 +307,7 @@ nav a {
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>응답 목록<a href="/adminAnswer">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>응답 목록<a href="/adminAnswerList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -327,7 +327,7 @@ nav a {
                     <h2>중고장터 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>게시글 목록<a href="/adminArticleNotice">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>게시글 목록<a href="/adminArticleNoticeList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -343,7 +343,7 @@ nav a {
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>댓글 목록<a href="/adminArticleComment">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>댓글 목록<a href="/adminArticleCommentList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                     </div>
 				</div>
@@ -351,11 +351,11 @@ nav a {
                     <h2>회원 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>일반 회원 목록<a href="/adminUser">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>일반 회원 목록<a href="/adminUserList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                     </div>
                     <div class="content_box">
-                        <h5>사업자 회원 목록<a href="/adminBusiness">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>사업자 회원 목록<a href="/adminBusinessList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                     </div>
 				</div>
