@@ -4,19 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
+<link rel="stylesheet" href="/css/content.css">
 </head>
 <body>
+<div id="wrapper">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<div class="container">
-		<h1>로그인</h1>
+	<div id="content">
+		<h1>로그인gg</h1>
+		<p>ddddddddd</p>
 	
 	</div>
 	
 	
 	
 	
-	
+	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
