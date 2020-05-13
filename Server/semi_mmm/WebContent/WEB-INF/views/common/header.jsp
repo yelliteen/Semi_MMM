@@ -70,12 +70,10 @@
         } else {
             check =3;
         }
-		$("#navbar_logo").css(
-				{
-					'background-image' : 'url(/img/'
-							+ images[check]
-							+ ')'
-				});
+	
+	$("#navbar_logo").css({
+			'background-image' : 'url(/img/' + images[check] + ')'
+		});
 	});
 </script>
 <style>
@@ -105,7 +103,7 @@
             <div id="navbar_logo">
             </div>
             <div id="navbar_login">
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">로그인</a></span>
+                <span style="font-size:20px;"><a href="/loginFrm" style="text-decoration:none; color:#545454;">로그인</a></span>
                 <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">회원가입</a></span>
             </div>
         </div>

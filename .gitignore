@@ -25,3 +25,4 @@
 hs_err_pid*
 Server/semi_mmm/.classpath
 *.prefs
+Server/semi_mmm/src/common/JDBCTemplate.java
