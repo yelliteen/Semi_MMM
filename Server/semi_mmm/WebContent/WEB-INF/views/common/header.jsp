@@ -38,7 +38,11 @@
                 <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
                 <span style="font-size:20px;"><a onclick="location.href='/logout'" style="cursor: pointer;">로그아웃</a></span>
                 </c:if>
-                <c:if test="${empty sessionScope.member.memberId }">
+               <c:if test="${not empty sessionScope.shop.memberId }">
+                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;"><a onclick="location.href='/logout'" style="cursor: pointer;">로그아웃</a></span>
+                </c:if>  
+                <c:if test="${empty sessionScope.member.memberId && empty sessionScope.shop.memberId }">
                  <span style="font-size:20px;"><a href="/loginFrm" style="text-decoration:none; color:#545454;">로그인</a></span>
                 <span style="font-size:20px;"><a href="/joinFrm" style="text-decoration:none; color:#545454;">회원가입</a></span>
                 </c:if>
