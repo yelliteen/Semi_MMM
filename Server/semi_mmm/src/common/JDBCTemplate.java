@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class JDBCTemplate {
 	
-	private static final String ipAddress = "127.0.0.1";
+	private static final String ipAddress = "192.168.10.25";
 	
 	public static Connection getConnection() {
 
