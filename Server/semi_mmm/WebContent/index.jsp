@@ -7,44 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-body {
-	z-index: 1;
-	margin: 0 auto;
-}
-#wrapper {
-	width: 100%;
-	margin: 0 auto;
-	z-index: 2;
-	position: relative;
-}
-#content {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-	width: 1300px;
-	z-index: 500;
-	overflow: hidden;
-}
-.container {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
- /* Make the image fully responsive */
- .carousel-inner img {
-    width: 100%;
-    height: 400px;
-  }
-  #carousel-area {
-  width:100%;
-  }
-  #content>div {
-  width: 410px;
-  height: 500px;
-  display: inline-block;
-  }
+
 </style>
 
 <head>
@@ -53,8 +16,8 @@ body {
 </head>
 
 <body>
-	<div id="wrapper">
-		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<div class="container">
 		<div id="carousel-area">
 			<div id="demo" class="carousel slide" data-ride="carousel">
 				<!-- Indicators -->
@@ -83,7 +46,6 @@ body {
 				</a>
 			</div>
 		</div>
-	<div id="content">
 		<div id="community">
 		<div id="free-comm"><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
 		<div id="free-comm"><p>이곳을 후기 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
@@ -93,14 +55,8 @@ body {
 		</div>
 	<div id="dessert-show">
 	<p>이곳을 디저트 샵<p></div>
-		</div>
-	
-	
-	
 	</div>
-		
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-	</div>
 </body>
 
 </html>
