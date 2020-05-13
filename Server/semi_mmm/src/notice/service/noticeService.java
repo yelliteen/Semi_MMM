@@ -15,10 +15,10 @@ public class noticeService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		int numPerPage = 10;// 한페이지당 게시물 수
-		
+		System.out.println(numPerPage);
 		//총 게시물 수를 구하는 dao 호출
 		int totalCount = new NoticeDao().totalCount(conn);
-		System.out.println(totalCount);
+		System.out.println("토탈 카운터 : "+totalCount);
 		//총페이지 수를 연산
 		int totalPage = 0;
 		// 10, 72 -> 8개
