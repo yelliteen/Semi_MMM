@@ -18,11 +18,10 @@ body {
 	z-index: 500;
 	overflow: hidden;
 }
+@media (min-width: 1200px) {
 .container {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
+max-width: 1500px;
+}
 }
  /* Make the image fully responsive */
  .carousel-inner img {
