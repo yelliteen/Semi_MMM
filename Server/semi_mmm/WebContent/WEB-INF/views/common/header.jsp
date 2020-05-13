@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="/css/menu.css">
 <link rel="stylesheet" href="/css/button-style.css">
 <link rel="stylesheet" href="/css/ham-menu1.css">
+<link rel="stylesheet" href="/css/bootstrap.css">
 <script>
     window.onscroll = function() {
         scrollFunction()

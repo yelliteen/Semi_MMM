@@ -3,13 +3,13 @@ package desert.model.vo;
 public class ProductOption {
 	private int optionNo;
 	private String bnMemberId;
-	private int optionTitle;
+	private String optionTitle;
 	private int optionPrice;
 	public ProductOption() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ProductOption(int optionNo, String bnMemberId, int optionTitle, int optionPrice) {
+	public ProductOption(int optionNo, String bnMemberId, String optionTitle, int optionPrice) {
 		super();
 		this.optionNo = optionNo;
 		this.bnMemberId = bnMemberId;
@@ -28,10 +28,10 @@ public class ProductOption {
 	public void setBnMemberId(String bnMemberId) {
 		this.bnMemberId = bnMemberId;
 	}
-	public int getOptionTitle() {
+	public String getOptionTitle() {
 		return optionTitle;
 	}
-	public void setOptionTitle(int optionTitle) {
+	public void setOptionTitle(String optionTitle) {
 		this.optionTitle = optionTitle;
 	}
 	public int getOptionPrice() {
