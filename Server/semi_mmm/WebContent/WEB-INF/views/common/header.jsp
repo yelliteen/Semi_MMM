@@ -91,11 +91,11 @@
                         <div id="line-bot" class="line init bot-reverse" style="background-color:#545454;"></div>
                     </div>
                     <div id="mySidepanel" class="sidepanel">
-                        <a href="#" class="openbtn">소개</a>
+                        <a href="/info" class="openbtn">회사소개</a>
                         <a href="#" class="openbtn">번개장터</a>
                         <a href="#" class="openbtn">디저트</a>
                         <a href="#" class="openbtn">커뮤니티</a>
-                        <a href="#" class="openbtn">놀이터</a>
+                        <a href="/map" class="openbtn">함께 할 수 있는 곳</a>
                         <a href="#" class="openbtn">F&A</a>
                     </div>
 
