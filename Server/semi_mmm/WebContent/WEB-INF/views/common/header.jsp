@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/content.css">
 <script type="text/javascript" src="/js/header.js"></script>
-
+<style>
+</style>
     <div id="header">
         <div id="navbar">
             <div id="navbar_menu">
@@ -22,7 +23,7 @@
                     <div id="mySidepanel" class="sidepanel">
                         <a href="/info" class="openbtn">회사소개</a>
                         <a href="/articleList" class="openbtn">번개장터</a>
-                        <a href="#" class="openbtn">디저트</a>
+                        <a href="/dessertMain" class="openbtn">디저트</a>
                         <a href="#" class="openbtn">커뮤니티</a>
 
                         <a href="/noticeList?reqPage=1">공지사항</a>

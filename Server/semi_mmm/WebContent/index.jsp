@@ -26,7 +26,7 @@
 					<li data-target="#demo" data-slide-to="1"></li>
 					<li data-target="#demo" data-slide-to="2"></li>
 				</ul>
-				<!-- The slideshow -->
+				<!-- The slideshow -->	
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<img src="/img/doghos.png" alt="Los Angeles">

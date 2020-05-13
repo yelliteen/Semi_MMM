@@ -1,4 +1,4 @@
-package desert.model.vo;
+package dessert.model.vo;
 
 public class Cart {
 	private int cartNo;
