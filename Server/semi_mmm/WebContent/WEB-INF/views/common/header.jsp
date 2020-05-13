@@ -93,7 +93,7 @@
                     <div id="mySidepanel" class="sidepanel">
                         <a href="#" class="openbtn">소개</a>
                         <a href="#" class="openbtn">번개장터</a>
-                        <a href="#" class="openbtn">디저트</a>
+                        <a href="/dessertMain" class="openbtn">디저트</a>
                         <a href="#" class="openbtn">커뮤니티</a>
                         <a href="#" class="openbtn">놀이터</a>
                         <a href="#" class="openbtn">F&A</a>
