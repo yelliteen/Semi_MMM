@@ -7,44 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-body {
-	z-index: 1;
-	margin: 0 auto;
-}
-#wrapper {
-	width: 100%;
-	margin: 0 auto;
-	z-index: 2;
-	position: relative;
-}
-#content {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-	width: 1300px;
-	z-index: 500;
-	overflow: hidden;
-}
-.container {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
- /* Make the image fully responsive */
- .carousel-inner img {
-    width: 100%;
-    height: 400px;
-  }
-  #carousel-area {
-  width:100%;
-  }
-  #content>div {
-  width: 410px;
-  height: 500px;
-  display: inline-block;
-  }
+
 </style>
 
 <head>
@@ -94,13 +57,8 @@ body {
 	<div id="dessert-show">
 	<p>이곳을 디저트 샵<p></div>
 		</div>
-	
-	
-	
 	</div>
-		
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-	</div>
 </body>
 
 </html>
