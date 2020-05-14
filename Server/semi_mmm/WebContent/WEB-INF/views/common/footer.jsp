@@ -15,7 +15,7 @@
 }
 </style>
 <body>
-	<div id="footer">
+	<div id="footer" style="min-width:1500px; width:100%;">
 		<div id="foot" style="background-color:#FAFBFC;">
 			<div id="footer-top" style="padding: 20px; border-top:1px solid #E4E8EB; border-bottom:1px solid #E4E8EB;"><span><a href="#" style="padding-left: 10px; color: #545454;">[공지] 공지사항 적어주세요</a></span>
 				<span style="float:right; ">

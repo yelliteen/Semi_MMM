@@ -1,23 +1,29 @@
-package member.controller;
+package shop.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.vo.Member;
+import shop.model.service.ShopService;
+
 /**
- * Servlet implementation class JoinFrmServlet
+ * Servlet implementation class ShopMainDataServlet
  */
-@WebServlet(name = "JoinFrm", urlPatterns = { "/joinFrm" })
-public class JoinFrmServlet extends HttpServlet {
+@WebServlet(name = "ShopMainData", urlPatterns = { "/shopMainData" })
+public class ShopMainDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinFrmServlet() {
+    public ShopMainDataServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +32,16 @@ public class JoinFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/member/joinFrm.jsp").forward(request, response);
+		//1. 인코딩
+		request.setCharacterEncoding("utf-8");
+		//2. 변수에 값 저장
+		//String memberId = request.getParameter("memberId");
+		//3. 비지니스 로직
+		ArrayList<Member> list = new ShopService().selectOneShop();
+		//4. 결과 처리
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/shopMain.jsp");
+		request.setAttribute("list", list);
+		rd.forward(request, response);
 	}
 
 	/**

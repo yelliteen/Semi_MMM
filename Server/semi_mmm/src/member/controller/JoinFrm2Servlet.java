@@ -1,4 +1,4 @@
-package dessert.controller;
+package member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DessertMainServlet
+ * Servlet implementation class JoinFrm2Servlet
  */
-@WebServlet(name = "DessertMain", urlPatterns = { "/dessertMain" })
-public class DessertMainServlet extends HttpServlet {
+@WebServlet(name = "JoinFrm2", urlPatterns = { "/joinFrm2" })
+public class JoinFrm2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DessertMainServlet() {
+    public JoinFrm2Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,11 +26,7 @@ public class DessertMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-		//2. 변수에 값 저장
-		//3. 비지니스로직 호출
-		//4. 결과처리
-		request.getRequestDispatcher("/WEB-INF/views/dessert/dessertMain.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/member/joinFrm2.jsp").forward(request, response);
 	}
 
 	/**
