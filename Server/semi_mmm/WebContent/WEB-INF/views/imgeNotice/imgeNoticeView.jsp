@@ -3,6 +3,8 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -68,25 +70,19 @@
 				
 				<tr>
 					<th colspan="2" style="text-align: center">
-						<c:if test="${not empty sessionScope.member.memberId }">
+						<c:if test="${sessionScope.member.memberNickname == n.noticeWriter }">
 							<a class="btn btn-outline-primary btn sm" href="updateNoticeFrm?noticeNo=${n.noticeNo }">수정하기</a>
 							<!-- href="javascript:void(0); : 클릭이벤트 취소시킴 -->
 							<a class="btn btn-outline-primary btn sm" href="javascript:void(0);" onclick="deleteNotice('${n.noticeNo }');">삭제하기</a>
 						</c:if>
 						
-						<c:if test="${not empty sessionScope.shop.memberId }">
-							<a class="btn btn-outline-primary btn sm" href="updateNoticeFrm?noticeNo=${n.noticeNo }">수정하기</a>
-							<!-- href="javascript:void(0); : 클릭이벤트 취소시킴 -->
-							<a class="btn btn-outline-primary btn sm" href="javascript:void(0);" onclick="deleteNotice('${n.noticeNo }');">삭제하기</a>
-						</c:if>
-
 						<a href="/noticeList?reqPage=1" class="btn btn-outline-primary btn sm">목록으로</a>
 					</th>
 				</tr>
 			</table>
 		</div>
 		<!-- 로그인이 되면 생성 -->
-		<c:if test="${not empty sessionScope.member.memberId || not empty sessionScope.shop.memberId}">
+		<c:if test="${not empty sessionScope.member.memberId || not empty sessionScope.shop.memberId }">
 		<!-- 댓글 작성창 -->
 		<div class="comment-wrapper">
 			<form action="/noticeCommentInsert" method="post">
@@ -175,14 +171,8 @@
 </section>
 	 
 	<script>
-		function fileDownload(filename, filepath){
-			var newFilename = encodeURIComponent(filename);
-			var newFilepath = encodeURIComponent(filepath);
-			
-			location.href="/noticeFileDownload?filename="+newFilename+"&filepath="+newFilepath;
-			
-		}
-		
+
+	
 		function deleteNotice(noticeNo){
 			if(confirm("삭제할래요?")){
 				location.href="/deleteNotice?noticeNo="+noticeNo;
