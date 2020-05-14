@@ -22,8 +22,13 @@
                     </div>
                     <div id="mySidepanel" class="sidepanel">
                         <a href="/info" class="openbtn">회사소개</a>
+<<<<<<< HEAD
                         <a href="/articleList" class="openbtn">중고장터</a>
                         <a href="/shopMain" class="openbtn">디저트</a>
+=======
+                        <a href="/articleList" class="openbtn">번개장터</a>
+                        <a href="/dessertMain" class="openbtn">디저트</a>
+>>>>>>> parent of 422a8aa... commit
                         <a href="#" class="openbtn">커뮤니티</a>
 
                         <a href="/noticeList?reqPage=1">사진 게시판</a>
