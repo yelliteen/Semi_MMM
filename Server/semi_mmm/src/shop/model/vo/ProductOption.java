@@ -1,4 +1,4 @@
-package dessert.model.vo;
+package shop.model.vo;
 
 public class ProductOption {
 	private int optionNo;
