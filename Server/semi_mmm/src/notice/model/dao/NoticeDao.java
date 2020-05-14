@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import article.model.vo.ArticleNotice;
 import common.JDBCTemplate;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeComment;
+
 
 
 
@@ -148,6 +148,82 @@ public class NoticeDao {
 			}
 		return result;
 		
+	}
+
+
+	public Notice selectOneNotice(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice n = null;
+		
+		String query="select * from(select rownum as rnum, n.* from(select * from notice, member WHERE notice.notice_writer = member.member_id order by notice_no desc)n)where notice_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, noticeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				n = new Notice();
+				n.setNoticeNo(rset.getInt("notice_no"));
+				n.setNoticeTitle(rset.getString("notice_title"));
+				n.setNoticeWriter(rset.getString("member_nickname"));
+				n.setNoticeContent(rset.getString("notice_content"));
+				n.setNoticeDate(rset.getDate("notice_date"));
+				n.setNoticeImgs(rset.getString("notice_imgs"));
+				n.setNoticeViewCount(rset.getInt("notice_view_count"));
+				n.setDogId(rset.getString("dog_id"));
+				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return n;
+	}
+
+
+	public ArrayList<NoticeComment> selectCommentList(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<NoticeComment> list = new ArrayList<NoticeComment>();
+		
+		String query = "select * from notice_comment where notice_comment_ref=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				NoticeComment nc = new NoticeComment();
+				nc.setNoticeCommentNo(rset.getInt("notice_comment_no"));
+				nc.setNoticeCommentContent(rset.getString("notice_comment_content"));
+				nc.setNoticeCommentWriter(rset.getString("notice_comment_writer"));
+				nc.setNoticeCommentDate(rset.getDate("notice_comment_date"));
+				nc.setNoticeCommentLevel(rset.getInt("notice_comment_level"));
+				nc.setNoticeCommentRef(rset.getInt("notice_comment_ref"));
+				nc.setNoticeCommentRefTwo(rset.getInt("notice_comment_ref_tow"));
+				nc.setDogId(rset.getString("dog_id"));
+				nc.setNoticeCommentBool(rset.getInt("notice_comment_bool"));
+				list.add(nc);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return list;
 	}
 
 

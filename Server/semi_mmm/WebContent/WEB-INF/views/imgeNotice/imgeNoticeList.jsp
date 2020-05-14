@@ -39,9 +39,7 @@
 			font-size: 18px;
 			color: blue;
 		}
-		.imgbox{
-		
-		}
+
 	</style>
 
 
@@ -51,7 +49,7 @@
  <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <section class="container">
-		<h1>사진 게시판</h1>
+		<h1>커뮤니티</h1>
 	
 		<c:if test="${not empty sessionScope.member.memberId || not empty sessionScope.shop.memberId }">
 		  		<form action="/noticeWriteFrm" method="post">
@@ -67,10 +65,10 @@
 			<c:forEach items="${list }" var="n">
 			
 		<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
-					<img src="${n.noticeImgs }" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
-					<div style="border: 1px solid black ">
-					<div>제목 : ${n.noticeTitle } 작성자 : ${n.noticeWriter }</div>
-					<div style="text-align: right;">작성일 : ${n.noticeDate }</div>
+					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs }" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;"></a>
+					<div style="border: 1px solid black;">
+					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
+					<div><div style="float: left; margin-left: 1%; display: inline-block; color: gray;">${n.noticeWriter }</div><div style="text-align: right; margin-right: 1%;">${n.noticeDate }</div></div>
 					</div>
 		</div>
 			</c:forEach>
@@ -78,7 +76,7 @@
 	
 			</div>
 		
-		<div id="pageNavi">${pageNavi }</div>
+		<div id="pageNavi" style=" margin-top: 3%;">${pageNavi }</div>
 		
 
 	

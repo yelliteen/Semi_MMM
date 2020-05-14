@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import common.JDBCTemplate;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
+import notice.model.vo.noticeViewData;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeComment;
 
 
 public class noticeService {
@@ -44,13 +46,13 @@ public class noticeService {
 		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
 		
 		if(pageNo != 1) {
-			pageNavi += "<a class='btn' href='/noticeList?reqPage="+(pageNo-pageNaviSize)+"'>이전</a>";
+			pageNavi += "<a class='btn' href='/noticeList?reqPage="+(pageNo-pageNaviSize)+"' style=' background-color:#F4F4F4; border-radius: 30px; margin-left: 2px;'>이전</a>";
 		}
 		for(int i=0; i<pageNaviSize; i++) {
 			if(reqPage == pageNo) {
-				pageNavi += "<span class='selectPage'>"+pageNo+"</span>";
+				pageNavi += "<span class='btn' style=' background-color:#76D5FF; border-radius: 30px; margin-left: 2px;'>"+pageNo+"</span>";
 			}else {
-				pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"'>"+pageNo+"</a>";			
+				pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"' style=' background-color:#B6EAFA; border-radius: 30px; margin-left: 2px;'>"+pageNo+"</a>";			
 				}
 			pageNo++;
 			if(pageNo>totalPage) {
@@ -59,7 +61,7 @@ public class noticeService {
 		}
 		
 		if(pageNo <= totalPage) {
-			pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"'>다음</a>";
+			pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"' style=' background-color:#F4F4F4; border-radius: 30px; margin-left: 2px;'>다음</a>";
 		}
 
 		
@@ -81,6 +83,16 @@ public class noticeService {
 		}
 		JDBCTemplate.close(conn);
 		return result;
+	}
+
+	public noticeViewData selectOneNotice(int noticeNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		Notice n = new NoticeDao().selectOneNotice(conn, noticeNo);
+		ArrayList<NoticeComment> list = new NoticeDao().selectCommentList(conn,noticeNo);
+		
+		noticeViewData nvd = new noticeViewData(n, list);
+		JDBCTemplate.close(conn);
+		return nvd;
 	}
 
 }
