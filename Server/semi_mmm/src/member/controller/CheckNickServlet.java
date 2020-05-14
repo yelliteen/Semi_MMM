@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.dao.MemberDao;
+import member.model.service.MemberService;
+
 /**
- * Servlet implementation class JoinFrm2Servlet
+ * Servlet implementation class CheckIdServlet
  */
-@WebServlet(name = "ComJoinFrm2", urlPatterns = { "/comJoinFrm2" })
-public class JoinFrm2Servlet extends HttpServlet {
+@WebServlet(name = "CheckNick", urlPatterns = { "/checkNick" })
+public class CheckNickServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinFrm2Servlet() {
+    public CheckNickServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +29,11 @@ public class JoinFrm2Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/member/comJoinFrm2.jsp").forward(request, response);
+		String nick = request.getParameter("val");
+		boolean result = new MemberService().selectNick(nick);
+		response.setContentType("applicaion/json");
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().print(result);
 	}
 
 	/**

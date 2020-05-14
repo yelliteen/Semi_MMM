@@ -73,7 +73,7 @@ function next() {
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="container">
-		<form action="/joinFrm2" id="joinForm">
+		<form action="/comJoinFrm2" id="joinForm">
 			<ul class="join_box">
 				<li class="checkBox check01">
 					<ul class="clearfix">
