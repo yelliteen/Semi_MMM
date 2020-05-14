@@ -114,7 +114,7 @@ margin: 5px;
 						if (data == true) {
 							what.css("border", "3px solid red");
 							$("#checkNick").prop("type","text");
-							$("#checkNick").val("닉네임이 중복입니다");
+							$("#checkNick").val("샵 네임이 중복입니다");
 						} else {
 							what.css("border", "3px solid #76D5FF");
 							$("#checkNick").prop("type","hidden");
@@ -130,7 +130,7 @@ margin: 5px;
 				what.css("border", "3px solid red");
 				what.focus();
 				$("#checkBirth").prop("type","text");
-				$("#checkBirth").val("생년월일이 잘못된 형식입니다");
+				$("#checkBirth").val("날짜 정보가 잘못된 형식입니다");
 			} else {
 				pwchk = val;
 				what.css("border", "3px solid #76D5FF");
@@ -193,9 +193,9 @@ margin: 5px;
 <body>
    <jsp:include page="/WEB-INF/views/common/header.jsp" />
    <div class="container">
-<form action="/joinMember" id="joinForm" method="post">
-  <legend>회원가입</legend>
-    <input type="text" id="id" name="id" class="form-control input-lg" placeholder="아이디 (대소문자+숫자를 포함한 4~12자리)" required/>
+<form action="/comJoinMember" id="joinForm" method="post">
+  <legend>사업자 회원가입</legend>
+    <input type="text" id="id" name="id" class="form-control input-lg" placeholder="아이디 (사업자 번호를 입력해주세요)" required/>
   <input type="hidden" id="checkId" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly>
   <br>
   <div class="row">
@@ -208,12 +208,12 @@ margin: 5px;
   </div>
    <input type="hidden" id="checkPw" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly>
    <br>
-  <input type="text" name="name" id="name" class="form-control input-lg" placeholder="이름 (최소 2글자 이상 6글자 이하)" required/>
+  <input type="text" name="name" id="name" class="form-control input-lg" placeholder="사업자 이름 (최소 2글자 이상 6글자 이하)" required/>
   <br>
-  <input type="text" name="nickname" id="nick" class="form-control input-lg" placeholder="닉네임 (2~10 문자)" required/>
+  <input type="text" name="nickname" id="nick" class="form-control input-lg" placeholder="샵 네임 (2~10 문자)" required/>
    <input type="hidden" id="checkNick" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly>
   <br>
-  <input type="text" name="birth" id="birth" class="form-control input-lg" placeholder="생일 (ex : 19950704)" required/>
+  <input type="text" name="birth" id="birth" class="form-control input-lg" placeholder="창업날짜 (ex : 20151010)" required/>
  <input type="hidden" id="checkBirth" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly>
   <br>
    <div class="row">
@@ -245,7 +245,7 @@ margin: 5px;
 		</div>
 		</div>
 		<div>
-		<input id="detailAddr" name="detailAddr" style="display: inline-block;" type="text" class="form-control input-lg" placeholder="상세주소">
+		<input id="detailAddr" name="detailAddr" style="display: inline-block;" type="text" class="form-control input-lg" placeholder="사업장 주소">
   </div>
   <input type="hidden" id="checksub" style="border:0px; color:red;font-size:15px;margin-left:20px;" size="30" readonly>
   <br><br>
