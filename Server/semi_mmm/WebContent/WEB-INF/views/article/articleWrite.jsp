@@ -7,18 +7,14 @@
 <link rel="stylesheet" href="/css/content.css">
 <title>중고장터 - 글쓰기</title>
 <style>
-#content {
-	overflow: hidden;
-	width: 100%;
-}
 
-#content>* {
+.container>* {
 	margin-left: 10%;
 	margin-right: 10%;
 	width: 80%;
 }
 
-#content>hr {
+.container>hr {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
@@ -97,6 +93,7 @@ input[type="button"] {
 			<div class="btnArea">
 				<input type="button" class="btn btn-primary" id="save" value="글쓰기">
 				<input type="button" class="btn btn-primary" id="cancel" value="취소">
+                <input type="hidden" id="now" value="write">
 			</div>
 		</form>
 

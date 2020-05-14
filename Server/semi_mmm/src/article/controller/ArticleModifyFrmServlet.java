@@ -1,30 +1,28 @@
 package article.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import article.model.service.ArticleNoticeService;
 import article.model.vo.ArticleNotice;
 
 /**
- * Servlet implementation class ArticleMoreServlet
+ * Servlet implementation class ArticleModifyFrmServlet
  */
-@WebServlet(name = "ArticleMore", urlPatterns = { "/articleMore" })
-public class ArticleMoreServlet extends HttpServlet {
+@WebServlet(name = "ArticleModifyFrm", urlPatterns = { "/articleModifyFrm" })
+public class ArticleModifyFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ArticleMoreServlet() {
+    public ArticleModifyFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,23 +32,12 @@ public class ArticleMoreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int start = Integer.parseInt(request.getParameter("start"));
-		String articleNoticeCategory1 = request.getParameter("articleNoticeCategory1");
-		String articleNoticeCategory2 = request.getParameter("articleNoticeCategory2");
-		String search = request.getParameter("search");
+		int articleNoticeNo = Integer.parseInt(request.getParameter("articleNoticeNo"));
+		ArticleNotice article = new ArticleNoticeService().articleRead(articleNoticeNo);
 		
-		ArrayList<ArticleNotice> list = null;
-		
-		if (search == null || search.equals("")) {
-			list = new ArticleNoticeService().articleMore(start);	
-		} else {
-			list = new ArticleNoticeService().articleKeywordMore(start, articleNoticeCategory1, articleNoticeCategory2, search);
-		}
-		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("utf-8");
-		
-		new Gson().toJson(list, response.getWriter());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleModify.jsp");
+		request.setAttribute("article", article);
+		rd.forward(request, response);
 	}
 
 	/**
