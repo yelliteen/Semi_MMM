@@ -1,4 +1,4 @@
-package member.controller;
+package notice.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class JoinFrmServlet
+ * Servlet implementation class NoticeWriteFrmServlet
  */
-@WebServlet(name = "JoinFrm", urlPatterns = { "/joinFrm" })
-public class JoinFrmServlet extends HttpServlet {
+@WebServlet(name = "NoticeWriteFrm", urlPatterns = { "/noticeWriteFrm" })
+public class NoticeWriteFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinFrmServlet() {
+    public NoticeWriteFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class JoinFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/member/joinFrm.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp").forward(request, response);	
 	}
 
 	/**
