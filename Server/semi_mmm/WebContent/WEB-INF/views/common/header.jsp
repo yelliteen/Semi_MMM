@@ -23,7 +23,7 @@
                     <div id="mySidepanel" class="sidepanel">
                         <a href="/info" class="openbtn">회사소개</a>
                         <a href="/articleList" class="openbtn">중고장터</a>
-                        <a href="/dessertMain" class="openbtn">디저트</a>
+                        <a href="/shopMain" class="openbtn">디저트</a>
                         <a href="#" class="openbtn">커뮤니티</a>
 
                         <a href="/noticeList?reqPage=1">사진 게시판</a>
@@ -44,7 +44,7 @@
                 <span style="font-size:20px;"><a onclick="location.href='/logout'" style="cursor: pointer;">로그아웃</a></span>
                 </c:if>
                <c:if test="${not empty sessionScope.shop.memberId }">
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;"><a onclick="location.href='/myShopFrm'" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
                 <span style="font-size:20px;"><a onclick="location.href='/logout'" style="cursor: pointer;">로그아웃</a></span>
                 </c:if>  
                 <c:if test="${empty sessionScope.member.memberId && empty sessionScope.shop.memberId }">
