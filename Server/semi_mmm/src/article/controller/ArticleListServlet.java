@@ -31,9 +31,23 @@ public class ArticleListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int totalCount = new ArticleNoticeService().getTotalCount();
-		
+		int totalCount;
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleList.jsp");
+		
+		if (request.getParameter("search") == null || request.getParameter("search").equals("")) {
+			totalCount = new ArticleNoticeService().getTotalCount();
+		} else {
+			String articleNoticeCategory1 = request.getParameter("articleNoticeCategory1");
+			String articleNoticeCategory2 = request.getParameter("articleNoticeCategory2");
+			String search = request.getParameter("search");
+			
+			totalCount = new ArticleNoticeService().getTotlaKeywordCount(articleNoticeCategory1, articleNoticeCategory2, search);
+			request.setAttribute("articleNoticeCategory1", articleNoticeCategory1);
+			request.setAttribute("articleNoticeCategory2", articleNoticeCategory2);
+			request.setAttribute("search", search);
+		}
+
 		request.setAttribute("totalCount", totalCount);
 		
 		rd.forward(request, response);
