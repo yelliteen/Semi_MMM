@@ -7,6 +7,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css">
     <title>중고장터</title>
     <style>
         #content {
@@ -69,7 +70,6 @@
         .imgBox {
             width: 100%;
             height: 200px;
-            background-image: url(/sm/multiupload/2020051316443252af684a-f823-4859-bcab-05a6c79abf39.jpg);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -88,6 +88,22 @@
             cursor: pointer;
             transform: translateY(-10px);
             box-shadow: 0px 10px 10px 0px #949494;
+        }
+        
+        .moreBtn {
+            border: 1px solid #76D5FF;
+            height: 30px;
+            font-weight: bold;
+        }
+        
+        .moreBtn:hover {
+            background-color: #76D5FF;
+            color: #F9F9F9;
+        }
+        
+        .moreBtn:disabled {
+            background-color: white;
+            color: black;
         }
     </style>
     <script>
@@ -113,7 +129,7 @@
         <ul class="articleList">
         </ul>
         <div class="moreArea">
-            <button class="btn btn-outline-info" id="more" totalCount="${totalCount }" currentCount="0" value="">더보기</button>
+            <button class="moreBtn" id="more" totalCount="${totalCount }" currentCount="0" value="">더보기</button>
         </div>
         <hr>
         <div class="searchBox">
