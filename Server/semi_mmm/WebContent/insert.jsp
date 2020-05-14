@@ -34,7 +34,7 @@
     //제대로 utf-8환경이 아니라 한글 깨짐 그래서 임의로 추가                                                   
     request.setCharacterEncoding("utf-8");
     
-    String title = request.getParameter("title");
+    String title = request.getParameter("imgeNoticeTitle");
     String content = request.getParameter("content");
     
     //콘솔 출력
@@ -48,9 +48,7 @@
 
 	<div class="con">
 		<div class="title"><%=title %></div>
-		
 		<div class="content"><%=content %></div>
-	
 	</div>
 
 </body>
