@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import article.model.vo.ArticleNotice;
 import common.JDBCTemplate;
 import notice.model.vo.Notice;
+
 
 
 
@@ -46,7 +48,7 @@ public class NoticeDao {
 		ResultSet rset = null;
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		
-		String query="select * from notice";
+		String query="select * from notice, member where notice.notice_writer = member.member_id";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -56,7 +58,7 @@ public class NoticeDao {
 				Notice n = new Notice();
 				n.setNoticeNo(rset.getInt("notice_no"));
 				n.setNoticeTitle(rset.getString("notice_title"));
-				n.setNoticeWriter(rset.getString("notice_writer"));
+				n.setNoticeWriter(rset.getString("member_nickname"));
 				n.setNoticeContent(rset.getString("notice_content"));
 				n.setNoticeDate(rset.getDate("notice_date"));
 				n.setNoticeImgs(rset.getString("notice_imgs"));
@@ -87,12 +89,11 @@ public class NoticeDao {
 		
 		
 		
-		String query="select * from(select rownum as rnum, n.* from(select * from notice order by notice_no desc)n)where rnum between ? and ?";
+		String query="select * from(select rownum as rnum, n.* from(select * from notice, member WHERE notice.notice_writer = member.member_id order by notice_no desc)n)where rnum between ? and ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setInt(1, start);
-
 			pstmt.setInt(2, end);
 
 			rset = pstmt.executeQuery();
@@ -101,7 +102,7 @@ public class NoticeDao {
 				Notice n = new Notice();
 				n.setNoticeNo(rset.getInt("notice_no"));
 				n.setNoticeTitle(rset.getString("notice_title"));
-				n.setNoticeWriter(rset.getString("notice_writer"));
+				n.setNoticeWriter(rset.getString("member_nickname"));
 				n.setNoticeContent(rset.getString("notice_content"));
 				n.setNoticeDate(rset.getDate("notice_date"));
 				n.setNoticeImgs(rset.getString("notice_imgs"));
@@ -109,12 +110,9 @@ public class NoticeDao {
 				n.setDogId(rset.getString("dog_id"));
 				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
 				list.add(n);
-
-				
-				
+		
 			}
-			
-			
+				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,8 +124,33 @@ public class NoticeDao {
 	}
 
 
+	public int writeNotice(Connection conn, Notice notice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "insert into notice values(notice_seq.nextval,?,?,?,sysdate,?,0,?,0)";
+		
+			try {
+				pstmt = conn.prepareStatement(query);
+				
+				int index = 1;
+				pstmt.setString(index++, notice.getNoticeTitle());
+				pstmt.setString(index++, notice.getNoticeWriter());
+				pstmt.setString(index++, notice.getNoticeContent());
+				pstmt.setString(index++, notice.getNoticeImgs());
+				pstmt.setString(index++, notice.getDogId());
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				JDBCTemplate.close(pstmt);
+			}
+		return result;
+		
+	}
 
-	
+
 }
 	
 	

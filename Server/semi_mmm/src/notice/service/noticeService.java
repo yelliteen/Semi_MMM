@@ -8,13 +8,14 @@ import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.Notice;
 
+
 public class noticeService {
 
 	
 	public NoticePageData selectList(int reqPage) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		int numPerPage = 10;// 한페이지당 게시물 수
+		int numPerPage = 6;// 한페이지당 게시물 수
 		System.out.println(numPerPage);
 		//총 게시물 수를 구하는 dao 호출
 		int totalCount = new NoticeDao().totalCount(conn);
@@ -67,4 +68,19 @@ public class noticeService {
 		
 		return pd;
 	}
+
+	public int noticeWrite(Notice notice) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new NoticeDao().writeNotice(conn, notice);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }
