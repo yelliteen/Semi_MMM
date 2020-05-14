@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import article.model.service.ArticleNoticeService;
+
 /**
  * Servlet implementation class ArticleListServlet
  */
@@ -29,7 +31,10 @@ public class ArticleListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int totalCount = new ArticleNoticeService().getTotalCount();
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleList.jsp");
+		request.setAttribute("totalCount", totalCount);
 		
 		rd.forward(request, response);
 	}
