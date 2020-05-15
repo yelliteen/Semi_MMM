@@ -41,6 +41,13 @@ public class ArticleModifyServlet extends HttpServlet {
 		String articleNoticeTitle = request.getParameter("title");
 		int articleNoticeNo = Integer.parseInt(request.getParameter("articleNoticeNo"));
 		String articleNoticeContent = request.getParameter("content");
+		int articleNoticeSoldBool; 
+		if (request.getParameter("articleNoticeSoldBool") == null) {
+			articleNoticeSoldBool = 1;
+		} else {
+			articleNoticeSoldBool = 0;
+		}
+		
 		String articleNoticeImgName = "";
 		Document doc = Jsoup.parse(articleNoticeContent);
 		Elements imgs = doc.getElementsByTag("img");
@@ -49,7 +56,7 @@ public class ArticleModifyServlet extends HttpServlet {
 			articleNoticeImgName = imgs.get(0).attr("src");
 		}
 		
-		ArticleNotice article = new ArticleNotice(articleNoticeNo, articleNoticeCategory1, articleNoticeCategory2, articleNoticeTitle, null, articleNoticeContent, null, 0, 0, articleNoticeImgName);
+		ArticleNotice article = new ArticleNotice(articleNoticeNo, articleNoticeCategory1, articleNoticeCategory2, articleNoticeTitle, null, articleNoticeContent, null, articleNoticeSoldBool, 0, articleNoticeImgName);
 		int result = new ArticleNoticeService().articleModify(article);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");

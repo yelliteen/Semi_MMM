@@ -1,7 +1,6 @@
 package article.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import article.model.service.ArticleNoticeService;
-import article.model.vo.ArticleNotice;
-import article.model.vo.ArticleNoticeCommentNick;
 
 /**
- * Servlet implementation class ArticleReadServlet
+ * Servlet implementation class ArticleDeleteServlet
  */
-@WebServlet(name = "ArticleRead", urlPatterns = { "/articleRead" })
-public class ArticleReadServlet extends HttpServlet {
+@WebServlet(name = "ArticleDelete", urlPatterns = { "/articleDelete" })
+public class ArticleDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ArticleReadServlet() {
+    public ArticleDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,14 +32,17 @@ public class ArticleReadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int articleNoticeNo = Integer.parseInt(request.getParameter("articleNoticeNo"));
-		ArticleNotice article = new ArticleNoticeService().articleRead(articleNoticeNo);
-		String memberNickname = new ArticleNoticeService().getMemberNickname(article.getArticleNoticeWriter());
-		ArrayList<ArticleNoticeCommentNick> list = new ArticleNoticeService().articleCommentList(articleNoticeNo);
+		int result = new ArticleNoticeService().articleDelete(articleNoticeNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleRead.jsp");
-		request.setAttribute("memberNickname", memberNickname);
-		request.setAttribute("article", article);
-		request.setAttribute("list", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("loc", "/articleList");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "게시글을 삭제하였습니다.");
+		} else {
+			request.setAttribute("msg", "게시글 삭제에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 
