@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import dessert.model.vo.Product;
 import member.model.vo.Member;
-import shop.model.vo.Product;
 
 public class ShopDao {
 

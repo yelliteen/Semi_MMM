@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import dessert.model.vo.Product;
 import member.model.vo.Member;
 import shop.model.dao.ShopDao;
-import shop.model.vo.Product;
 
 public class ShopService {
 
