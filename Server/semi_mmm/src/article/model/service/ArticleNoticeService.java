@@ -6,6 +6,8 @@ import java.util.StringTokenizer;
 
 import article.model.dao.ArticleNoticeDao;
 import article.model.vo.ArticleNotice;
+import article.model.vo.ArticleNoticeComment;
+import article.model.vo.ArticleNoticeCommentNick;
 import common.JDBCTemplate;
 
 public class ArticleNoticeService {
@@ -119,6 +121,48 @@ public class ArticleNoticeService {
 		JDBCTemplate.close(conn);
 		
 		return result;
+	}
+
+	public int articleDelete(int articleNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ArticleNoticeDao().articleDelete(conn, articleNoticeNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int articleCommentWrite(ArticleNoticeComment comment) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ArticleNoticeDao().articleCommentWrite(conn, comment);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<ArticleNoticeCommentNick> articleCommentList(int articleNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<ArticleNoticeCommentNick> list = new ArticleNoticeDao().articleCommentList(conn, articleNoticeNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
 	}
 
 }

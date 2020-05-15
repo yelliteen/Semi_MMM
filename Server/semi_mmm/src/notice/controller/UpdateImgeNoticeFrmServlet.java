@@ -13,16 +13,16 @@ import notice.model.vo.noticeViewData;
 import notice.service.noticeService;
 
 /**
- * Servlet implementation class NoticeViewServlet
+ * Servlet implementation class UpdateImgeNoticeFrmServlet
  */
-@WebServlet(name = "NoticeView", urlPatterns = { "/noticeView" })
-public class NoticeViewServlet extends HttpServlet {
+@WebServlet(name = "UpdateImgeNoticeFrm", urlPatterns = { "/updateImgeNoticeFrm" })
+public class UpdateImgeNoticeFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeViewServlet() {
+    public UpdateImgeNoticeFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,29 +31,17 @@ public class NoticeViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-				request.setCharacterEncoding("utf-8");
-				//2. 변수에 값 저장
+		//1.인코딩
+				//2. 변수에 값저장
 				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
-				//4. 결과처리
-				if(nvd.getN() != null) {
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeView.jsp");
-					request.setAttribute("n", nvd.getN());
-					request.setAttribute("list", nvd.getList());
-					rd.forward(request, response);
-					
-					System.out.println("성공");
-				}else {
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-					request.setAttribute("loc", "/noticeList?reqPage=1");
-
-					request.setAttribute("msg", "실패하셨습니다.");
-
-					rd.forward(request, response);	
-				}
 				
+				//4. 결과처리
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/notice/updateNotice.jsp");
+				request.setAttribute("n", nvd.getN());
+				//request.setAttribute("list", nvd.getList());
+				rd.forward(request, response);
 	}
 
 	/**

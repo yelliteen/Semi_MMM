@@ -37,8 +37,8 @@ public class InsertNoticeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		Dog dog = new Dog();
 		
+		String dogId = request.getParameter("dogId");
 		String imgeNoticeTitle = request.getParameter("imgeNoticeTitle");
 		String imgeNoticeWriter = request.getParameter("imgeNoticeWriter");
 		String imgeNoticeContent = request.getParameter("content");
@@ -50,16 +50,16 @@ public class InsertNoticeServlet extends HttpServlet {
 			System.out.println(imgeNoticeImgName);
 		}
 		
-	
+		
 
 		System.out.println("값확인 : "+imgeNoticeTitle);
 		System.out.println("값확인 : "+imgeNoticeWriter);
 		System.out.println("값확인 : "+imgeNoticeContent);
 		System.out.println("값확인 : "+imgeNoticeImgName);
-		System.out.println("값확인 : "+dog.getDogId());
+
 		
 		
-		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, null, 0);
+		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, dogId, 0);
 		int result = new noticeService().noticeWrite(n);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
@@ -67,6 +67,7 @@ public class InsertNoticeServlet extends HttpServlet {
 		
 		if (result > 0) {
 			request.setAttribute("msg", " 등록되었습니다.");
+
 		} else {
 			request.setAttribute("msg", "실패하셨습니다.");
 		}

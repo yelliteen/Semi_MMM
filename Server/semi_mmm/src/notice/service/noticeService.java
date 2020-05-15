@@ -95,4 +95,17 @@ public class noticeService {
 		return nvd;
 	}
 
+	public int noticeCommentInsert(NoticeComment nc) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().noticeCommentInsert(conn,nc);
+		
+		if(result>0) {	
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }

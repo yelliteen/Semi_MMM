@@ -28,9 +28,11 @@
 							
 							 <c:if test="${not empty sessionScope.member.memberId }">
 							<input type="hidden" name="imgeNoticeWriter" value="${sessionScope.member.memberId }">
+							<input type="hidden" name="dogId" value="${sessionScope.dog.dogId }">
 							</c:if>
 							 <c:if test="${not empty sessionScope.shop.memberId }">
 							<input type="hidden" name="imgeNoticeWriter" value="${sessionScope.shop.memberId }">
+								<input type="hidden" name="dogId" value="${sessionScope.dog.dogId }">
 							</c:if>
 							
 							
