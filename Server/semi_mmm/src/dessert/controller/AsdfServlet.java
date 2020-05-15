@@ -1,6 +1,7 @@
-package shop.controller;
+package dessert.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ShopMakeFrmServlet
+ * Servlet implementation class AsdfServlet
  */
-@WebServlet(name = "ShopMakeFrm", urlPatterns = { "/shopMakeFrm" })
-public class ShopMakeFrmServlet extends HttpServlet {
+@WebServlet(name = "Asdf", urlPatterns = { "/Asdf" })
+public class AsdfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopMakeFrmServlet() {
+    public AsdfServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +27,8 @@ public class ShopMakeFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/shop/shopMake.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

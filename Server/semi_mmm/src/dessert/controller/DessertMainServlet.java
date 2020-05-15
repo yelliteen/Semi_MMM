@@ -1,30 +1,23 @@
-package shop.controller;
+package dessert.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import shop.model.service.ShopService;
-import shop.model.vo.Product;
-
 /**
- * Servlet implementation class ShopMoreServlet
+ * Servlet implementation class DessertMainServlet
  */
-@WebServlet(name = "ShopMore", urlPatterns = { "/shopMore" })
-public class ShopMoreServlet extends HttpServlet {
+@WebServlet(name = "DessertMain", urlPatterns = { "/dessertMain" })
+public class DessertMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopMoreServlet() {
+    public DessertMainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +26,11 @@ public class ShopMoreServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int start = Integer.parseInt(request.getParameter("start"));
-		ArrayList<Product> list = new ShopService().morePhoto(start);
-		response.setCharacterEncoding("utf-8");
-		new Gson().toJson(list,response.getWriter());
+		//1. 인코딩
+		//2. 변수에 값 저장
+		//3. 비지니스로직 호출
+		//4. 결과처리
+		request.getRequestDispatcher("/WEB-INF/views/dessert/dessertMain.jsp").forward(request, response);
 	}
 
 	/**

@@ -16,6 +16,8 @@
 	margin: 0 auto;
 	background-color:#FAFBFC;
 	width:100%;
+    
+    
 }
 /* Display some links to the right */
 #navbar>div {
@@ -62,5 +64,5 @@
 	margin-top : 20px;
 }
 #wrapper_menu {
-    float: left
+    float: left;
 }

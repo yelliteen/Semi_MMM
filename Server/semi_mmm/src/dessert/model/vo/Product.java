@@ -1,4 +1,4 @@
-package shop.model.vo;
+package dessert.model.vo;
 
 public class Product {
 	private int productNo;
@@ -6,17 +6,19 @@ public class Product {
 	private int optionNo;
 	private String productFilename;
 	private String productFilepath;
+	private String productTitle;
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Product(int productNo, String bnMemberId, int optionNo, String productFilename, String productFilepath) {
+	public Product(int productNo, String bnMemberId, int optionNo, String productFilename, String productFilepath, String productTitle) {
 		super();
 		this.productNo = productNo;
 		this.bnMemberId = bnMemberId;
 		this.optionNo = optionNo;
 		this.productFilename = productFilename;
 		this.productFilepath = productFilepath;
+		this.productTitle = productTitle;
 	}
 	public int getProductNo() {
 		return productNo;
@@ -47,6 +49,12 @@ public class Product {
 	}
 	public void setProductFilepath(String productFilepath) {
 		this.productFilepath = productFilepath;
+	}
+	public String getProductTitle() {
+		return productTitle;
+	}
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
 	}
 	
 	

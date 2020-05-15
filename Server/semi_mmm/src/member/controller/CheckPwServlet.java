@@ -1,29 +1,28 @@
-package shop.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import member.model.service.MemberService;
 import member.model.vo.Member;
-import shop.model.service.ShopService;
 
 /**
- * Servlet implementation class ShopMainDataServlet
+ * Servlet implementation class CheckPwServlet
  */
-@WebServlet(name = "ShopMainData", urlPatterns = { "/shopMainData" })
-public class ShopMainDataServlet extends HttpServlet {
+@WebServlet(name = "CheckPw", urlPatterns = { "/checkPw" })
+public class CheckPwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopMainDataServlet() {
+    public CheckPwServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +31,19 @@ public class ShopMainDataServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-		request.setCharacterEncoding("utf-8");
-		//2. 변수에 값 저장
-		//String memberId = request.getParameter("memberId");
-		//3. 비지니스 로직
-		ArrayList<Member> list = new ShopService().selectOneShop();
-		//4. 결과 처리
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/shopMain.jsp");
-		request.setAttribute("list", list);
-		rd.forward(request, response);
+		String memberId = request.getParameter("memberId");
+		String memberPw = request.getParameter("memberPw");
+		System.out.println("hh");
+		
+		Member m = new MemberService().selectOneMember(memberId, memberPw);
+		response.setContentType("applicaion/json");
+		response.setCharacterEncoding("utf-8");
+		if (m != null) {
+			response.getWriter().print("true");
+		} else {
+			response.getWriter().print("false");
+		}
+	
 	}
 
 	/**

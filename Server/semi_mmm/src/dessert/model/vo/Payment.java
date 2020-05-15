@@ -1,4 +1,4 @@
-package shop.model.vo;
+package dessert.model.vo;
 
 public class Payment {
 	private int paymentNo;
