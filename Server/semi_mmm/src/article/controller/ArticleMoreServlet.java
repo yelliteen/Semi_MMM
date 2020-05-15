@@ -35,7 +35,17 @@ public class ArticleMoreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int start = Integer.parseInt(request.getParameter("start"));
-		ArrayList<ArticleNotice> list = new ArticleNoticeService().articleMore(start);
+		String articleNoticeCategory1 = request.getParameter("articleNoticeCategory1");
+		String articleNoticeCategory2 = request.getParameter("articleNoticeCategory2");
+		String search = request.getParameter("search");
+		
+		ArrayList<ArticleNotice> list = null;
+		
+		if (search == null || search.equals("")) {
+			list = new ArticleNoticeService().articleMore(start);	
+		} else {
+			list = new ArticleNoticeService().articleKeywordMore(start, articleNoticeCategory1, articleNoticeCategory2, search);
+		}
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");

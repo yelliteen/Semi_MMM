@@ -13,4 +13,37 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 		return m;
 	}
+
+	public boolean selectId(String id) {
+		Connection conn = new JDBCTemplate().getConnection();
+		boolean result = new MemberDao().selectId(conn, id);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public boolean selectNick(String nick) {
+		Connection conn = new JDBCTemplate().getConnection();
+		boolean result = new MemberDao().selectNick(conn, nick);
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int insertMember(Member m) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MemberDao().insertMember(conn, m);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public Member selectOneMember(String memberId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = new MemberDao().selectOneMember(conn, memberId);
+		JDBCTemplate.close(conn);
+		return m;
+	}
 }

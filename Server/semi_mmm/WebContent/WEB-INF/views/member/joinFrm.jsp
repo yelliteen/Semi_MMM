@@ -63,10 +63,9 @@ $(function(){
 });
 
 function next() {
-	if ($("#chk1").prop("checked") == true && $("#chk2").prop("checked") ) {
-		location.href="/joinFrm2";
-	} else {
+	if ($("#chk1").prop("checked") == false || $("#chk2").prop("checked") == false) {
 		alert("동의를 하셔야 합니다");
+		return false;
 	}
 }
 </script>
@@ -74,7 +73,7 @@ function next() {
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="container">
-		<form action="" id="joinForm">
+		<form action="/joinFrm2" id="joinForm">
 			<ul class="join_box">
 				<li class="checkBox check01">
 					<ul class="clearfix">
@@ -227,10 +226,10 @@ MMM 및 MMM 관련 제반 서비스(모바일 웹/앱 포함)의 회원관리, �
 
 				</li>
 			</ul>
-			<ul class="footBtwrap clearfix">
-				<li><button class="btn btn-light btn-block">비동의</button></li>
-				<li><button class="btn btn-primary btn-block" onclick="next();">동의</button></li>
-			</ul>
+			 <div style="width:100%; text-align:center;">
+				<button class="btn btn-lg btn-secondary btn-lg signup-btn" style="width:300px;">비동의</button>
+				<button class="btn btn-lg btn-primary btn-lg signup-btn" style="width:300px;" onclick="return next();">동의</button>
+			</div>
 		</form>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

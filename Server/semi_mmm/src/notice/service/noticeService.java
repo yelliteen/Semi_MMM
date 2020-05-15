@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import common.JDBCTemplate;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
+import notice.model.vo.noticeViewData;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeComment;
+
 
 public class noticeService {
 
@@ -14,7 +17,7 @@ public class noticeService {
 	public NoticePageData selectList(int reqPage) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		int numPerPage = 10;// 한페이지당 게시물 수
+		int numPerPage = 6;// 한페이지당 게시물 수
 		System.out.println(numPerPage);
 		//총 게시물 수를 구하는 dao 호출
 		int totalCount = new NoticeDao().totalCount(conn);
@@ -43,13 +46,13 @@ public class noticeService {
 		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
 		
 		if(pageNo != 1) {
-			pageNavi += "<a class='btn' href='/noticeList?reqPage="+(pageNo-pageNaviSize)+"'>이전</a>";
+			pageNavi += "<a class='btn' href='/noticeList?reqPage="+(pageNo-pageNaviSize)+"' style=' background-color:#F4F4F4; border-radius: 30px; margin-left: 2px;'>이전</a>";
 		}
 		for(int i=0; i<pageNaviSize; i++) {
 			if(reqPage == pageNo) {
-				pageNavi += "<span class='selectPage'>"+pageNo+"</span>";
+				pageNavi += "<span class='btn' style=' background-color:#76D5FF; border-radius: 30px; margin-left: 2px;'>"+pageNo+"</span>";
 			}else {
-				pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"'>"+pageNo+"</a>";			
+				pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"' style=' background-color:#B6EAFA; border-radius: 30px; margin-left: 2px;'>"+pageNo+"</a>";			
 				}
 			pageNo++;
 			if(pageNo>totalPage) {
@@ -58,7 +61,7 @@ public class noticeService {
 		}
 		
 		if(pageNo <= totalPage) {
-			pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"'>다음</a>";
+			pageNavi += "<a class='btn' href='/noticeList?reqPage="+pageNo+"' style=' background-color:#F4F4F4; border-radius: 30px; margin-left: 2px;'>다음</a>";
 		}
 
 		
@@ -67,4 +70,42 @@ public class noticeService {
 		
 		return pd;
 	}
+
+	public int noticeWrite(Notice notice) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new NoticeDao().writeNotice(conn, notice);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public noticeViewData selectOneNotice(int noticeNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		Notice n = new NoticeDao().selectOneNotice(conn, noticeNo);
+		ArrayList<NoticeComment> list = new NoticeDao().selectCommentList(conn,noticeNo);
+		
+		noticeViewData nvd = new noticeViewData(n, list);
+		JDBCTemplate.close(conn);
+		return nvd;
+	}
+
+	public int noticeCommentInsert(NoticeComment nc) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().noticeCommentInsert(conn,nc);
+		
+		if(result>0) {	
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }
