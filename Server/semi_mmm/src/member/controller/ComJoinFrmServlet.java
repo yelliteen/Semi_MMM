@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class JoinFrm2Servlet
+ * Servlet implementation class JoinFrmServlet
  */
-@WebServlet(name = "ComJoinFrm2", urlPatterns = { "/comJoinFrm2" })
-public class JoinFrm2Servlet extends HttpServlet {
+@WebServlet(name = "ComJoinFrm", urlPatterns = { "/comJoinFrm" })
+public class ComJoinFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinFrm2Servlet() {
+    public ComJoinFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class JoinFrm2Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/member/comJoinFrm2.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/member/comJoinFrm.jsp").forward(request, response);
 	}
 
 	/**
