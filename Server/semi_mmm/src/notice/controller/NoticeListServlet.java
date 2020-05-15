@@ -35,6 +35,7 @@ public class NoticeListServlet extends HttpServlet {
 			request.setCharacterEncoding("utf-8");
 			
 			int reqPage = Integer.parseInt(request.getParameter("reqPage"));
+			String memberId = request.getParameter("memberId");
 			System.out.println(reqPage);
 			NoticePageData pd = new noticeService().selectList(reqPage);
 
@@ -42,6 +43,7 @@ public class NoticeListServlet extends HttpServlet {
 			
 			request.setAttribute("list", pd.getList());
 			request.setAttribute("pageNavi", pd.getPageNavi());
+			request.setAttribute("memberId", memberId);
 			rd.forward(request, response);
 			
 		}

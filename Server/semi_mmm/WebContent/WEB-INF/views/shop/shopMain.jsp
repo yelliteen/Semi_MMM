@@ -20,7 +20,6 @@
  
 <title>shopMain</title>
 <style>
-	
 	.sell-list{
 		float:left;
 		width: 250px;
@@ -58,14 +57,11 @@
         background-color: aquamarine;
         text-align:right;
     }
-    #write-btn{
-    	border: 1px solid black;
-    }
 </style>
 </head>
 <body>
 	
-	
+	<div id="wrapper">
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<div class="container">
 		<form action="/shopMain" method="get">
@@ -76,7 +72,7 @@
 	         			<div class="sell-list1"></div>
 	         			<div class="sell-list2">
 	         				<div><%=m.getMemberNickname() %></div>
-	         				<div><%=m.getMemberId() %></div>
+	         				<div><%=m.getMemberName() %></div>
 	         			</div>
 	         		</a>
 	         	</li>
@@ -88,6 +84,7 @@
             <!--<button class="btn btn-outline-info" id="write-btn">글쓰기</button>-->
          <!--</c:if>-->
 	         
+      </div>
       </div>
       <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

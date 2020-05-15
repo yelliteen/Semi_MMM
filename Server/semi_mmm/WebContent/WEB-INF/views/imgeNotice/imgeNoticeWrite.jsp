@@ -1,36 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	
 		<section class="container">
-			<h1>공지사항 작성</h1>
-			<form action="/insertNotice" method="post" enctype="multipart/form-data" id="insertFrm">
+			<h1>글작성</h1>
+			<form id="frm" action="/insertNotice" method="post">
 				<table class="table table-bordered">
 					
 					<tr>
-						<th>제목</th>
-						<td><input  type="text" class="form-control" name="noticeTitle"></td>
-					</tr>
-					
-					<tr>
-						<th>작성자</th>
-						<td>${sessionScope.Member.memberId }
-							<input type="hidden" name="noticeWriter" value="${sessionScope.Member.memberId }">
+						<td colspan="2">
+							<div style="width: 15%; float: left; text-align: center; line-height: 40px;"> 
+							작성자 : ${sessionScope.member.memberNickname }
+								   ${sessionScope.shop.memberNickname }
+							</div>
+							
+							
+							 <c:if test="${not empty sessionScope.member.memberId }">
+							<input type="hidden" name="imgeNoticeWriter" value="${sessionScope.member.memberId }">
+							<input type="hidden" name="dogId" value="${sessionScope.dog.dogId }">
+							</c:if>
+							 <c:if test="${not empty sessionScope.shop.memberId }">
+							<input type="hidden" name="imgeNoticeWriter" value="${sessionScope.shop.memberId }">
+								<input type="hidden" name="dogId" value="${sessionScope.dog.dogId }">
+							</c:if>
+							
+							
+							<!--  <input type="hidden" name="imgeNoticeWriter" value="${sessionScope.shop.memberId }"> -->
+							<input type="text" class="form-control" name="imgeNoticeTitle" style="width: 85%;" placeholder="제목을 입력해주세요.">
 						</td>
 					</tr>
 					
 					<tr>
-						<th>내용</th>
 						<td>
 							<jsp:include page="/WEB-INF/views/common/smartEditorForm.jsp" />
 						</td>
@@ -38,11 +49,12 @@
 					
 					<tr style="text-align: center;">
 						<th colspan="2">
-							<button type="submit" class="btn btn-outline-primary">등록</button>
+							<input type="button" class="btn btn-outline-primary" id="save" value="작성">
+							<button type="button" class="btn btn-outline-primary">취소</button>
 						</th>
 					</tr>
 				</table>
-			</form>
+				</form>
 		</section>
 
 </body>

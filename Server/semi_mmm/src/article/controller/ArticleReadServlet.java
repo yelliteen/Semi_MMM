@@ -1,6 +1,7 @@
 package article.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import article.model.service.ArticleNoticeService;
 import article.model.vo.ArticleNotice;
+import article.model.vo.ArticleNoticeCommentNick;
 
 /**
  * Servlet implementation class ArticleReadServlet
@@ -35,10 +37,12 @@ public class ArticleReadServlet extends HttpServlet {
 		int articleNoticeNo = Integer.parseInt(request.getParameter("articleNoticeNo"));
 		ArticleNotice article = new ArticleNoticeService().articleRead(articleNoticeNo);
 		String memberNickname = new ArticleNoticeService().getMemberNickname(article.getArticleNoticeWriter());
+		ArrayList<ArticleNoticeCommentNick> list = new ArticleNoticeService().articleCommentList(articleNoticeNo);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleRead.jsp");
 		request.setAttribute("memberNickname", memberNickname);
 		request.setAttribute("article", article);
+		request.setAttribute("list", list);
 		rd.forward(request, response);
 	}
 

@@ -13,6 +13,10 @@ public class ArticleNoticeComment {
 	private int articleCommentLevel;
 	private int articleCommentDeleteBool;
 	
+	public String getContentBr() {
+		return articleCommentContent.replaceAll("\r\n", "<br>");
+	}
+	
 	public ArticleNoticeComment() {
 		super();
 		// TODO Auto-generated constructor stub

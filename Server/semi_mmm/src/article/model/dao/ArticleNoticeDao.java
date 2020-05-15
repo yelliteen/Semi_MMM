@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import article.model.vo.ArticleNotice;
+import article.model.vo.ArticleNoticeComment;
+import article.model.vo.ArticleNoticeCommentNick;
 import common.JDBCTemplate;
 
 public class ArticleNoticeDao {
@@ -23,6 +25,18 @@ public class ArticleNoticeDao {
 				rset.getInt(index++),
 				rset.getInt(index++),
 				rset.getString(index++));
+	}
+	
+	private ArticleNoticeComment setArticleNoticeComment(ResultSet rset, int index) throws SQLException {
+		
+		return new ArticleNoticeComment(rset.getInt(index++),
+				rset.getString(index++),
+				rset.getString(index++),
+				rset.getDate(index++),
+				rset.getInt(index++),
+				rset.getInt(index++),
+				rset.getInt(index++),
+				rset.getInt(index++));
 	}
 
 	public int articleWrite(Connection conn, ArticleNotice article) {
@@ -167,7 +181,7 @@ public class ArticleNoticeDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "update article_notice set ARTICLE_NOTICE_CATEGORY1=?, ARTICLE_NOTICE_CATEGORY2=?, ARTICLE_NOTICE_TITLE=?,"
-				+ "ARTICLE_NOTICE_CONTENT=?, ARTICLE_NOTICE_IMG_NAME=? where ARTICLE_NOTICE_NO=?";
+				+ "ARTICLE_NOTICE_CONTENT=?, article_notice_sold_bool = ?, ARTICLE_NOTICE_IMG_NAME=? where ARTICLE_NOTICE_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -177,6 +191,7 @@ public class ArticleNoticeDao {
 			pstmt.setString(index++, article.getArticleNoticeCategory2());
 			pstmt.setString(index++, article.getArticleNoticeTitle());
 			pstmt.setString(index++, article.getArticleNoticeContent());
+			pstmt.setInt(index++, article.getArticleNoticeSoldBool());
 			pstmt.setString(index++, article.getArticleNoticeImgName());
 			pstmt.setInt(index++, article.getArticleNoticeNo());
 			
@@ -287,5 +302,78 @@ public class ArticleNoticeDao {
 		}
 		
 		return result;
+	}
+
+	public int articleDelete(Connection conn, int articleNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update article_notice set article_notice_delete_bool = 1 where article_notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNoticeNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int articleCommentWrite(Connection conn, ArticleNoticeComment comment) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into article_notice_comment values(article_notice_comment_seq.nextval, ?, ?, sysdate, ?, ?, ?, 0)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, comment.getArticleCommentWriter());
+			pstmt.setString(index++, comment.getArticleCommentContent());
+			pstmt.setInt(index++, comment.getArticleRef());
+			pstmt.setString(index++, comment.getArticleCommentRef() == 0 ? null : String.valueOf(comment.getArticleCommentRef()));
+			pstmt.setInt(index++, comment.getArticleCommentLevel());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<ArticleNoticeCommentNick> articleCommentList(Connection conn, int articleNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ArticleNoticeCommentNick> list = new ArrayList<ArticleNoticeCommentNick>();
+		String query = "SELECT MEMBER.MEMBER_NICKNAME AS NICKNAME, A.* " 
+				+ "FROM ARTICLE_NOTICE_COMMENT A " 
+				+ "JOIN MEMBER ON (MEMBER_ID = ARTICLE_COMMENT_WRITER) " 
+				+ "WHERE ARTICLE_REF=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNoticeNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ArticleNoticeCommentNick comment = new ArticleNoticeCommentNick(rset.getString(1), setArticleNoticeComment(rset, 2));
+				list.add(comment);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }
