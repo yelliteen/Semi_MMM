@@ -156,7 +156,7 @@ public class NoticeDao {
 		ResultSet rset = null;
 		Notice n = null;
 		
-		String query="select * from(select rownum as rnum, n.* from(select * from notice, member WHERE notice.notice_writer = member.member_id order by notice_no desc)n)where notice_no=?";
+		String query="select * from(select rownum as rnum, n.* from(select member.MEMBER_LEVEL,notice_no,NOTICE_TITLE,NOTICE_WRITER,NOTICE_CONTENT,NOTICE_DATE,NOTICE_IMGS,NOTICE_VIEW_COUNT,NOTICE_DELETE_BOOL,dog.dog_id,member.member_id,member.member_nickname from notice join member on(notice.notice_writer = member.member_id) join dog on (member.member_Id = dog.dog_member_id) order by notice_no desc)n)where notice_no=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -175,6 +175,7 @@ public class NoticeDao {
 				n.setNoticeViewCount(rset.getInt("notice_view_count"));
 				n.setDogId(rset.getString("dog_id"));
 				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
+				System.out.println(n.getDogId());
 
 			}
 		} catch (SQLException e) {
@@ -224,6 +225,36 @@ public class NoticeDao {
 			JDBCTemplate.close(rset);
 		}
 		return list;
+	}
+
+
+	public int noticeCommentInsert(Connection conn, NoticeComment nc) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into notice_comment values(notice_comment_seq.nextval,?,?,sysdate,?,?,?,?,1)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, nc.getNoticeCommentContent());
+			pstmt.setString(2, nc.getNoticeCommentWriter());
+			pstmt.setInt(3, nc.getNoticeCommentLevel());
+			pstmt.setInt(4, nc.getNoticeCommentRef());
+			
+			//pstmt.setInt(5, nc.getNoticeCommentRef());
+			//null이 들어올 경우를 대비해서 삼항연산자로 표현해서 사용가능.
+			pstmt.setString(5, nc.getNoticeCommentRefTwo()==0?null:String.valueOf(nc.getNoticeCommentRefTwo()));
+			pstmt.setString(6, nc.getDogId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 
