@@ -1,23 +1,28 @@
-package dessert.controller;
+package article.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import article.model.service.ArticleNoticeService;
+import article.model.vo.ArticleNotice;
+
 /**
- * Servlet implementation class DessertMainServlet
+ * Servlet implementation class ArticleModifyFrmServlet
  */
-@WebServlet(name = "DessertMain", urlPatterns = { "/dessertMain" })
-public class DessertMainServlet extends HttpServlet {
+@WebServlet(name = "ArticleModifyFrm", urlPatterns = { "/articleModifyFrm" })
+public class ArticleModifyFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DessertMainServlet() {
+    public ArticleModifyFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,11 +31,13 @@ public class DessertMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-		//2. 변수에 값 저장
-		//3. 비지니스로직 호출
-		//4. 결과처리
-		request.getRequestDispatcher("/WEB-INF/views/dessert/dessertMain.jsp").forward(request, response);
+		
+		int articleNoticeNo = Integer.parseInt(request.getParameter("articleNoticeNo"));
+		ArticleNotice article = new ArticleNoticeService().articleRead(articleNoticeNo);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/article/articleModify.jsp");
+		request.setAttribute("article", article);
+		rd.forward(request, response);
 	}
 
 	/**
