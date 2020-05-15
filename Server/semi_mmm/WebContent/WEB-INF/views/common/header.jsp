@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="/css/ham-menu1.css">
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/content.css">
+<link href="/img/kakao.jpg" rel="shortcut icon" type="image/x-icon">
 <script type="text/javascript" src="/js/header.js"></script>
 <style>
 </style>
-    <div id="header">
+    <div id="header" style="height:120px;">
         <div id="navbar">
             <div id="navbar_menu">
                 <div id="wrapper_menu">
