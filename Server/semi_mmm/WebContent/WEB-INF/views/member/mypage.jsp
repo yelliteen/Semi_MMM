@@ -4,9 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>마이페이지</title>
+<title>마이페이지 ?memberId=${sessionScope.member.memberId }</title>
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<div class="container">
+   
+</div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
