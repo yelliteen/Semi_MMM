@@ -40,9 +40,7 @@
             margin-top: 10px;
             margin-left: 10px; 
         }
-        .bigTitle{
-        }
-        
+
     </style>
     
 
@@ -50,7 +48,7 @@
 <div class="contentBox">
 <div class="context">
     
-<form id="frm" action="insert.jsp" method="post" >
+
 <table width="100%">
   
         <tr>
@@ -59,7 +57,7 @@
             </td>
         </tr>
 </table>
-</form>
+
 
 </div>
 </div>
