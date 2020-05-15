@@ -32,7 +32,7 @@
 			$(this).css("cursor", "pointer");
 		});
 		$("#navbar_logo").click(function() {
-			location.href = "/index.jsp";
+			location.href = "/";
 		});
 		$('#line-wrapper').click(function() {
 			$('.line').removeClass('init');
@@ -47,7 +47,6 @@
 			}
 		});
 		/*이미지 랜덤*/
-        
         var num = Math.floor(Math.random() * 1000);
         var check = 0;
         if (num >= 0 && num < 300) {
@@ -63,7 +62,6 @@
         } else {
             check =3;
         }
-	
 	$("#navbar_logo").css({
 			'background-image' : 'url(/img/' + images[check] + ')'
 		});

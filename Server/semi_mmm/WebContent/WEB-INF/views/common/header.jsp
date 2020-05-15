@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="/css/ham-menu1.css">
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/content.css">
+<link href="/img/kakao.jpg" rel="shortcut icon" type="image/x-icon">
 <script type="text/javascript" src="/js/header.js"></script>
 <style>
 </style>
-    <div id="header">
+    <div id="header" style="height:120px;">
         <div id="navbar">
             <div id="navbar_menu">
                 <div id="wrapper_menu">
@@ -46,7 +47,7 @@
             </div>
             <div id="navbar_login">
             <c:if test="${not empty sessionScope.member.memberId }">
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;"><a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;">[ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
                 <span style="font-size:20px;"><a onclick="location.href='/logout'" style="cursor: pointer;">로그아웃</a></span>
                 </c:if>
                <c:if test="${not empty sessionScope.shop.memberId }">
@@ -55,7 +56,7 @@
                 </c:if>  
                 <c:if test="${empty sessionScope.member.memberId && empty sessionScope.shop.memberId }">
                  <span style="font-size:20px;"><a href="/loginFrm" style="text-decoration:none; color:#545454;">로그인</a></span>
-                <span style="font-size:20px;"><a href="/joinFrm" style="text-decoration:none; color:#545454;">회원가입</a></span>
+                <span style="font-size:20px;"><a href="/joinSelect" style="text-decoration:none; color:#545454;">회원가입</a></span>
                 </c:if>
             </div>
         </div>
