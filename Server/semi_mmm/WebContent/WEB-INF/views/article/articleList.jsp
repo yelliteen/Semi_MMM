@@ -253,6 +253,11 @@
                         div.append($("<p>" + data[i]["articleNoticeCategory1"] + " > " + data[i]["articleNoticeCategory2"] + "</p>"));
                         div.append($("<p class='title'>" + data[i]["articleNoticeTitle"] + "</p>"));
                         div.append($("<p>작성자 : " + data[i]["articleNoticeWriter"] + "</p>"));
+                        if (data[i]["articleNoticeSoldBool"] == 0) {
+                            div.append("<p>구매여부 : 구매 가능</p>");
+                        } else {
+                            div.append("<p>구매여부 : 판매 완료</p>");
+                        }
                         $(li).append($(div));
                         
                         $(".articleList").append($(li));

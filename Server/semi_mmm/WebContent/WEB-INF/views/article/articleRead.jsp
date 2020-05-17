@@ -35,6 +35,7 @@
         float: right;
         color: #545454;
         border: 1px solid #FFA6C2;
+        background-color: white;
         margin-right: 20px;
         font-weight: bold;
         height: 26px;
@@ -132,12 +133,11 @@
     .commentOneBox a, .commentOneBox a:hover, .commentOneBox a:focus {
         text-decoration: none;
         color: black;
-/*        font-weight: bold;*/
-        text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.2);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
     
     .commentOneBox>div:first-child {
-        text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.2);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
     
     .commentOneBox textarea {
@@ -185,7 +185,7 @@
 						type="hidden" name="articleCommentRef" value="0"> <input
 						type="hidden" name="articleCommentLevel" value="1">
 					<textarea rows="5" name="articleCommentContent"></textarea>
-					<button class="btn btn-primary" style="margin-bottom: 30px;">댓글
+					<button class="btn btn-primary" style="margin-bottom: 30px; margin-left: 10px;">댓글
 						입력</button>
 				</form>
 			</div>
@@ -194,7 +194,7 @@
 		<div class="comment">
 			<h4>
 				댓글: ${fn:length(list)}개
-				<button class="btn btn-primary" id="list">목록으로</button>
+				<button class="btn btn-info" id="list">목록으로</button>
 			</h4>
 			<br>
 			<br>
@@ -219,7 +219,7 @@
 								<tr>
                                     <td style="width: 33%;">
                                         <c:if test="${(not empty sessionScope.member.memberId) and comment.comment.articleCommentDeleteBool == 0}">
-                                            <a href="javascript:void(0)" onclick="">답글</a>
+                                            <a href="javascript:void(0)" onclick="reComment(this, ${comment.comment.articleCommentLevel}, ${comment.comment.articleCommentNo })">답글</a>
                                         </c:if>
                                     </td>
                                     <td style="width: 33%;">
@@ -261,7 +261,7 @@
 									<tr>
                                         <td style="width: 33%;">
                                             <c:if test="${(not empty sessionScope.member.memberId) and comment2.comment.articleCommentDeleteBool == 0}">
-                                                <a href="javascript:void(0)" onclick="">답글</a>
+                                                <a href="javascript:void(0)" onclick="reComment(this, ${comment2.comment.articleCommentLevel}, ${comment2.comment.articleCommentNo })">답글</a>
                                             </c:if>
                                         </td>
 										<td style="width: 33%;">
@@ -335,11 +335,11 @@
             if (confirm("게시글을 삭제하시겠습니까?")) {
                 location.href = "/articleDelete?articleNoticeNo=" + ${article.articleNoticeNo};
             }
-        })
+        });
         
         $("#list").click(function() {
             location.href = "/articleList";
-        })
+        });
         
         if (${article.articleNoticeSoldBool} == 0) {
             $("#soldBox").css("background-image", "url(/img/sold.png)");
@@ -356,6 +356,7 @@
             $(obj).attr("onclick", "modifyCommentComplet(this)");
             $(obj).parent().next().children().html("수정취소").attr("onclick", "modifyCommentCancel(this)");
             $(obj).parents("table").parent().prev().prev().children().toggle();
+            $(obj).parent().prev().children().toggle();
         }
         
         //댓글 수정용 메소드
@@ -373,6 +374,7 @@
             $(obj).attr("onclick", "deleteComment(this)");
             $(obj).parent().prev().children().html("수정").attr("onclick", "modifyCommentWrite(this)");
             $(obj).parents("table").parent().prev().prev().children().toggle();
+            $(obj).parent().prev().prev().children().toggle();
         }
         
         function deleteComment(obj) {
@@ -380,6 +382,51 @@
                 location.href = "/articleCommentDelete?articleCommentNo=" + $(obj).parent().prev().children("input").val() + "&articleNoticeNo=" + ${article.articleNoticeNo};
             }
         }
+        
+        function reComment(obj, level, commentNo) {
+        	$(obj).parents("table").toggle();
+            var comment = $(obj).parents(".commentOneBox");
+            
+            var commentBox = $("<div class='commentOneBox'></div>");
+            
+            var first = $("<div style='width: 15%; padding-left: " + (level * 2 + 1) + "%'></div>");
+            first.append("<i class='fas fa-level-up-alt fa-rotate-90'></i>");
+            commentBox.append(first);
+            
+            var seccond = $("<div style='width: 70%;'></div>");
+            var form = $("<form action='/articleCommentWrite' method='post'></from>");
+            form.append("<input type='hidden' name='articleRef'	value='${article.articleNoticeNo}'>");
+            form.append("<input type='hidden' name='articleCommentWriter' value='${sessionScope.member.memberId}'>");
+            form.append("<input	type='hidden' name='articleCommentRef' value='" + commentNo + "'>");
+            form.append("<input	type='hidden' name='articleCommentLevel' value='" + (level + 1) + "'>");
+            form.append("<textarea style='width:95%;' name='articleCommentContent'></textarea>");
+            seccond.append(form);
+            commentBox.append(seccond);
+            
+            var third = $("<div style='width: 10%; font-weight: normal; font-size: 1.0em'></div>");
+            var table = $("<table style='width: 100%'></table>");
+            var tbody = $("<tbody></tbody>");
+            var tr = $("<tr></tr>");
+            tr.append("<td style='width: 33%'><a href='javascript:void(0)' onclick='reCommentWrite(this)'>입력</a><td>");
+            tr.append("<td style='width: 33%'><a href='javascript:void(0)' onclick='reCommentCancel(this)'>취소</a><td>");
+            tbody.append(tr);
+            table.append(tbody);
+            third.append(table);
+            commentBox.append(third);
+            
+            comment.after(commentBox);
+        }
+        
+        function reCommentWrite(obj) {
+            $(obj).parents(".commentOneBox").find("form").submit();
+        }
+        
+        function reCommentCancel(obj) {
+            var comment = $(obj).parents(".commentOneBox");
+            comment.prev().find("table").toggle();
+            comment.remove();
+        }
+
     </script>
 
 </html>
