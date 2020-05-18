@@ -85,8 +85,8 @@ nav a {
 					<div class="collapse" id="collapseLayouts"
 						aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav"> <a class="nav-link"
-							href="/adminNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminCommentList">댓글 관리</a> </nav>
+							href="/adminNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapsePages" aria-expanded="false"
@@ -102,8 +102,8 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionPages"> <a class="nav-link"
-							href="/adminQnaList">질문 관리</a> <a class="nav-link"
-							href="/adminAnswerList">응답 관리</a> </nav>
+							href="/adminQnaList?reqPage=1">질문 관리</a> <a class="nav-link"
+							href="/adminAnswerList?reqPage=1">응답 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapseArticle" aria-expanded="false"
@@ -119,15 +119,15 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionArticle"> <a class="nav-link"
-							href="/adminArticleNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminArticleCommentList">댓글 관리</a> </nav>
+							href="/adminArticleNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminArticleCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<div class="sb-sidenav-menu-heading">회원관리</div>
-					<a class="nav-link" href="/adminUserList">
+					<a class="nav-link" href="/adminUserList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 일반 회원
-					</a> <a class="nav-link" href="/adminBusinessList">
+					</a> <a class="nav-link" href="/adminBusinessList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
@@ -223,16 +223,31 @@ nav a {
                 text-align: center;
             }
             
-            .table_tr a {
+            .member_tr a {
                 text-decoration: none;                
             }
             
-            .delete_true {
-                color: red;
+            .member_tr {
+                width: 100%;
             }
             
-            .delete_false {
-                color: blue;
+            .member_tr>div {
+                height: 50px;
+                line-height: 50px;
+                float: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                width: 33%;
+                text-align: center;
+            }
+            
+            .member_tr:first-child {
+                font-weight: bolder;
+            }
+            
+            .member_tr a {
+                text-decoration: none;                
             }
 		</style>
         <script>
@@ -248,17 +263,31 @@ nav a {
                 $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
                 $("#page").submit();
             }
+            
+            function noticePopup(noticeCommentNo) {
+                var status = "left=500px, top=100px, width=600px, height=300px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminNoticeComment";
+                var url = "/adminNoticeComment";
+                var popup = window.open("", title, status);
+                
+                $("input[name=noticeCommentNo]").val(noticeCommentNo);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
         </script>
 		<div id="layoutSidenav_content">
 			<main>
                 <form id="page">
                     <input type="hidden" name="articleCommentNo">
+                    <input type="hidden" name="noticeCommentNo">
                 </form>
 				<div class="notice_box">
                     <h2>자랑게시판 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>게시글 목록<a href="/adminNoticeList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>게시글 목록<a href="/adminNoticeList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -266,46 +295,107 @@ nav a {
                                 <div>제목</div>
                                 <div>작성자</div>
                             </div>
+                            <c:forEach items="${info.notice }" var="notice">
+                            	<c:if test="${notice.noticeDeleteBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${notice.noticeNo }</div>
+                                        <div><a class="delete_false" href="/adminNoticeRead?noticeNo=${notice.noticeNo }">${notice.noticeTitle }</a></div>
+                                        <div>${notice.noticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${notice.noticeDeleteBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${notice.noticeNo }</div>
+                                        <div><a class="delete_true" href="/adminNoticeRead?noticeNo=${notice.noticeNo }">${notice.noticeTitle }</a></div>
+                                        <div>${notice.noticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>댓글 목록<a href="/adminCommentList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>댓글 목록<a href="/adminCommentList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
+                        <div class="table_box">
+                            <div class="table_tr">
+                                <div>댓글번호</div>
+                                <div>댓글내용</div>
+                                <div>작성자</div>
+                            </div>
+                            <c:forEach items="${info.noticeComment }" var="noticeComment">
+                            	<c:if test="${noticeComment.noticeCommentBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${noticeComment.noticeCommentNo }</div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="noticePopup(${noticeComment.noticeCommentNo })">${noticeComment.noticeCommentContent }</a></div>
+                                        <div>${noticeComment.noticeCommentWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${noticeComment.noticeCommentBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${noticeComment.noticeCommentNo }</div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="noticePopup(${noticeComment.noticeCommentNo })">${noticeComment.noticeCommentContent }</a></div>
+                                        <div>${noticeComment.noticeCommentWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
+                        </div>
                     </div>
 				</div>
 				<div class="notice_box">
                     <h2>Q&A 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>질문 목록<a href="/adminQnaList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>질문 목록<a href="/adminQnaList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
-                            <div class="table_tr">
-                                <div>게시글번호</div>
+                            <div class="table_tr"> 
+                                <div>질문번호</div>
                                 <div>제목</div>
                                 <div>작성자</div>
                             </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'qna');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
+                            <c:forEach items="${info.qna }" var="qna">
+                            	<c:if test="${qna.qnaNoticeDeleteBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${qna.qnaNoticeNo }</div>
+                                        <div><a class="delete_false" href="#">${qna.qnaNoticeTitle }</a></div>
+                                        <div>${qna.qnaNoticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${qna.qnaNoticeDeleteBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${qna.qnaNoticeNo }</div>
+                                        <div><a class="delete_true" href="#">${qna.qnaNoticeTitle }</a></div>
+                                        <div>${qna.qnaNoticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>응답 목록<a href="/adminAnswerList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>응답 목록<a href="/adminAnswerList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
-                            <div class="table_tr">
-                                <div>게시글번호</div>
-                                <div>제목</div>
+                            <div class="table_tr"> 
+                                <div>응답번호</div>
+                                <div>응답내용</div>
                                 <div>작성자</div>
                             </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'answer');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
+                            <c:forEach items="${info.qnaAnswer }" var="qnaAnswer">
+                            	<c:if test="${qnaAnswer.answerDeleteBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${qnaAnswer.answerNo }</div>
+                                        <div><a class="delete_false" href="#">${qnaAnswer.answerContent }</a></div>
+                                        <div>${qnaAnswer.answerWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${qnaAnswer.answerDeleteBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${qnaAnswer.answerNo }</div>
+                                        <div><a class="delete_true" href="#">${qnaAnswer.answerContent }</a></div>
+                                        <div>${qnaAnswer.answerWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </div>
 				</div>
@@ -313,10 +403,10 @@ nav a {
                     <h2>중고장터 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>게시글 목록<a href="/adminArticleNoticeList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>게시글 목록<a href="/adminArticleNoticeList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
-                            <div class="table_tr">
+                            <div class="table_tr"> 
                                 <div>게시글번호</div>
                                 <div>제목</div>
                                 <div>작성자</div>
@@ -340,7 +430,7 @@ nav a {
                         </div>
                     </div>
                     <div class="content_box">
-                        <h5>댓글 목록<a href="/adminArticleCommentList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>댓글 목록<a href="/adminArticleCommentList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
                         <div class="table_box">
                             <div class="table_tr">
@@ -371,12 +461,58 @@ nav a {
                     <h2>회원 관리</h2>
                     <hr>
                     <div class="content_box">
-                        <h5>일반 회원 목록<a href="/adminUserList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>일반 회원 목록<a href="/adminUserList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
+                        <div class="table_box">
+                            <div class="member_tr">
+                                <div>아이디</div>
+                                <div>닉네임</div>
+                                <div>가입일</div>
+                            </div>
+                            <c:forEach items="${info.member }" var="member">
+                            	<c:if test="${member.memberLevel eq 1 }">
+                            		<div class="member_tr delete_false">
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div>${member.memberNickname }</div>
+                                        <div>${member.enrollDate }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${member.memberLevel eq 3 }">
+                            		<div class="member_tr delete_true">
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div>${member.memberNickname }</div>
+                                        <div>${member.enrollDate }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
+                        </div>
                     </div>
                     <div class="content_box">
-                        <h5>사업자 회원 목록<a href="/adminBusinessList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
+                        <h5>사업자 회원 목록<a href="/adminBusinessList?reqPage=1">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
+                        <div class="table_box">
+                            <div class="member_tr">
+                                <div>아이디</div>
+                                <div>닉네임</div>
+                                <div>가입일</div>
+                            </div>
+                            <c:forEach items="${info.shop }" var="shop">
+                            	<c:if test="${shop.memberLevel eq 2 }">
+                            		<div class="member_tr delete_false">
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="shopPopup(${shop.memberId })">${shop.memberId }</a></div>
+                                        <div>${shop.memberNickname }</div>
+                                        <div>${shop.enrollDate }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${shop.memberLevel eq 4 }">
+                            		<div class="member_tr delete_true">
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="shopPopup(${shop.memberId })">${shop.memberId }</a></div>
+                                        <div>${shop.memberNickname }</div>
+                                        <div>${shop.enrollDate }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
+                        </div>
                     </div>
 				</div>
 			</main>

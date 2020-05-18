@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import article.model.vo.ArticleNoticeComment;
+import notice.model.vo.Notice;
 
 /**
- * Servlet implementation class AdminArticleCommentServlet
+ * Servlet implementation class AdminNoticeReadServlet
  */
-@WebServlet(name = "AdminArticleComment", urlPatterns = { "/adminArticleComment" })
-public class AdminArticleCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminNoticeRead", urlPatterns = { "/adminNoticeRead" })
+public class AdminNoticeReadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminArticleCommentServlet() {
+    public AdminNoticeReadServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +32,11 @@ public class AdminArticleCommentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int articleCommentNo = Integer.parseInt(request.getParameter("articleCommentNo"));
-		ArticleNoticeComment comment = new AdminService().articleComment(articleCommentNo);
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		Notice notice = new AdminService().noticeRead(noticeNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/articlePopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminNoticeRead.jsp");
+		request.setAttribute("notice", notice);
 		rd.forward(request, response);
 	}
 

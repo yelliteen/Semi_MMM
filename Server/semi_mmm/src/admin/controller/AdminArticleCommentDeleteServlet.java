@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import article.model.vo.ArticleNoticeComment;
 
 /**
- * Servlet implementation class AdminArticleCommentServlet
+ * Servlet implementation class AdminArticleCommentDeleteServlet
  */
-@WebServlet(name = "AdminArticleComment", urlPatterns = { "/adminArticleComment" })
-public class AdminArticleCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminArticleCommentDelete", urlPatterns = { "/adminArticleCommentDelete" })
+public class AdminArticleCommentDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminArticleCommentServlet() {
+    public AdminArticleCommentDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +32,16 @@ public class AdminArticleCommentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int articleCommentNo = Integer.parseInt(request.getParameter("articleCommentNo"));
-		ArticleNoticeComment comment = new AdminService().articleComment(articleCommentNo);
+		int result = new AdminService().articleCommentDelete(articleCommentNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/articlePopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "댓글을 삭제하였습니다.");
+		} else {
+			request.setAttribute("msg", "댓글 삭제에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 

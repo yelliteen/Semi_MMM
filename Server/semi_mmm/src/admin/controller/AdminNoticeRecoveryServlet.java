@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import article.model.vo.ArticleNoticeComment;
 
 /**
- * Servlet implementation class AdminArticleCommentServlet
+ * Servlet implementation class AdminNoticeRecoveryServlet
  */
-@WebServlet(name = "AdminArticleComment", urlPatterns = { "/adminArticleComment" })
-public class AdminArticleCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminNoticeRecovery", urlPatterns = { "/adminNoticeRecovery" })
+public class AdminNoticeRecoveryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminArticleCommentServlet() {
+    public AdminNoticeRecoveryServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +30,19 @@ public class AdminArticleCommentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		int result = new AdminService().noticeRecovery(noticeNo);
 		
-		int articleCommentNo = Integer.parseInt(request.getParameter("articleCommentNo"));
-		ArticleNoticeComment comment = new AdminService().articleComment(articleCommentNo);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("loc", "/adminNoticeRead?noticeNo=" + noticeNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/articlePopup.jsp");
-		request.setAttribute("comment", comment);
+		if (result > 0) {
+			request.setAttribute("msg", "게시글을 복구하였습니다.");
+		} else {
+			request.setAttribute("msg", "게시글 복구에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 

@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 자랑게시판 댓글 관리 페이지</title>
+<title>Adimn - 자랑게시판 게시글 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
@@ -140,72 +140,32 @@ nav a {
 			</div>
 			</nav>
 		</div>
-        <script>
-            function noticePopup(noticeCommentNo) {
-                var status = "left=500px, top=100px, width=600px, height=300px, menubar=no, status=no,scrollbars=yes";
-                var title = "adminNoticeComment";
-                var url = "/adminNoticeComment";
-                var popup = window.open("", title, status);
-                
-                $("input[name=noticeCommentNo]").val(noticeCommentNo);
-                $("#page").attr("action", url);
-                $("#page").attr("method", "post");
-                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
-                $("#page").submit();
-            }
-        </script>
+
 		<div id="layoutSidenav_content">
-			<main>
-                <form id="page">
-                    <input type="hidden" name="noticeCommentNo">
-                </form>
-				<h1 style="margin: 20px;">자랑게시판 댓글 관리</h1>
+			<main style="padding: 20px;">
+				<h3 style='margin-left: 20px; margin-right: 20px;'>제목 : ${notice.noticeTitle }</h3>
+                <hr>
+                <h5>
+                	<span style='margin-left: 10px; float: left;'>작성자 : ${notice.noticeWriter }</span>
+                	<span style='margin-right: 10px; float: right;'>작성일 : ${notice.noticeDate }</span>
+                </h5>
+                <br>
+                <hr>
+                <div style='margin: 30px'>
+                	${notice.noticeContent }
+				</div>
 				<hr>
-				<table class="list_table comment_notice">
-                    <tr>
-                        <th>댓글번호</th>
-                        <th>게시물번호</th>
-                        <th>내용</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                    <c:forEach items="${data.list }" var="comment">
-                    	<c:if test="${comment.noticeCommentBool eq 0 }">
-                    		<tr class="delete_false">
-                    			<td>${comment.noticeCommentNo }</td>
-                    			<td><a class="delete_false" href="/adminNoticeRead?noticeNo=${comment.noticeCommentRef }">${comment.noticeCommentRef }</a></td>
-                                <td><a class="delete_false" href="javascript:void(0)" onclick="noticePopup(${comment.noticeCommentNo })">${comment.noticeCommentContent }</a></td>
-                    			<td>${comment.noticeCommentWriter }</td>
-                    			<td>${comment.noticeCommentDate }</td>
-                    		</tr>
-                    	</c:if>
-                    	<c:if test="${comment.noticeCommentBool eq 1 }">
-                    		<tr class="delete_true">
-                    			<td>${comment.noticeCommentNo }</td>
-                    			<td><a class="delete_true" href="/adminArticleRead?noticeNo=${comment.noticeCommentRef }">${comment.noticeCommentRef }</a></td>
-                                <td><a class="delete_true" href="javascript:void(0)" onclick="noticePopup(${comment.noticeCommentNo })">${comment.noticeCommentContent }</a></td>
-                    			<td>${comment.noticeCommentWriter }</td>
-                    			<td>${comment.noticeCommentDate }</td>
-                    		</tr>
-                    	</c:if>
-                    </c:forEach>
-                </table>
-                <div class="pageNavi">
-                    ${data.pageNavi }
-                </div>
-                <div class="searchBox">
-                	<div>
-	                	<form action="/adminCommentList" method="get">
-	                		<input type="hidden" name="reqPage" value="1">
-	                		<select name="type" class="form-control" style="width: 150px;">
-	                			<option value="notice_comment_ref">게시글 번호</option>
-	                			<option value="notice_comment_writer">작성자</option>
-	                			<option value="notice_comment_content">내용</option>
-	                		</select>
-	                		<input type="text" class="form-control" style="width: 300px" name="search">
-	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
-	                	</form>
-                	</div>
+				<div style="text-align: center">
+					<c:if test="${notice.noticeDeleteBool eq 0 }">
+	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                	background-color: black; color: white; font-size: 30px; border: none' onclick="deleteConfirm();">삭제</button>
+	                </c:if>
+	                <c:if test="${notice.noticeDeleteBool eq 1 }">
+	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                	background-color: black; color: white; font-size: 30px; border: none' onclick="recoveryConfirm();">복구</button>
+	                </c:if>
+	                <button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                background-color: black; color: white; font-size: 30px; border: none' onclick="history.go(-1)">취소</button>
                 </div>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
@@ -221,34 +181,19 @@ nav a {
 			</footer>
 		</div>
 	</div>
-    <script>
-        function check() {
-            if ($("input[name=search]").val() == "") {
-                alert("검색 내용을 입력하세요.");
-                return false;
+	<script>
+		function deleteConfirm() {
+			if (confirm("게시글을 삭제하시겠습니까?")) {
+                location.href='/adminNoticeDelete?noticeNo=${notice.noticeNo}';
             }
-            
-            var regExp = /\D/;
-            if ($("option:selected").val() == "article_ref" && regExp.test($("input[name=search]").val())) {
-                alert("숫자를 입력하세요.");
-                return false;
+		}
+		
+		function recoveryConfirm() {
+			if (confirm("게시글을 복구하시겠습니까?")) {
+                location.href='/adminNoticeRecovery?noticeNo=${notice.noticeNo}';
             }
-        }
-    </script>
-    <c:if test="${not empty search}">
-        <script>
-            var option = $("option");
-			for (var i = 0; i < option.length; i++) {
-                console.log(option.eq(i).val());
-				if (option.eq(i).val() == "${type}") {
-                    option.eq(i).prop("selected", "true");
-                    break;
-                }
-			}
-            
-            $("input[name=search]").val("${search}");
-        </script>
-    </c:if>
+		}
+	</script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
