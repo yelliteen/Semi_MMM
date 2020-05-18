@@ -36,7 +36,6 @@ height: 0px;
                     </div>
                     <div id="mySidepanel" class="sidepanel">
                         <a href="/info" class="openbtn">회사소개</a>
-
                         <a href="/articleList" class="openbtn">중고장터</a>
                         <a href="/shopMain" class="openbtn">디저트</a>
                         <a href="/noticeList?reqPage=1" class="openbtn">커뮤니티</a>
