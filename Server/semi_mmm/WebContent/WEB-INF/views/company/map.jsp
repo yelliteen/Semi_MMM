@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="/css/content.css">
@@ -62,38 +64,47 @@
 				</div>
 				<div class="collapse" id="collapseExample2">
 					<div class="card card-body">
-						<button id="test5" onclick="dog5()">월드컵공원</button><br>
-						<button id="test6" onclick="dog6()">보라매공원</button><br>
-						<button id="test7" onclick="dog7()">개판오분전</button><br>
-						<button id="test8" onclick="dog8()">수락반려견 놀이터</button><br>
+						<button id="test5" onclick="dog5()">월드컵공원</button>
+						<br>
+						<button id="test6" onclick="dog6()">보라매공원</button>
+						<br>
+						<button id="test7" onclick="dog7()">개판오분전</button>
+						<br>
+						<button id="test8" onclick="dog8()">수락반려견 놀이터</button>
+						<br>
 						<button id="test9" onclick="dog9()">노원마들스타디움</button>
 					</div>
 				</div>
 				<div class="collapse" id="collapseExample3">
 					<div class="card card-body">
-					<button id="test10" onclick="dog10()">상상다방</button><br>
-					<button id="test11" onclick="dog11()">얼띵앤키친</button><br>
-					<button id="test12" onclick="dog12()">두애견포차</button>
+						<button id="test10" onclick="dog10()">상상다방</button>
+						<br>
+						<button id="test11" onclick="dog11()">얼띵앤키친</button>
+						<br>
+						<button id="test12" onclick="dog12()">두애견포차</button>
 					</div>
 				</div>
 				<div class="collapse" id="collapseExample4">
 					<div class="card card-body">
-						<button id="test13" onclick="dog13()">IFC</button><br>
+						<button id="test13" onclick="dog13()">IFC</button>
+						<br>
 						<button id="test14" onclick="dog14()">스타필드 고양</button>
 					</div>
 				</div>
-				
+
 				<div class="collapse" id="collapseExample5">
 					<div class="card card-body">
-						<button id="test15" onclick="dog15()">카푸치노 호텔</button><br>
-						<button id="test16" onclick="dog16()">오크우드 프리미어 인천</button><br>
+						<button id="test15" onclick="dog15()">카푸치노 호텔</button>
+						<br>
+						<button id="test16" onclick="dog16()">오크우드 프리미어 인천</button>
+						<br>
 						<button id="test17" onclick="dog17()">비스타 워커힐 호텔</button>
 					</div>
 				</div>
 			</div>
-
-
-
+				
+				<br>
+			<div id="play" style="width: 95%; height: 500px;"></div>
 		</div>
 	</div>
 	<br>
@@ -151,7 +162,7 @@
 			$("#test17").click(function() {
 
 			});
-	
+
 		});
 		$(document).ready(function() {
 			$('#btn1').on('click', function() {
@@ -215,7 +226,7 @@
 		}
 	</script>
 
-	<div id="play" style="width: 95%; height: 500px;"></div>
+	
 	<script>
 		var HOME_PATH = window.HOME_PATH || '.';
 
