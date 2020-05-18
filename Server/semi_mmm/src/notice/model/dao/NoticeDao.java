@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import common.JDBCTemplate;
+import member.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 
@@ -175,7 +176,7 @@ public class NoticeDao {
 				n.setNoticeViewCount(rset.getInt("notice_view_count"));
 				n.setDogId(rset.getString("dog_id"));
 				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
-				System.out.println(n.getDogId());
+				System.out.println("강아지 이름 : "+n.getDogId());
 
 			}
 		} catch (SQLException e) {
@@ -255,6 +256,40 @@ public class NoticeDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+
+	public Dog noticeDogWrite(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Dog d = new Dog();
+		
+		String query = "select * from dog join member on(dog.dog_member_id = member.member_id) where member.member_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				d.setDogId(rset.getString("dog_id"));
+				d.setDogMemberId(rset.getString("member_nickname"));
+				d.setVariety(rset.getString("variety"));
+				d.setAge(rset.getInt("age"));
+				d.setDogGender(rset.getString("dog_gender").charAt(0));
+				d.setDogImg(rset.getString("dog_img"));
+				d.setDogBool(rset.getInt("dog_bool"));
+				System.out.println(d.getDogId());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return d;
 	}
 
 

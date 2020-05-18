@@ -32,12 +32,8 @@ public class MypageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
-		Member m = new MemberService().selectOneMember(memberId);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp");
-		request.setAttribute("m", m);
-		rd.forward(request, response);
-		System.out.println("1"+ memberId);
-		System.out.println("2"+ m);
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMypage.jsp").forward(request, response);
 	}
 
 	/**

@@ -24,6 +24,7 @@ $(function(){
 	});
 	$("#company").click(function(){
 		location.href="/comJoinFrm";
+		alert("니가왜떠");
 	});
 });
 </script>

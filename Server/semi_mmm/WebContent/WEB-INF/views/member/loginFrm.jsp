@@ -27,7 +27,7 @@
         <input type="password" name="memberPw" id="upw" class="form-control" placeholder="Password" required><br>
         <div class="checkbox">
            <label>
-            <input type="radio" name="userlevel" value="1" required> 일반 이용자
+            <input type="radio" name="userlevel" value="1" required checked> 일반 이용자
               </label>
               <label>
             <input type="radio" name="userlevel" value="2" required> 사업자
@@ -48,6 +48,8 @@
 			var level = $('input[name="userlevel"]:checked').val();
 			var memberId = $("#uid").val();
 			var memberPw = $("#upw").val();
+			console.log(memberId);
+			console.log(memberPw);
 			var user = {
 					level : level,
 					memberId : memberId,
