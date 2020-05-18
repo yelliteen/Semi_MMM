@@ -31,15 +31,13 @@ public class MypageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		//2.값저장
 		String memberId = request.getParameter("memberId");
-		//3.비지니스로직
 		Member m = new MemberService().selectOneMember(memberId);
-		//4.결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp");
 		request.setAttribute("m", m);
 		rd.forward(request, response);
+		System.out.println("1"+ memberId);
+		System.out.println("2"+ m);
 	}
 
 	/**

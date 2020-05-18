@@ -34,7 +34,7 @@ public class ShopMainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		ArrayList<Member> list = new ShopService().selectOneShop();
+		ArrayList<Member> list = new ShopService().shopList();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/shopMain.jsp");
 		request.setAttribute("list", list);
 		rd.forward(request, response);

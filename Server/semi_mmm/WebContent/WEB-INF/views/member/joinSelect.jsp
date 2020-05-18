@@ -10,10 +10,10 @@
 <style>
 table>tbody>tr>td{padding: 10px;}
 #joinForm{width: 1000px;margin: 0 auto;padding-top: 50px; padding-bottom: 50px;padding-right:20px;}
-img{
+td>img{
 width:150px; height:150px; box-shadow: 1px 1px #E4E8EB; padding:10px;cursor: pointer;
 }
-img:hover{
+td>img:hover{
 box-shadow: 1px 1px .5px .5px gray;
 }
 </style>

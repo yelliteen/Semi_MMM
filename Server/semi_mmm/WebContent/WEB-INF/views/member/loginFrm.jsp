@@ -28,8 +28,10 @@
         <div class="checkbox">
            <label>
             <input type="radio" name="userlevel" value="1" required> 일반 이용자
+              </label>
+              <label>
             <input type="radio" name="userlevel" value="2" required> 사업자
-          </label>
+        </label>
         </div>
         <button id="logining" class="btn btn-lg btn-primary btn-block" type="submit">로 그 인</button>
 		</div>
