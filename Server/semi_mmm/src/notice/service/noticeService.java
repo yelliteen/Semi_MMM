@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import member.model.vo.Dog;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.noticeViewData;
@@ -106,6 +107,14 @@ public class noticeService {
 		}
 		JDBCTemplate.close(conn);
 		return result;
+	}
+
+	public Dog noticeDogWrite(String memberId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Dog dogList = new NoticeDao().noticeDogWrite(conn, memberId);
+		
+		JDBCTemplate.close(conn);
+		return dogList;
 	}
 
 }
