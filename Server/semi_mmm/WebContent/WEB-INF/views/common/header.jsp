@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="/css/content.css?after">
 <link rel="stylesheet" href="/css/menu.css?after">
 <link rel="stylesheet" href="/css/ham-menu1.css?after">
-<script type="text/javascript" src="/js/header.js"></script>
+<script type="text/javascript" src="/js/header.js?after"></script>
 <style>
 .logoutImg {
 width: 0px;
@@ -23,8 +23,18 @@ height: 0px;
    height: 20px;
   }
 }
+.box {
+    width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 </style>
-    <div id="header" style="height:120px;">
+    <div id="header" style="height:100px;">
         <div id="navbar">
             <div id="navbar_menu">
                 <div id="wrapper_menu">
@@ -36,21 +46,9 @@ height: 0px;
                     </div>
                     <div id="mySidepanel" class="sidepanel">
                         <a href="/info" class="openbtn">회사소개</a>
-
                         <a href="/articleList" class="openbtn">중고장터</a>
                         <a href="/shopMain" class="openbtn">디저트</a>
-
-                        <a href="/articleList" class="openbtn">번개장터</a>
-                        <a href="/dessertMain" class="openbtn">디저트</a>
-
-                        <a href="#" class="openbtn">커뮤니티</a>
-
-                        <a href="/noticeList?reqPage=1">사진 게시판</a>
-
                         <a href="/noticeList?reqPage=1" class="openbtn">커뮤니티</a>
-
-                        <a href="#" class="openbtn">놀이터</a>
-
                         <a href="/map" class="openbtn">함께 할 수 있는 곳</a>
                         <a href="#" class="openbtn">F&A</a>
                     </div>
@@ -61,14 +59,20 @@ height: 0px;
             </div>
             <div id="navbar_login">
             <c:if test="${not empty sessionScope.member.memberId }">
-                <span style="font-size:20px;"><a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;">[ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 </span>
+                  <div class="box">
+                <span style="font-size:20px;">
+              <img class="forfile" src="/upload/memberImg/${m.profileImg }">
+                <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;">
+                [ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 </span></div>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>
                 </c:if>
                <c:if test="${not empty sessionScope.shop.memberId }">
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
-                <span style="font-size:20px;" ><a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a></span>         
+                <span style="font-size:20px;"><a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;" >
+                <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
+                <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>         
                 </c:if>  
                 <c:if test="${empty sessionScope.member.memberId && empty sessionScope.shop.memberId }">
                  <span style="font-size:20px;"><a href="/loginFrm" style="text-decoration:none; color:#545454;">로그인</a></span>

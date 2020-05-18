@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 			if (level == 1 && m.getMemberLevel() == level) {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", m);
+				
 			} else if (level == 2 && m.getMemberLevel() == level) {
 				HttpSession session = request.getSession();
 				session.setAttribute("shop", m);

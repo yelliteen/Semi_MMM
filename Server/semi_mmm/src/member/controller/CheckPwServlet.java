@@ -33,7 +33,6 @@ public class CheckPwServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
-		System.out.println("hh");
 		
 		Member m = new MemberService().selectOneMember(memberId, memberPw);
 		response.setContentType("applicaion/json");

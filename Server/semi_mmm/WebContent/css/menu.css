@@ -4,7 +4,7 @@
 }
 #navbar {
 	border-radius: 2px;
-	padding: 20px 10px;
+	padding: 15px 10px;
 	/* Large padding which will shrink on scroll (using JS) */
 	transition: 0.4s;
 	/* Adds a transition effect when the padding is decreased */
@@ -14,10 +14,9 @@
 	/* At the top */
 	z-index: 600;
 	margin: 0 auto;
-	background-color:#FAFBFC;
+	background-color:white;
 	width:100%;
-    
-    
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 7px 0 rgba(0, 0, 0, 0.19);
 }
 /* Display some links to the right */
 #navbar>div {
