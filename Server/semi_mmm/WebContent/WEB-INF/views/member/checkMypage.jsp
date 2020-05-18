@@ -8,16 +8,23 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-<div class="container">
-   <div id="mypageArea" style="margin: 0 auto; margin: 50px; height:500px; text-align:center; border: 1px solid  #E4E8EB;">
-   <label style="margin-top:200px;display: inline-flex;">비밀번호 확인 : <input type="password" id="checkPw2" class="form-control input-lg"></label>
-   <input type="hidden" value="${m.memberId}" id="memberId">
-   <input type="button" class="btn btn-lg btn-primary btn-lg signup-btn" id="success" value="확인">
-   <button class="btn btn-lg btn-summarry btn-lg signup-btn" onclick="location.href='/''">홈으로</button>
-   <p id="result" style="color:red;"></p>
-   </div>
-</div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<div class="container">
+		<div id="mypageArea"
+			style="margin: 0 auto; margin: 50px; height: 500px; text-align: center; border: 1px solid #E4E8EB;">
+			<div style="margin-top: 200px;">
+				<label for="checkPw2" style="font-size: 20px;">비밀번호 확인
+					:&nbsp;&nbsp;</label><input type="password" id="checkPw2" class="input-lg"
+					style="border: 1px solid #ccc;"> <input type="hidden"
+					value="${memberId}" id="memberId"> <input type="button"
+					class="btn btn-lg btn-primary btn-lg signup-btn" id="success"
+					value="확인">
+				<button class="btn btn-lg btn-summarry btn-lg signup-btn"
+					onclick="location.href='/''">홈으로</button>
+				<p id="result" style="color: red;"></p>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 <script>
 	$("#success").click(function() { 
@@ -34,6 +41,8 @@
 			success:function(data) {
 				if (data == false) {
 					$("#result").html("비밀번호가 틀렸습니다");
+				} else {
+					location.href='/mypageMain?memberId=${memberId}';
 				}
 			}
 		});

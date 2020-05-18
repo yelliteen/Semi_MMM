@@ -18,7 +18,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class JoinMemberServlet
  */
-@WebServlet(name = "JoinMember", urlPatterns = { "/joinMember" })
+@WebServlet(name = "ComJoinMember", urlPatterns = { "/comJoinMember" })
 public class ComJoinMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -54,7 +54,7 @@ public class ComJoinMemberServlet extends HttpServlet {
 		m.setMemberNickname(request.getParameter("nickname"));
 		m.setMemberBirth(d);
 		m.setPhone(request.getParameter("phone1")+request.getParameter("phone3")+request.getParameter("phone2"));
-		m.setAddr(request.getParameter("roadAddr")+"/"+request.getParameter("detailAddr"));
+		m.setAddr(request.getParameter("roadAddr")+"/"+request.getParameter("jibunAddr")+"/"+request.getParameter("detailAddr"));
 		m.setMemberLevel(2);
 		m.setProfileImg(null);
 		int result = new MemberService().insertMember(m);

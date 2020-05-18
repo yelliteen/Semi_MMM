@@ -1,8 +1,22 @@
+<%@page import="member.model.vo.Dog"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ page import = "member.model.vo.*" %>
 <%
     String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
 %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
+<%
+
+Dog d = (Dog)request.getAttribute("dog");
+
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -41,24 +55,52 @@
             margin-left: 10px; 
         }
 
+
+
     </style>
     
 
 
 <div class="contentBox">
+
+
 <div class="context">
-    
+   
+
 
 <table width="100%">
   
         <tr>
             <td>
-              <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:400px;" placeholder="내용을 입력하세요."></textarea>
+              
+              <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:600px;">
+              
+              
+		<table style=" margin: 0 auto;">
+			<tbody>
+			<tr>
+				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/sm/img/dogImg/<%=d.getDogImg()%>); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
+			</tr>
+			
+			
+			
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : <%=d.getDogMemberId() %></p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : <%=d.getDogGender() %></p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : <%=d.getDogId() %></p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : <%=d.getAge() %>살</p></td></tr>
+		</tbody>
+	</table>
+              
+              </textarea>
+
             </td>
         </tr>
 </table>
-
-
+	
+		<input type="hidden" name="memberId" value="<%=d.getDogMemberId() %>"/>
+		<input type="hidden" name="dogGender" value="<%=d.getDogGender() %>"/>
+		<input type="hidden" name="dogId" value="<%=d.getDogId() %>"/>
+		<input type="hidden" name="age" value="<%=d.getAge() %>"/>
 </div>
 </div>
 

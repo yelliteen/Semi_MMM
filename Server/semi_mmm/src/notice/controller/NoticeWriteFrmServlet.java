@@ -1,11 +1,16 @@
 package notice.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import member.model.vo.Dog;
+import notice.service.noticeService;
 
 /**
  * Servlet implementation class NoticeWriteFrmServlet
@@ -26,7 +31,12 @@ public class NoticeWriteFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp").forward(request, response);	
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
+
+
+		rd.forward(request, response);	
 	}
 
 	/**
