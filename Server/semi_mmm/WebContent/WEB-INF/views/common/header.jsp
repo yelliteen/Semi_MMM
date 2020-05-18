@@ -29,8 +29,7 @@
                         <a href="/noticeList?reqPage=1">사진 게시판</a>
 
                         <a href="/noticeList?reqPage=1" class="openbtn">커뮤니티</a>
-                        <a href="#" class="openbtn">놀이터</a>
-
+                       
                         <a href="/map" class="openbtn">함께 할 수 있는 곳</a>
                         <a href="#" class="openbtn">F&A</a>
                     </div>
