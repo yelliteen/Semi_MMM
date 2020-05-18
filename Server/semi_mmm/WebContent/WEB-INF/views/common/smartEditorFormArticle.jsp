@@ -79,6 +79,8 @@
 
         var imgArr = new Array();
         var oEditors = [];
+        //에러 방지를 위한 articleNoticeNo 초기화
+        var articleNoticeNo = "";
 
         // 추가 글꼴 목록
         //var aAdditionalFontSet = [["MS UI Gothic", "MS UI Gothic"], ["Comic Sans MS", "Comic Sans MS"],["TEST","TEST"]];
@@ -219,7 +221,7 @@
                     type: "post"
                 });
                 
-                location.href = "/articleRead?articleNoticeNo=" + ${article.articleNoticeNo };
+                location.href = "/articleRead?articleNoticeNo=" + articleNoticeNo;
             }
         });
 
@@ -231,6 +233,6 @@
         $(function() {
             $("#title").val("${article.articleNoticeTitle}");
         });
-
+        articleNoticeNo = "${article.articleNoticeNo}";
     </script>
 </c:if>

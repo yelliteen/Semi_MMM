@@ -224,25 +224,36 @@ nav a {
             }
             
             .table_tr a {
-                text-decoration: none;
-                color: black;
-                
+                text-decoration: none;                
+            }
+            
+            .delete_true {
+                color: red;
+            }
+            
+            .delete_false {
+                color: blue;
             }
 		</style>
         <script>
-            function popup(obj, str) {
-                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
-                var popup = window.open("", "상세보기", status);
+            function articlePopup(articleCommentNo) {
+                var status = "left=500px, top=100px, width=600px, height=300px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminArticleComment";
+                var url = "/adminArticleComment";
+                var popup = window.open("", title, status);
                 
-                $(popup.document.body).append("<h3 style='margin-left: 20px; margin-right: 20px;'>제목 : " + $(obj).html() + "</h3>");
-                $(popup.document.body).append("<hr><h5><span style='margin-left: 10px; float: left;'>작성자 : " + $(obj).parent().next().html() + "</span><span style='margin-right: 10px; float: right;'>작성일 : " + "2020-05-12" + "</span></h5>");
-                $(popup.document.body).append("<br><hr><div style='margin: 30px'>" + str + "</div><hr>");
-                $(popup.document.body).append("<button style='width: 150px; height: 70px; float: left; margin-left: 400px; background-color: black; color: white; font-size: 30px; border: none' onclick='alert(0);'>삭제</button>");
-                $(popup.document.body).append("<button style='width: 150px; height: 70px; float: right; margin-right: 400px; background-color: black; color: white; font-size: 30px; border: none' onclick='window.close()'>취소</button>");
+                $("input[name=articleCommentNo]").val(articleCommentNo);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
             }
         </script>
 		<div id="layoutSidenav_content">
 			<main>
+                <form id="page">
+                    <input type="hidden" name="articleCommentNo">
+                </form>
 				<div class="notice_box">
                     <h2>자랑게시판 관리</h2>
                     <hr>
@@ -254,31 +265,6 @@ nav a {
                                 <div>게시글번호</div>
                                 <div>제목</div>
                                 <div>작성자</div>
-                            </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
                             </div>
                         </div>
                     </div>
@@ -335,16 +321,50 @@ nav a {
                                 <div>제목</div>
                                 <div>작성자</div>
                             </div>
-                            <div class="table_tr">
-                                <div>5</div>
-                                <div><a href="javascript:void(0)" onclick="popup(this, 'notice');">555555555555555555555555555555555555</a></div>
-                                <div>5</div>
-                            </div>
+                            <c:forEach items="${info.article }" var="article">
+                            	<c:if test="${article.articleNoticeDeleteBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${article.articleNoticeNo }</div>
+                                        <div><a class="delete_false" href="/adminArticleRead?articleNoticeNo=${article.articleNoticeNo }">${article.articleNoticeTitle }</a></div>
+                                        <div>${article.articleNoticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${article.articleNoticeDeleteBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${article.articleNoticeNo }</div>
+                                        <div><a class="delete_true" href="/adminArticleRead?articleNoticeNo=${article.articleNoticeNo }">${article.articleNoticeTitle }</a></div>
+                                        <div>${article.articleNoticeWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="content_box">
                         <h5>댓글 목록<a href="/adminArticleCommentList">more <i class="fas fa-plus" style="font-size: 0.7em;"></i></a></h5>
                         <hr>
+                        <div class="table_box">
+                            <div class="table_tr">
+                                <div>댓글번호</div>
+                                <div>댓글내용</div>
+                                <div>작성자</div>
+                            </div>
+                            <c:forEach items="${info.articleComment }" var="articleComment">
+                            	<c:if test="${articleComment.articleCommentDeleteBool eq 0 }">
+                            		<div class="table_tr delete_false">
+                                        <div>${articleComment.articleCommentNo }</div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="articlePopup(${articleComment.articleCommentNo })">${articleComment.articleCommentContent }</a></div>
+                                        <div>${articleComment.articleCommentWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            	<c:if test="${articleComment.articleCommentDeleteBool eq 1 }">
+                            		<div class="table_tr delete_true">
+                                        <div>${articleComment.articleCommentNo }</div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="articlePopup(${articleComment.articleCommentNo })">${articleComment.articleCommentContent }</a></div>
+                                        <div>${articleComment.articleCommentWriter }</div>
+                            	   </div>
+                            	</c:if>
+                            </c:forEach>
+                        </div>
                     </div>
 				</div>
 				<div class="notice_box">

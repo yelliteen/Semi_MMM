@@ -357,7 +357,7 @@ public class ArticleNoticeDao {
 		String query = "SELECT MEMBER.MEMBER_NICKNAME AS NICKNAME, A.* " 
 				+ "FROM ARTICLE_NOTICE_COMMENT A " 
 				+ "JOIN MEMBER ON (MEMBER_ID = ARTICLE_COMMENT_WRITER) " 
-				+ "WHERE ARTICLE_REF=?";
+				+ "WHERE ARTICLE_REF=? order by article_comment_no asc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -366,6 +366,10 @@ public class ArticleNoticeDao {
 			
 			while(rset.next()) {
 				ArticleNoticeCommentNick comment = new ArticleNoticeCommentNick(rset.getString(1), setArticleNoticeComment(rset, 2));
+				if (comment.getComment().getArticleCommentDeleteBool() == 1) {
+					comment.getComment().setArticleCommentContent("삭제된 댓글입니다.");
+					comment.setNickname("");
+				}
 				list.add(comment);
 			}
 			
@@ -375,5 +379,46 @@ public class ArticleNoticeDao {
 		}
 		
 		return list;
+	}
+
+	public int articleCommentModify(Connection conn, String articleCommentContent, int articleCommentNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update article_notice_comment set article_comment_content = ? where article_comment_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, articleCommentContent);
+			pstmt.setInt(2, articleCommentNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int articleCommentDelete(Connection conn, int articleCommentNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update article_notice_comment set ARTICLE_COMMENT_DELETE_BOOL = 1 where article_comment_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleCommentNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 }

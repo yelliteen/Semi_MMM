@@ -165,4 +165,36 @@ public class ArticleNoticeService {
 		return list;
 	}
 
+	public int articleCommentModify(String articleCommentContent, int articleCommentNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ArticleNoticeDao().articleCommentModify(conn, articleCommentContent, articleCommentNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int articleCommentDelete(int articleCommentNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ArticleNoticeDao().articleCommentDelete(conn, articleCommentNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }
