@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminMemberList;
 
 /**
- * Servlet implementation class AdminUserListServlet
+ * Servlet implementation class AdminMemberDeleteServlet
  */
-@WebServlet(name = "AdminUserList", urlPatterns = { "/adminUserList" })
-public class AdminUserListServlet extends HttpServlet {
+@WebServlet(name = "AdminMemberDelete", urlPatterns = { "/adminMemberDelete" })
+public class AdminMemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminUserListServlet() {
+    public AdminMemberDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,22 +31,18 @@ public class AdminUserListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		AdminMemberList list = null;
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminUserList.jsp");
+		String memberId = request.getParameter("memberId");
+		int memberLevel = Integer.parseInt(request.getParameter("memberLevel"));
 		
-		if (type == null) {
-			list = new AdminService().userList(reqPage);
+		int result = new AdminService().adminMemberDelete(memberId, memberLevel);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "계정을 정지시켰습니다.");
 		} else {
-			list = new AdminService().userList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+			request.setAttribute("msg", "계정 정지에 실패하였습니다.");
 		}
-		
-		request.setAttribute("data", list);
 		
 		rd.forward(request, response);
 	}

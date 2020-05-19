@@ -73,6 +73,11 @@ public class Member {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+	
+	public String getSpaceAddr() {
+		return addr.replaceAll("/", " ");
+	}
+	
 	public Date getEnrollDate() {
 		return enrollDate;
 	}

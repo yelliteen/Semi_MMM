@@ -296,6 +296,32 @@ nav a {
                 $("#page").submit();
             }
             
+            function memberPopup(memberId) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminMemberInfo";
+                var url = "/adminMemberInfo";
+                var popup = window.open("", title, status);
+                
+                $("input[name=memberId]").val(memberId);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+            
+            function shopPopup(memberId) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminShopInfo";
+                var url = "/adminShopInfo";
+                var popup = window.open("", title, status);
+                
+                $("input[name=memberId]").val(memberId);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+            
             $(function() {
                 var aTag = $(".table_tr>div:nth-of-type(2)").children();
 
@@ -310,6 +336,7 @@ nav a {
                     <input type="hidden" name="articleCommentNo">
                     <input type="hidden" name="noticeCommentNo">
                     <input type="hidden" name="answerNo">
+                    <input type="hidden" name="memberId">
                 </form>
 				<div class="notice_box">
                     <h2>자랑게시판 관리</h2>
@@ -500,14 +527,14 @@ nav a {
                             <c:forEach items="${info.member }" var="member">
                             	<c:if test="${member.memberLevel eq 1 }">
                             		<div class="member_tr delete_false">
-                                        <div><a class="delete_false" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId }</a></div>
                                         <div>${member.memberNickname }</div>
                                         <div>${member.enrollDate }</div>
                             	   </div>
                             	</c:if>
                             	<c:if test="${member.memberLevel eq 3 }">
                             		<div class="member_tr delete_true">
-                                        <div><a class="delete_true" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId }</a></div>
                                         <div>${member.memberNickname }</div>
                                         <div>${member.enrollDate }</div>
                             	   </div>

@@ -189,6 +189,7 @@ nav a {
         </style>
 		<div id="layoutSidenav_content">
 			<main>
+				<h1 style="margin: 20px;">F&A 관리</h1>
                 <table>
                     <tr>
                         <td></td>

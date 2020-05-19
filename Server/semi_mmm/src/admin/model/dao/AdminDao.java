@@ -11,6 +11,7 @@ import admin.model.vo.AdminIndexInfo;
 import article.model.vo.ArticleNotice;
 import article.model.vo.ArticleNoticeComment;
 import common.JDBCTemplate;
+import dog.model.vo.Dog;
 import fna.model.vo.Fna;
 import member.model.vo.Member;
 import notice.model.vo.Notice;
@@ -102,6 +103,18 @@ public class AdminDao {
 				rset.getString(index++),
 				rset.getString(index++),
 				rset.getDate(index++),
+				rset.getInt(index++),
+				rset.getString(index++));
+	}
+	
+	private Dog setDog(ResultSet rset, int index) throws SQLException {
+		
+		return new Dog(rset.getString(index++),
+				rset.getString(index++),
+				rset.getString(index++),
+				rset.getInt(index++),
+				rset.getString(index++),
+				rset.getString(index++),
 				rset.getInt(index++),
 				rset.getString(index++));
 	}
@@ -1318,7 +1331,6 @@ public class AdminDao {
 		return result;
 	}
 
-	
 	public ArrayList<QnaAnswer> qnaAnswerSearchList(Connection conn, int start, int end, String type, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1464,6 +1476,184 @@ public class AdminDao {
 		}
 		
 		return result;
+	}
+
+	public Member getMember(Connection conn, String memberId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member member = null;
+		String query = "select * from member where member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				member = setMember(rset, 1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return member;
+	}
+
+	public ArrayList<Dog> getDogs(Connection conn, String memberId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Dog> dogs = new ArrayList<Dog>();
+		String query = "select * from dog where dog_member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				Dog dog = setDog(rset, 1);
+				dogs.add(dog);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return dogs;
+	}
+
+	public int adminMemberLevelUpdate(Connection conn, String memberId, int memberLevel) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update member set member_level = ? where member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberLevel);
+			pstmt.setString(2, memberId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int userTotal(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from member where member_level = 1 or member_level = 3";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Member> userList(Connection conn, int start, int end) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from member where member_level = 1 or member_level = 3 order by ENROLL_DATE desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = setMember(rset, 2);
+				list.add(member);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int userTotal(Connection conn, String type, String search) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from member where (member_level = 1 or member_level = 3) and " + type + " like ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Member> userList(Connection conn, int start, int end, String type, String search) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from member where (member_level = 1 or member_level = 3) and " + type + " like ? order by ENROLL_DATE desc) S) where rnum between ? and ?";
+				
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = setMember(rset, 2);
+				list.add(member);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
 	}
 
 }
