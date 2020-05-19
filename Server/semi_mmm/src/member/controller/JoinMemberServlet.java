@@ -46,7 +46,6 @@ public class JoinMemberServlet extends HttpServlet {
 		}
 	    String transDate = afterFormat.format(tempDate);
 	    Date d = Date.valueOf(transDate);
-
 		Member m = new Member();
 		m.setMemberId(request.getParameter("id"));
 		m.setMemberPw(request.getParameter("password"));
@@ -54,9 +53,9 @@ public class JoinMemberServlet extends HttpServlet {
 		m.setMemberNickname(request.getParameter("nickname"));
 		m.setMemberBirth(d);
 		m.setPhone(request.getParameter("phone1")+request.getParameter("phone3")+request.getParameter("phone2"));
-		m.setAddr(request.getParameter("roadAddr")+"/"+request.getParameter("detailAddr"));
+		m.setAddr(request.getParameter("roadAddr")+"/"+request.getParameter("jibunAddr")+"/"+request.getParameter("detailAddr"));
 		m.setMemberLevel(1);
-		m.setProfileImg(null);
+		m.setProfileImg("interface.png");
 		int result = new MemberService().insertMember(m);
 		request.getRequestDispatcher("/WEB-INF/views/member/joinFinish.jsp").forward(request, response);
 	}
