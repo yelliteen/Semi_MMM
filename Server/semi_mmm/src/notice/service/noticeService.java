@@ -4,18 +4,21 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
+import notice.model.vo.NoticePageDataImge;
 import notice.model.vo.noticeViewData;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
+import notice.model.vo.NoticeImg;
+import notice.model.vo.NoticeNickname;
 
 
 public class noticeService {
 
 	
-	public NoticePageData selectList(int reqPage) {
+	public NoticePageDataImge selectList(int reqPage) {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		int numPerPage = 6;// 한페이지당 게시물 수
@@ -39,6 +42,7 @@ public class noticeService {
 		int end = reqPage*numPerPage;
 		//해당페이지에 게시물들 조회
 		ArrayList<Notice> list = new NoticeDao().selectList(conn, start, end);
+
 		
 		//페이지 네비게이션 작성시작
 		String pageNavi = "";
@@ -66,7 +70,7 @@ public class noticeService {
 		}
 
 		
-		NoticePageData pd = new NoticePageData(list, pageNavi);		
+		NoticePageDataImge pd = new NoticePageDataImge(list, pageNavi);		
 		JDBCTemplate.close(conn);
 		
 		return pd;
@@ -76,6 +80,20 @@ public class noticeService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		int result = new NoticeDao().writeNotice(conn, notice);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else{
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+	
+	public int noticeUpdate(Notice notice) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new NoticeDao().noticeUpdate(conn, notice);
 		
 		if(result>0) {
 			JDBCTemplate.commit(conn);
@@ -115,6 +133,62 @@ public class noticeService {
 		
 		JDBCTemplate.close(conn);
 		return dogList;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().deleteNotice(conn,noticeNo);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int updateNotice(Notice n) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().updateNotice(conn,n);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public NoticeNickname noticeCommentINickname(String noticeWriter, String nickName) {
+		Connection conn = JDBCTemplate.getConnection();
+		NoticeNickname nn = new NoticeDao().noticeCommentINickname(conn, nickName);
+		
+		JDBCTemplate.close(conn);
+		return nn;
+	}
+
+	public int noticeCommentUpdate(int noticeCommentNo, int inoticeCommentRef, String noticeCommentContent) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().noticeCommentUpdate(conn,noticeCommentNo, inoticeCommentRef, noticeCommentContent);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int deleteNoticeCommentNo(int noticeCommentNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new NoticeDao().deleteNoticeCommentNo(conn,noticeCommentNo);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
 	}
 
 }

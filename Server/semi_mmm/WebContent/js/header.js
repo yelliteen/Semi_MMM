@@ -40,7 +40,7 @@
 			$('#line-mid').toggleClass('line-mid').toggleClass('mid-reverse');
 			$('#line-bot').toggleClass('line-bot').toggleClass('bot-reverse');
 		});
-		$("#content").click(function() {
+		$(".container").click(function() {
 			if (Number($("#mySidepanel").width()) == 275) {
 				console.log($("#mySidepanel").width());
 				$("#line-wrapper").trigger("click");

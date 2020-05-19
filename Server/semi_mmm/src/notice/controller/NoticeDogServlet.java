@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.service.noticeService;
 
 /**
@@ -34,14 +34,12 @@ public class NoticeDogServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String memberId = request.getParameter("memberId");
-		System.out.println(memberId);
 		Dog dog = new noticeService().noticeDogWrite(memberId);
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
 
 		request.setAttribute("dog", dog);
-		System.out.println("강아지 이름 출력 : "+dog.getDogId());
 
 		rd.forward(request, response);	
 	}

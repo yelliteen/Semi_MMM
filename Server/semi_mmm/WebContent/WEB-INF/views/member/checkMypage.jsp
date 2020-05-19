@@ -19,7 +19,7 @@
 					class="btn btn-lg btn-primary btn-lg signup-btn" id="success"
 					value="확인">
 				<button class="btn btn-lg btn-summarry btn-lg signup-btn"
-					onclick="location.href='/''">홈으로</button>
+					onclick="history.go(-1);">뒤로가기</button>
 				<p id="result" style="color: red;"></p>
 			</div>
 		</div>
