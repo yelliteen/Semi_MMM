@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.noticeViewData;

@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import dog.model.service.DogService;
+import dog.model.vo.Dog;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
@@ -39,16 +42,15 @@ public class LoginServlet extends HttpServlet {
 		int level = Integer.parseInt(request.getParameter("level"));
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
+		
 		Member m = new MemberService().selectOneMember(memberId, memberPw);
 		if (m != null) {
 			if (level == 1 && m.getMemberLevel() == level) {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", m);
-				
 			} else if (level == 2 && m.getMemberLevel() == level) {
 				HttpSession session = request.getSession();
 				session.setAttribute("shop", m);
-				System.out.println("hihi");
 			} else {
 				response.setContentType("applicaion/json");
 				response.setCharacterEncoding("utf-8");

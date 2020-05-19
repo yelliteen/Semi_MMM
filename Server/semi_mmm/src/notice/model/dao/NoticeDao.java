@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import common.JDBCTemplate;
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 
