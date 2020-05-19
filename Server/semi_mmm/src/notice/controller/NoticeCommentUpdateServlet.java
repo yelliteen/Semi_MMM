@@ -1,4 +1,4 @@
-package notice.controller;
+﻿package notice.controller;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.service.noticeService;
 
