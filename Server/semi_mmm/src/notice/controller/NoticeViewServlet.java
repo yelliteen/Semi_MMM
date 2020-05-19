@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import notice.model.vo.NoticeNickname;
 import notice.model.vo.noticeViewData;
 import notice.service.noticeService;
 
@@ -35,14 +36,24 @@ public class NoticeViewServlet extends HttpServlet {
 				request.setCharacterEncoding("utf-8");
 				//2. 변수에 값 저장
 				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+				String nickName = request.getParameter("memberNickname");
+				
+				System.out.println("뷰에서 확인 : "+nickName);
+
+				
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
+	
 				//4. 결과처리
 				if(nvd.getN() != null) {
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeView.jsp");
 					request.setAttribute("n", nvd.getN());
 					request.setAttribute("list", nvd.getList());
+					request.setAttribute("nickName", nickName);
+
 					rd.forward(request, response);
+					
+					
 					
 					System.out.println("성공");
 				}else {

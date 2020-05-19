@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 import member.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
+import notice.model.vo.NoticeNickname;
 import notice.service.noticeService;
 
 /**
@@ -47,21 +48,35 @@ public class NoticeCommentInsertServlet extends HttpServlet {
 				nc.setNoticeCommentWriter(request.getParameter("noticeCommentWriter"));
 				nc.setNoticeCommentContent(request.getParameter("noticeCommentContent"));
 				nc.setNoticeCommentRef(Integer.parseInt(request.getParameter("noticeCommentRef")));
+				nc.setNoticeCommentNo(Integer.parseInt(request.getParameter("noticeCommentNo")));
 				nc.setNoticeCommentRefTwo(Integer.parseInt(request.getParameter("noticeCommentRefTwo")));
+				
+
 				nc.setDogId(request.getParameter("dogId"));
+				
 				System.out.println("강이지 이름 값 : "+nc.getDogId());
+				System.out.println("게시글 번호 : "+nc.getNoticeCommentRef());
+				System.out.println("댁글 번호 : "+nc.getNoticeCommentNo());
+				System.out.println("댓글 레벨 : "+nc.getNoticeCommentLevel());
+				System.out.println("작성자 : "+nc.getNoticeCommentWriter());
+				
+				
 				//3. 비지니스 로직
 				int result = new noticeService().noticeCommentInsert(nc);
+				
+			
 				//4. 결과처리
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-	
+				
+				
 				
 				if(result>0) {
 					request.setAttribute("msg", "댓글등록성공");
+					
 				}else {
 					request.setAttribute("msg", "댓글등록실패");
 				}
-				request.setAttribute("loc", "/imgeNoticeView?noticeNo="+nc.getNoticeCommentRef());
+				request.setAttribute("loc", "/noticeView?noticeNo="+nc.getNoticeCommentRef());
 				rd.forward(request, response);
 	}
 
