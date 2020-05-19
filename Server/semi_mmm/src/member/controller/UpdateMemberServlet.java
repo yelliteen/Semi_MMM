@@ -40,9 +40,6 @@ public class UpdateMemberServlet extends HttpServlet {
 		int maxSize = 10*1024*1024;
 		MultipartRequest mRequest = new MultipartRequest(request, saveDirectory, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 		String fileName = mRequest.getFilesystemName("file");
-		if (fileName.equals(null)) {
-			fileName="interface.png";
-		}
 		String memberId = mRequest.getParameter("id");
 		String memberPW = mRequest.getParameter("pw");
 		String memberName = mRequest.getParameter("name");
@@ -57,7 +54,11 @@ public class UpdateMemberServlet extends HttpServlet {
 		m.setMemberNickname(memberNickName);
 		m.setPhone(phone);
 		m.setAddr(addr);
-		m.setProfileImg(fileName);
+		if (fileName != null) {
+			m.setProfileImg(fileName);
+		} else {
+			m.setProfileImg(mRequest.getParameter("memberOriginImg"));
+		}
 		HttpSession session = request.getSession(false);
 		session.setAttribute("member", m);
 		
