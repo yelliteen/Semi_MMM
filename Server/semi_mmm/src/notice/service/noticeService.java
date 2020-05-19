@@ -8,6 +8,7 @@ import dog.model.vo.Dog;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.NoticePageDataImge;
+import notice.model.vo.dogList;
 import notice.model.vo.noticeViewData;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;

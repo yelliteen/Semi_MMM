@@ -11,6 +11,7 @@ import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 import notice.model.vo.NoticeImg;
 import notice.model.vo.NoticeNickname;
+import notice.model.vo.dogList;
 
 public class NoticeDao {
 	
@@ -294,7 +295,6 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Dog d = new Dog();
-		
 		String query = "select * from dog join member on(dog.dog_member_id = member.member_id) where member.member_id=?";
 		
 		try {
@@ -303,6 +303,7 @@ public class NoticeDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
+				
 				d.setDogId(rset.getString("dog_id"));
 				d.setDogMemberId(rset.getString("member_nickname"));
 				d.setVariety(rset.getString("variety"));
