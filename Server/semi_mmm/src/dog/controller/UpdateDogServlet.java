@@ -52,7 +52,6 @@ public class UpdateDogServlet extends HttpServlet {
 		}
 		int result = new DogService().updateDog(dogId, dog);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
-		System.out.println("결과"+result);
 		if (result > 0) {
 			request.setAttribute("msg", "정보수정 완료");
 		} else {
