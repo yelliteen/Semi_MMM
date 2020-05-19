@@ -13,6 +13,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+
+import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.NoticePageDataImge;

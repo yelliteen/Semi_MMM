@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dog.model.vo.Dog;
+import notice.model.vo.dogList;
 import notice.service.noticeService;
+
 
 /**
  * Servlet implementation class NoticeDogServlet
@@ -33,13 +35,15 @@ public class NoticeDogServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		String memberId = request.getParameter("memberId");
-		Dog dog = new noticeService().noticeDogWrite(memberId);
+		Dog dogList = new noticeService().noticeDogWrite(memberId);
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
 
-		request.setAttribute("dog", dog);
+		request.setAttribute("dog", dogList);
+
 
 		rd.forward(request, response);	
 	}

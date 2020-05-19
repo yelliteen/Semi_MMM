@@ -1,3 +1,4 @@
+<%@page import="notice.model.vo.dogList"%>
 <%@page import="dog.model.vo.Dog"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -69,28 +70,32 @@ Dog d = (Dog)request.getAttribute("dog");
 
 
 <table width="100%">
-  
+
         <tr>
             <td>
               
               <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:600px;">
               
-              
+			
 		<table style=" margin: 0 auto;">
+		
 			<tbody>
 			<tr>
-				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/<%=d.getDogImg()%>); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
+				
+				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/${dog.dogImg }); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
 			</tr>
-			
-			
-			
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : <%=d.getDogMemberId() %></p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : <%=d.getDogGender() %></p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : <%=d.getDogId() %></p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : <%=d.getAge() %>살</p></td></tr>
+				
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : ${dog.dogMemberId }</p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : ${dog.dogGender }</p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : ${dog.dogName }</p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : ${dog.age }살</p></td></tr>
+		
 		</tbody>
+		
+			
 	</table>
-              
+	
+			
               </textarea>
 
             </td>
