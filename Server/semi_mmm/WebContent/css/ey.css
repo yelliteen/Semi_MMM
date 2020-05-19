@@ -4,6 +4,3 @@
 .show{
 	visibility: visible;
 }
-.collapse>.card card-body>#test1{
-	width: 60%;
-}
