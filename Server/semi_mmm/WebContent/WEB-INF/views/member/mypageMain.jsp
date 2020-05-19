@@ -206,6 +206,7 @@
   <div style="border: 1px solid black">
   	<div style="width:100%;  padding:30px; margin:0 auto;">
   	<img src="/upload/memberImg/${m.profileImg }"  style="width:100%; height:90%;">
+  	<input type="hidden" value="${m.profileImg }" name="memberOriginImg">
   	</div><input type="file" value="사진 선택" name="file" style="border:0px; margin: 10px;">
   </div>
   </div>

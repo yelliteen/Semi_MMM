@@ -17,6 +17,13 @@
 .mypage-menu>li:nth-child(2) {background-color: #B6EAFA;}
 .table a {display:block; cursor:pointer;}
 </style>
+<script>
+function popupOpen(dogId) {
+		var popUrl = "/showDog?dogId="+dogId;
+		var popOption = "width=1100, height=550, resizable=no, scrollbars=yes, status=no;"; 
+		window.open(popUrl,"",popOption);
+	}
+</script>
 
 <h2>내 강아지 리스트</h2>
 	<table class="table table-striped">
@@ -31,14 +38,7 @@
 		</c:if>
 		<c:if test="${not empty d}">
 			<tr>
-				<td style="text-align:center; line-height:200px; font-size:25px; font-weight:bold;"><a onclick="popupOpen();">${d.dogName }</a></td>
-<script>
-function popupOpen() {
-		var popUrl = "/showDog?dogId="${d.dogId};
-		var popOption = "width=1000, height=600, resizable=no, scrollbars=yes, status=no;"; 
-		window.open(popUrl,"",popOption);
-	}
-</script>
+				<td style="text-align:center; line-height:200px; font-size:25px; font-weight:bold;"><a onclick="popupOpen('${d.dogId}');">${d.dogName }</a></td>
 				<td style="text-align:center;"><img src="/upload/dogImg/${d.dogImg}" style="width:300px; height:200px;"></td>
 			</tr>
 			</c:if>

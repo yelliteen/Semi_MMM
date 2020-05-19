@@ -39,19 +39,29 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int level = Integer.parseInt(request.getParameter("level"));
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		
 		Member m = new MemberService().selectOneMember(memberId, memberPw);
 		if (m != null) {
-			if (level == 1 && m.getMemberLevel() == level) {
+			if (m.getMemberLevel() == 1) {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", m);
-			} else if (level == 2 && m.getMemberLevel() == level) {
+			} else if (m.getMemberLevel() == 2) {
 				HttpSession session = request.getSession();
 				session.setAttribute("shop", m);
-			} else {
+			} else if(m.getMemberLevel() == 3 || m.getMemberLevel() == 4) {
+				response.setContentType("applicaion/json");
+				response.setCharacterEncoding("utf-8");
+				response.getWriter().print(2);
+			} else if(m.getMemberLevel() == 0) {
+				response.setContentType("applicaion/json");
+				response.setCharacterEncoding("utf-8");
+				response.getWriter().print(0);
+				HttpSession session = request.getSession();
+				session.setAttribute("member", m);
+			}
+			else {
 				response.setContentType("applicaion/json");
 				response.setCharacterEncoding("utf-8");
 				response.getWriter().print(1);

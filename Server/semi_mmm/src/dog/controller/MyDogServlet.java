@@ -35,7 +35,7 @@ public class MyDogServlet extends HttpServlet {
 		String memberId= request.getParameter("memberId");
 		request.setAttribute("memberId", memberId);
 		ArrayList<Dog> dog = new DogService().selectDog(memberId);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		session.setAttribute("dog", dog);
 		request.getRequestDispatcher("/WEB-INF/views/dog/myDog.jsp").forward(request, response);
 	}
