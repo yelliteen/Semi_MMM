@@ -58,6 +58,8 @@ public class LoginServlet extends HttpServlet {
 				response.setContentType("applicaion/json");
 				response.setCharacterEncoding("utf-8");
 				response.getWriter().print(0);
+				HttpSession session = request.getSession();
+				session.setAttribute("member", m);
 			}
 			else {
 				response.setContentType("applicaion/json");
