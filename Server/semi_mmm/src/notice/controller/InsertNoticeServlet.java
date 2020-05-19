@@ -14,7 +14,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeImg;
 import notice.service.noticeService;

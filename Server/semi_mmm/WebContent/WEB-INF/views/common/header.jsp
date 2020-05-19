@@ -23,15 +23,11 @@ height: 0px;
    height: 20px;
   }
 }
-.box {
-    width: 150px;
-    height: 150px; 
-    border-radius: 70%;
-}
 .profile {
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
+    border-radius: 70%;
 }
 </style>
     <div id="header" style="height:100px;">
@@ -59,11 +55,10 @@ height: 0px;
             </div>
             <div id="navbar_login">
             <c:if test="${not empty sessionScope.member.memberId }">
-                  <div class="box">
-                <span style="font-size:20px;">
-              <img class="forfile" src="/upload/memberImg/${m.profileImg }">
+                <span style="font-size:20px;" >
+                <img class="profile" src="/upload/memberImg/${sessionScope.member.profileImg }">&nbsp;&nbsp;&nbsp;
                 <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;">
-                [ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 </span></div>
+                [ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 </span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>
