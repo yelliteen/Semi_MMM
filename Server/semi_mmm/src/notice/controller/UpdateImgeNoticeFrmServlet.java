@@ -36,7 +36,6 @@ public class UpdateImgeNoticeFrmServlet extends HttpServlet {
 				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
-				
 				//4. 결과처리
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/notice/updateNotice.jsp");
 				request.setAttribute("n", nvd.getN());

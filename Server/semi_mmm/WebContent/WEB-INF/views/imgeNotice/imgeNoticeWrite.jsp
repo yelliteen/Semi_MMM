@@ -23,6 +23,7 @@
 							<div style="width: 15%; float: left; text-align: center; line-height: 40px;"> 
 							작성자 : ${sessionScope.member.memberNickname }
 								   ${sessionScope.shop.memberNickname }
+								  
 							</div>
 							
 							
@@ -36,6 +37,7 @@
 							
 							<!--  <input type="hidden" name="imgeNoticeWriter" value="${sessionScope.shop.memberId }"> -->
 							<input type="text" class="form-control" name="imgeNoticeTitle" style="width: 85%;" placeholder="제목을 입력해주세요.">
+							<input type="hidden" name="imgeNoticeNo" value="${noticeNo }">
 						</td>
 					</tr>
 					
@@ -48,7 +50,7 @@
 					<tr style="text-align: center;">
 						<th colspan="2">
 							<input type="button" class="btn btn-outline-primary" id="save" value="작성">
-							<button type="button" class="btn btn-outline-primary">취소</button>
+							<button type="button" class="btn btn-outline-primary"  onclick="location.href='/noticeList?reqPage=1'">취소</button>
 						</th>
 					</tr>
 				</table>

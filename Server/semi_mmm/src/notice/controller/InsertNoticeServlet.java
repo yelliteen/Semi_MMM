@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 
 import member.model.vo.Dog;
 import notice.model.vo.Notice;
+import notice.model.vo.NoticeImg;
 import notice.service.noticeService;
 
 /**
@@ -38,6 +39,8 @@ public class InsertNoticeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
+		
 		String DogId = request.getParameter("dogId");
 		String imgeNoticeTitle = request.getParameter("imgeNoticeTitle");
 		String imgeNoticeWriter = request.getParameter("imgeNoticeWriter");
@@ -50,28 +53,43 @@ public class InsertNoticeServlet extends HttpServlet {
 			System.out.println(imgeNoticeImgName);
 		}
 		
+		Dog dog = new noticeService().noticeDogWrite(imgeNoticeWriter);
+		//NoticeImg ni = new NoticeImg();
+		//ni.setNoticeImg(imgeNoticeImgName);
+		//ni.setDogImg(dog.getDogImg());
+
+		
 		
 
 		System.out.println("값확인 : "+imgeNoticeTitle);
 		System.out.println("값확인 : "+imgeNoticeWriter);
 		System.out.println("값확인 : "+imgeNoticeContent);
 		System.out.println("값확인 : "+imgeNoticeImgName);
-		
-	
-		
+		System.out.println("값확인 : "+dog.getDogImg());
 
+		
 		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, DogId, 0);
+		if(imgeNoticeImgName.equals("")) {
+			n.setNoticeImgs("/sm/img/dogImg/"+dog.getDogImg());
+			System.out.println(n.getNoticeImgs());
+		}
 		int result = new noticeService().noticeWrite(n);
+		
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		request.setAttribute("loc", "/noticeList?reqPage=1");
+	
 		
 		if (result > 0) {
 			request.setAttribute("msg", " 등록되었습니다.");
+			request.setAttribute("loc", "/noticeList?reqPage=1");
+			
 		} else {
-			request.setAttribute("msg", "실패하셨습니다.");
+				request.setAttribute("msg", "제목을 입력해 주세요.");
+				request.setAttribute("loc", "/noticeDog?memberId="+imgeNoticeWriter+"");
 		}
 		rd.forward(request, response);	
-		
 	}
 
 
