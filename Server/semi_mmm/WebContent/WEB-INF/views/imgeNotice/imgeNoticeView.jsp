@@ -143,7 +143,7 @@
 						</td>
 						
 						<td width="15%">
-							<button type="submit" class="btn btn-primary">등록</button>
+							<button type="submit" class="btn btn-primary">등록 ${n.dogImg }</button>
 						</td>
 					</tr>
 				</table>

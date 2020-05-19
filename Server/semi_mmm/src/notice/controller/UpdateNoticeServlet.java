@@ -2,6 +2,7 @@ package notice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dog.model.vo.Dog;
 import notice.model.vo.Notice;
+import notice.model.vo.dogList;
 import notice.service.noticeService;
 
 /**
@@ -62,12 +64,15 @@ public class UpdateNoticeServlet extends HttpServlet {
 		
 		Dog dog = new noticeService().noticeDogWrite(imgeNoticeWriter);
 
-	
+		
 		
 		Notice n = new Notice(imgeNoticeNo, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, imgeNoticeViewCount, DogId, 0);
 		if(imgeNoticeImgName.equals("")) {
 			n.setNoticeImgs("/upload/dogImg/"+dog.getDogImg());
 			System.out.println(n.getNoticeImgs());
+			
+			
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 		}
 		int result = new noticeService().noticeUpdate(n);
 		
@@ -83,11 +88,11 @@ public class UpdateNoticeServlet extends HttpServlet {
 			
 		} else {
 				request.setAttribute("msg", "제목을 입력해 주세요.");
-				request.setAttribute("loc", "/noticeDog?memberId="+imgeNoticeWriter+"");
+				request.setAttribute("loc", "/noticeDog?memberId="+imgeNoticeWriter);
 		}
-		rd.forward(request, response);	
 		request.setAttribute("loc", "/noticeView?noticeNo="+n.getNoticeNo());
-		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+		rd.forward(request, response);	
+
 	}
 
 	/**
