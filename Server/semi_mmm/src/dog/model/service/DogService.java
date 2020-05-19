@@ -43,4 +43,15 @@ public class DogService {
 		return dog;
 	}
 
+	public int updateDog(String dogId, Dog dog) {
+		Connection conn = new JDBCTemplate().getConnection();
+		int result = new DogDao().updateDog(conn, dogId, dog);
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		return result;
+	}
+
 }
