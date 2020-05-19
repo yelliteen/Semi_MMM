@@ -1,6 +1,7 @@
 package admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminQnaList;
+import admin.model.vo.AdminFnaData;
 
 /**
- * Servlet implementation class AdminQnaListServlet
+ * Servlet implementation class AdminFnaListServlet
  */
-@WebServlet(name = "AdminQnaList", urlPatterns = { "/adminQnaList" })
-public class AdminQnaListServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaList", urlPatterns = { "/adminFnaList" })
+public class AdminFnaListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminQnaListServlet() {
+    public AdminFnaListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +33,9 @@ public class AdminQnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		AdminQnaList list = null;
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminQnaList.jsp");
-		
-		if (type == null) {
-			list = new AdminService().qnaList(reqPage);
-		} else {
-			list = new AdminService().qnaSearchList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
-		}
-		
-		request.setAttribute("data", list);
+		ArrayList<AdminFnaData> list = new AdminService().fnaSelectAll();
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminFnaList.jsp");
+		request.setAttribute("list", list);
 		rd.forward(request, response);
 	}
 

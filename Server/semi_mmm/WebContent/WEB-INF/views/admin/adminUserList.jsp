@@ -132,6 +132,12 @@ nav a {
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
 					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
+					</a>
 				</div>
 			</div>
 			<div class="sb-sidenav-footer">

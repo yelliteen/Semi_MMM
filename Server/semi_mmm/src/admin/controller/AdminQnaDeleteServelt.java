@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminAnswerList;
 
 /**
- * Servlet implementation class AdminAnswerListServlet
+ * Servlet implementation class AdminQnaDeleteServelt
  */
-@WebServlet(name = "AdminAnswerList", urlPatterns = { "/adminAnswerList" })
-public class AdminAnswerListServlet extends HttpServlet {
+@WebServlet(name = "AdminQnaDelete", urlPatterns = { "/adminQnaDelete" })
+public class AdminQnaDeleteServelt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminAnswerListServlet() {
+    public AdminQnaDeleteServelt() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +30,18 @@ public class AdminAnswerListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		int qnaNoticeNo = 0;
-		AdminAnswerList list = null;
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminAnswerList.jsp");
+		int qnaNoticeNo = Integer.parseInt(request.getParameter("qnaNoticeNo"));
+		int result = new AdminService().qnaNoticeDelete(qnaNoticeNo);
 		
-		if (type == null) {
-			list = new AdminService().qnaAnswerList(reqPage);
-		} else if (type.equals("qna_notice_no")) {
-			qnaNoticeNo = Integer.parseInt(search);
-			list = new AdminService().qnaAnswerSearchList(reqPage, qnaNoticeNo);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("loc", "/adminQnaNoticeRead?qnaNoticeNo=" + qnaNoticeNo);
+		
+		if (result > 0) {
+			request.setAttribute("msg", "게시글을 삭제하였습니다.");
 		} else {
-			list = new AdminService().qnaAnswerSearchList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+			request.setAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
-		request.setAttribute("data", list);
 		
 		rd.forward(request, response);
 	}

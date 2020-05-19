@@ -9677,6 +9677,10 @@ html, body {
 	text-align: center;
 }
 
+.list_table>p {
+	margin: 0 auto;
+} 
+
 .list_table>* {
 	width: 100%;
 }

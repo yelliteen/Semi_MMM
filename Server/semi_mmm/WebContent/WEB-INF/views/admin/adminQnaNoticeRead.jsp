@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 중고장터 게시글 관리 페이지</title>
+<title>Adimn - Q&A 질문 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
@@ -149,24 +149,24 @@ nav a {
 
 		<div id="layoutSidenav_content">
 			<main style="padding: 20px;">
-				<h3 style='margin-left: 20px; margin-right: 20px;'>제목 : ${article.articleNoticeTitle }</h3>
+				<h3 style='margin-left: 20px; margin-right: 20px;'>제목 : ${qna.qnaNoticeTitle }</h3>
                 <hr>
                 <h5>
-                	<span style='margin-left: 10px; float: left;'>작성자 : ${article.articleNoticeWriter }</span>
-                	<span style='margin-right: 10px; float: right;'>작성일 : ${article.articleNoticeDate }</span>
+                	<span style='margin-left: 10px; float: left;'>작성자 : ${qna.qnaNoticeWriter }</span>
+                	<span style='margin-right: 10px; float: right;'>작성일 : ${qna.qnaNoticeDate }</span>
                 </h5>
                 <br>
                 <hr>
                 <div style='margin: 30px'>
-                	${article.articleNoticeContent }
+                	${qna.qnaNoticeContent }
 				</div>
 				<hr>
 				<div style="text-align: center">
-					<c:if test="${article.articleNoticeDeleteBool eq 0 }">
+					<c:if test="${qna.qnaNoticeDeleteBool eq 0 }">
 	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
 	                	background-color: black; color: white; font-size: 30px; border: none' onclick="deleteConfirm();">삭제</button>
 	                </c:if>
-	                <c:if test="${article.articleNoticeDeleteBool eq 1 }">
+	                <c:if test="${qna.qnaNoticeDeleteBool eq 1 }">
 	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
 	                	background-color: black; color: white; font-size: 30px; border: none' onclick="recoveryConfirm();">복구</button>
 	                </c:if>
@@ -190,13 +190,13 @@ nav a {
 	<script>
 		function deleteConfirm() {
 			if (confirm("게시글을 삭제하시겠습니까?")) {
-                location.href='/adminArticleDelete?articleNoticeNo=${article.articleNoticeNo}';
+                location.href='/adminQnaDelete?qnaNoticeNo=${qna.qnaNoticeNo}';
             }
 		}
 		
 		function recoveryConfirm() {
 			if (confirm("게시글을 복구하시겠습니까?")) {
-                location.href='/adminArticleRecovery?articleNoticeNo=${article.articleNoticeNo}';
+                location.href='/adminQnaRecovery?qnaNoticeNo=${qna.qnaNoticeNo}';
             }
 		}
 	</script>

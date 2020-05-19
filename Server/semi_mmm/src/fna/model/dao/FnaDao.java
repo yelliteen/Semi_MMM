@@ -14,16 +14,16 @@ public class FnaDao {
 	public ArrayList<Fna>selectAll (Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select*from fna";
+		String query = "select rownum as rnum, f.question, f.answer from (select * from fna order by qna_no asc) f";
 		ArrayList<Fna> fna = new ArrayList<Fna>();
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				Fna f = new Fna();
-				f.setQnaNo(rset.getInt("qna_no"));
-				f.setQuestion(rset.getString("question"));
-				f.setAnswer(rset.getString("answer"));
+				f.setQnaNo(rset.getInt(1));
+				f.setQuestion(rset.getString(2));
+				f.setAnswer(rset.getString(3));
 				fna.add(f);
 			}
 		} catch (SQLException e) {

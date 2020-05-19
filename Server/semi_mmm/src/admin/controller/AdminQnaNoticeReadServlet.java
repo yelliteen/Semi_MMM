@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminQnaList;
+import qna.model.vo.QnaNotice;
 
 /**
- * Servlet implementation class AdminQnaListServlet
+ * Servlet implementation class AdminQnaNoticeReadServlet
  */
-@WebServlet(name = "AdminQnaList", urlPatterns = { "/adminQnaList" })
-public class AdminQnaListServlet extends HttpServlet {
+@WebServlet(name = "AdminQnaNoticeRead", urlPatterns = { "/adminQnaNoticeRead" })
+public class AdminQnaNoticeReadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminQnaListServlet() {
+    public AdminQnaNoticeReadServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +32,11 @@ public class AdminQnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		AdminQnaList list = null;
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminQnaList.jsp");
+		int qnaNoticeNo = Integer.parseInt(request.getParameter("qnaNoticeNo"));
+		QnaNotice qna = new AdminService().qnaNoticeRead(qnaNoticeNo);
 		
-		if (type == null) {
-			list = new AdminService().qnaList(reqPage);
-		} else {
-			list = new AdminService().qnaSearchList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
-		}
-		
-		request.setAttribute("data", list);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminQnaNoticeRead.jsp");
+		request.setAttribute("qna", qna);
 		rd.forward(request, response);
 	}
 

@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import admin.model.vo.AdminFnaData;
 import admin.model.vo.AdminIndexInfo;
 import article.model.vo.ArticleNotice;
 import article.model.vo.ArticleNoticeComment;
 import common.JDBCTemplate;
+import fna.model.vo.Fna;
 import member.model.vo.Member;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
@@ -985,6 +987,483 @@ public class AdminDao {
 		}
 		
 		return list;
+	}
+
+	public QnaNotice qnaNoticeRead(Connection conn, int qnaNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		QnaNotice qna = null;
+		String query = "select * from qna_notice where qna_notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNoticeNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				qna = setQna(rset, 1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return qna;
+	}
+
+	public int qnaNoticeDelete(Connection conn, int qnaNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update qna_notice set QNA_NOTICE_DELETE_BOOL = 1 where qna_notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNoticeNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+	
+		return result;
+	}
+
+	public int qnaNoticeRecovery(Connection conn, int qnaNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update qna_notice set QNA_NOTICE_DELETE_BOOL = 0 where qna_notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNoticeNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+	
+		return result;
+	}
+
+	public QnaAnswer qnaAnswer(Connection conn, int answerNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		QnaAnswer answer = null;
+		String query = "select * from qna_answer where answer_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, answerNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				answer = setQnaAnswer(rset, 1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return answer;
+	}
+
+	public int qnaTotalCount(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from qna_notice";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<QnaNotice> qnaList(Connection conn, int start, int end) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<QnaNotice> list = new ArrayList<QnaNotice>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from qna_notice order by QNA_NOTICE_NO desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				QnaNotice qna = setQna(rset, 2);
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int qnaTotalCount(Connection conn, String type, String search) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from qna_notice where " + type + " like ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<QnaNotice> qnaList(Connection conn, int start, int end, String type, String search) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<QnaNotice> list = new ArrayList<QnaNotice>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from qna_notice where " + type + " like ? order by QNA_NOTICE_NO desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, search);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				QnaNotice qna = setQna(rset, 2);
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int qnaAnswerTotalCount(Connection conn) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from qna_answer";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<QnaAnswer> qnaAnswerList(Connection conn, int start, int end) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<QnaAnswer> list = new ArrayList<QnaAnswer>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from qna_answer order by ANSWER_NO desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				QnaAnswer comment = setQnaAnswer(rset, 2);
+				list.add(comment);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int qnaAnswerTotalCount(Connection conn, int qnaNoticeNo) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from qna_answer where qna_notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNoticeNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<QnaAnswer> qnaAnswerSearchList(Connection conn, int start, int end, int qnaNoticeNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<QnaAnswer> list = new ArrayList<QnaAnswer>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from qna_answer where qna_notice_no = ? order by ANSWER_NO desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNoticeNo);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				QnaAnswer comment = setQnaAnswer(rset, 2);
+				list.add(comment);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int qnaAnswerTotalCount(Connection conn, String type, String search) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from qna_answer where " + type + " like ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	public ArrayList<QnaAnswer> qnaAnswerSearchList(Connection conn, int start, int end, String type, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<QnaAnswer> list = new ArrayList<QnaAnswer>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from qna_answer where " + type + " like ? order by ANSWER_NO desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				QnaAnswer comment = setQnaAnswer(rset, 2);
+				list.add(comment);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<AdminFnaData> fnaSelectAll(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select rownum as rnum, f.* from (select * from fna order by qna_no asc) f";
+		ArrayList<AdminFnaData> fna = new ArrayList<AdminFnaData>();
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Fna f = new Fna();
+				f.setQnaNo(rset.getInt(2));
+				f.setQuestion(rset.getString(3));
+				f.setAnswer(rset.getString(4));
+				fna.add(new AdminFnaData(f, rset.getInt(1)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return fna;
+	}
+
+	public Fna fnaSelectAll(Connection conn, int qnaNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from fna where qna_no = ?";
+		Fna fna = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				fna = new Fna(rset.getInt(1), rset.getString(2), rset.getString(3));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return fna;
+	}
+
+	public int adminFnaDelete(Connection conn, int qnaNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from fna where qna_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qnaNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int adminFnaModify(Connection conn, Fna fna) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update fna set question=?, answer=? where qna_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, fna.getQuestion());
+			pstmt.setString(index++, fna.getAnswer());
+			pstmt.setInt(index++, fna.getQnaNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int adminFnaInsert(Connection conn, Fna fna) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into fna values(fna_seq.nextval, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, fna.getQuestion());
+			pstmt.setString(index++, fna.getAnswer());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

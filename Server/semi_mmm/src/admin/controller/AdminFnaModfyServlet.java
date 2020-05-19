@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminAnswerList;
+import fna.model.vo.Fna;
 
 /**
- * Servlet implementation class AdminAnswerListServlet
+ * Servlet implementation class AdminFnaModfyServlet
  */
-@WebServlet(name = "AdminAnswerList", urlPatterns = { "/adminAnswerList" })
-public class AdminAnswerListServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaModify", urlPatterns = { "/adminFnaModify" })
+public class AdminFnaModfyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminAnswerListServlet() {
+    public AdminFnaModfyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +31,21 @@ public class AdminAnswerListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		int qnaNoticeNo = 0;
-		AdminAnswerList list = null;
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminAnswerList.jsp");
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		String question = request.getParameter("question");
+		String answer = request.getParameter("answer");
 		
-		if (type == null) {
-			list = new AdminService().qnaAnswerList(reqPage);
-		} else if (type.equals("qna_notice_no")) {
-			qnaNoticeNo = Integer.parseInt(search);
-			list = new AdminService().qnaAnswerSearchList(reqPage, qnaNoticeNo);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+		Fna fna = new Fna(qnaNo, question, answer); 
+		int result = new AdminService().adminFnaModify(fna);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "F&A를 수정하였습니다.");
 		} else {
-			list = new AdminService().qnaAnswerSearchList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+			request.setAttribute("msg", "F&A 수정에 실패하였습니다.");
 		}
-		request.setAttribute("data", list);
 		
 		rd.forward(request, response);
 	}

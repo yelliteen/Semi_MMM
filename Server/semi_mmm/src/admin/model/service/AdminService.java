@@ -4,18 +4,24 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import admin.model.dao.AdminDao;
+import admin.model.vo.AdminAnswerList;
 import admin.model.vo.AdminArticleCommentList;
 import admin.model.vo.AdminArticleList;
+import admin.model.vo.AdminFnaData;
 import admin.model.vo.AdminIndexInfo;
 import admin.model.vo.AdminNoticeCommentList;
 import admin.model.vo.AdminNoticeList;
+import admin.model.vo.AdminQnaList;
 import article.model.dao.ArticleNoticeDao;
 import article.model.vo.ArticleNotice;
 import article.model.vo.ArticleNoticeComment;
 import common.JDBCTemplate;
+import fna.model.vo.Fna;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
+import qna.model.vo.QnaAnswer;
+import qna.model.vo.QnaNotice;
 
 public class AdminService {
 
@@ -742,5 +748,405 @@ public class AdminService {
 		JDBCTemplate.close(conn);
 		
 		return data;
+	}
+
+	public QnaNotice qnaNoticeRead(int qnaNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		QnaNotice qna = new AdminDao().qnaNoticeRead(conn, qnaNoticeNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return qna;
+	}
+
+	public int qnaNoticeDelete(int qnaNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new AdminDao().qnaNoticeDelete(conn, qnaNoticeNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int qnaNoticeRecovery(int qnaNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new AdminDao().qnaNoticeRecovery(conn, qnaNoticeNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public QnaAnswer qnaAnswer(int answerNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		QnaAnswer answer = new AdminDao().qnaAnswer(conn, answerNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return answer;
+	}
+
+	public AdminQnaList qnaList(int reqPage) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().qnaTotalCount(conn);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<QnaNotice> list = new AdminDao().qnaList(conn, start, end);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminQnaList?reqPage="+ (pageNo - pageNaviSize) + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminQnaList?reqPage=" + pageNo + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminQnaList?reqPage=" + pageNo + "'>다음</a>");
+		}
+		
+		AdminQnaList data = new AdminQnaList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminQnaList qnaSearchList(int reqPage, String type, String search) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().qnaTotalCount(conn, type, search);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<QnaNotice> list = new AdminDao().qnaList(conn, start, end, type, search);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminQnaList?reqPage="+ (pageNo - pageNaviSize) + "&type=" + type + "&search=" + search + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminQnaList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminQnaList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>다음</a>");
+		}
+		
+		AdminQnaList data = new AdminQnaList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	
+	public AdminAnswerList qnaAnswerList(int reqPage) {
+
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().qnaAnswerTotalCount(conn);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<QnaAnswer> list = new AdminDao().qnaAnswerList(conn, start, end);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminAnswerList?reqPage="+ (pageNo - pageNaviSize) + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminAnswerList?reqPage=" + pageNo + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminAnswerList?reqPage=" + pageNo + "'>다음</a>");
+		}
+		
+		AdminAnswerList data = new AdminAnswerList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminAnswerList qnaAnswerSearchList(int reqPage, int qnaNoticeNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().qnaAnswerTotalCount(conn, qnaNoticeNo);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<QnaAnswer> list = new AdminDao().qnaAnswerSearchList(conn, start, end, qnaNoticeNo);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminCommentList?reqPage="+ (pageNo - pageNaviSize) + "&type=qna_notice_no&search=" + qnaNoticeNo + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminCommentList?reqPage=" + pageNo + "&type=qna_notice_no&search=" + qnaNoticeNo + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminCommentList?reqPage=" + pageNo + "&type=qna_notice_no&search=" + qnaNoticeNo + "'>다음</a>");
+		}
+		
+		AdminAnswerList data = new AdminAnswerList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminAnswerList qnaAnswerSearchList(int reqPage, String type, String search) {
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().qnaAnswerTotalCount(conn, type, search);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<QnaAnswer> list = new AdminDao().qnaAnswerSearchList(conn, start, end, type, search);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminCommentList?reqPage="+ (pageNo - pageNaviSize) + "&type=qna_notice_no&search=" + search + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminCommentList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminCommentList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>다음</a>");
+		}
+		
+		AdminAnswerList data = new AdminAnswerList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public ArrayList<AdminFnaData> fnaSelectAll() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<AdminFnaData> list = new AdminDao().fnaSelectAll(conn); 
+		
+		JDBCTemplate.close(conn);
+		
+		return list;
+	}
+
+	public Fna fnaSelect(int qnaNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		Fna fna = new AdminDao().fnaSelectAll(conn, qnaNo);
+		
+		JDBCTemplate.close(conn);
+		
+		return fna;
+	}
+
+	public int adminFnaDelete(int qnaNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new AdminDao().adminFnaDelete(conn, qnaNo);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int adminFnaModify(Fna fna) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new AdminDao().adminFnaModify(conn, fna);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int adminFnaInsert(Fna fna) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new AdminDao().adminFnaInsert(conn, fna);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 }

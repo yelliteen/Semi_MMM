@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminQnaList;
+import fna.model.vo.Fna;
 
 /**
- * Servlet implementation class AdminQnaListServlet
+ * Servlet implementation class AdminFnaPopupServlet
  */
-@WebServlet(name = "AdminQnaList", urlPatterns = { "/adminQnaList" })
-public class AdminQnaListServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaPopup", urlPatterns = { "/adminFnaPopup" })
+public class AdminFnaPopupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminQnaListServlet() {
+    public AdminFnaPopupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +32,16 @@ public class AdminQnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
 		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		AdminQnaList list = null;
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminQnaList.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminFnaPopup.jsp");
+		request.setAttribute("type", type);
 		
-		if (type == null) {
-			list = new AdminService().qnaList(reqPage);
-		} else {
-			list = new AdminService().qnaSearchList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
+		if (!type.equals("insert")) {
+			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+			Fna fna = new AdminService().fnaSelect(qnaNo);
+			request.setAttribute("fna", fna);
 		}
 		
-		request.setAttribute("data", list);
 		rd.forward(request, response);
 	}
 
