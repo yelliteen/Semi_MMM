@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.model.service.AdminService;
+import admin.model.vo.AdminNoticeList;
+
 /**
  * Servlet implementation class AdminNoticeListServlet
  */
@@ -28,9 +31,22 @@ public class AdminNoticeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
+		String type = request.getParameter("type");
+		String search = request.getParameter("search");
+		AdminNoticeList list = null;
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminNoticeList.jsp");
 		
+		if (type == null) {
+			list = new AdminService().noticeList(reqPage);
+		} else {
+			list = new AdminService().noticeList(reqPage, type, search);
+			request.setAttribute("type", type);
+			request.setAttribute("search", search);
+		}
+		
+		request.setAttribute("data", list);
 		rd.forward(request, response);
 	}
 

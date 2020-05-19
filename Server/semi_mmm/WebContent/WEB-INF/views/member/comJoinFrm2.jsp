@@ -125,7 +125,7 @@ margin: 5px;
 			}
 		}
 		if (what.attr("id") == "birth") {
-			regExp =/^(19|20)[0-9]{2}(0[1-9]|1[1-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+			regExp =/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 			if (!regExp.test(val)) {
 				what.css("border", "3px solid red");
 				what.focus();
@@ -241,7 +241,7 @@ margin: 5px;
 		<input id="roadAddr" name="roadAddr" style="display: inline-block;" type="text" class="form-control input-lg" placeholder="도로명주소"> 
 		</div>
 		<div class="col-xs-6 col-md-6">
-		<input id="jibunAddr" style="display: inline-block;" type="text" class="form-control input-lg" placeholder="지번주소">
+		<input id="jibunAddr" name="jibunAddr" style="display: inline-block;" type="text" class="form-control input-lg" placeholder="지번주소">
 		</div>
 		</div>
 		<div>

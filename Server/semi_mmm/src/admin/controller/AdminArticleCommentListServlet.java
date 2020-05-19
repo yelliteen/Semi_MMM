@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.model.service.AdminService;
+import admin.model.vo.AdminArticleCommentList;
+
 /**
  * Servlet implementation class AdminArticleCommentListServlet
  */
@@ -29,7 +32,27 @@ public class AdminArticleCommentListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
+		String type = request.getParameter("type");
+		String search = request.getParameter("search");
+		int articleRef = 0;
+		AdminArticleCommentList list = null;
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminArticleCommentList.jsp");
+		
+		if (type == null) {
+			list = new AdminService().articleCommentList(reqPage);
+		} else if (type.equals("article_ref")) {
+			articleRef = Integer.parseInt(search);
+			list = new AdminService().articleCommentSearchList(reqPage, articleRef);
+			request.setAttribute("type", type);
+			request.setAttribute("search", search);
+		} else {
+			list = new AdminService().articleCommentSearchList(reqPage, type, search);
+			request.setAttribute("type", type);
+			request.setAttribute("search", search);
+		}
+		request.setAttribute("data", list);
 		
 		rd.forward(request, response);
 	}

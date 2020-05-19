@@ -4,9 +4,9 @@
     /*스크롤 내리면 메뉴 작아짐*/
     var width = $("#wrapper").width();
  
-	function scrollFunction() {
-		if (document.body.scrollTop > 80
-				|| document.documentElement.scrollTop > 80) {
+    function scrollFunction() {
+		if (document.body.scrollTop > 50
+				|| document.documentElement.scrollTop > 50) {
 			document.getElementById("navbar").style.padding = "3px 10px";
 			$("#navbar_login").children().css("font-size","17px");
 		} else {
