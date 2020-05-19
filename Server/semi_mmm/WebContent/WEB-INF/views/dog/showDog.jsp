@@ -29,7 +29,7 @@
 <select name="dogCate" size="4">
 <c:if test="${empty var[0] }"><option value="대형견">대형견</option><option value="중형견">중형견</option><option value="소형견">소형견</option></c:if>
 <c:if test="${not empty var[0] }">
-<c:if test="${var[0] eq "대형견"}>
+<c:if test="${var[0] eq '대형견'}">
 <option value="대형견">대형견</option><option value="중형견">중형견</option><option value="소형견">소형견</option></c:if>	</c:if>						
 </select>
 <input type="text" id="variety" name="variety" class="input-lg" style="margin-left:20px; width:70%; margin-top:28px;"/></div><br>

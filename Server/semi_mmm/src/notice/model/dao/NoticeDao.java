@@ -12,10 +12,6 @@ import notice.model.vo.NoticeComment;
 import notice.model.vo.NoticeImg;
 import notice.model.vo.NoticeNickname;
 
-
-
-
-
 public class NoticeDao {
 	
 	public int totalCount(Connection conn) {
@@ -311,7 +307,7 @@ public class NoticeDao {
 				d.setDogMemberId(rset.getString("member_nickname"));
 				d.setVariety(rset.getString("variety"));
 				d.setAge(rset.getInt("age"));
-				d.setDogGender(rset.getString("dog_gender").charAt(0));
+				d.setDogGender(rset.getString("dog_gender"));
 				d.setDogImg(rset.getString("dog_img"));
 				d.setDogBool(rset.getInt("dog_bool"));
 				System.out.println(d.getDogId());

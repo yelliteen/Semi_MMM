@@ -1,4 +1,4 @@
-<%@page import="member.model.vo.Dog"%>
+<%@page import="dog.model.vo.Dog"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

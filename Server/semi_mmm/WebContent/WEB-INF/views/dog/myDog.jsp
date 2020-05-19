@@ -34,7 +34,7 @@
 				<td style="text-align:center; line-height:200px; font-size:25px; font-weight:bold;"><a onclick="popupOpen();">${d.dogName }</a></td>
 <script>
 function popupOpen() {
-		var popUrl = "/showDog?dogId=${d.dogId}";
+		var popUrl = "/showDog?dogId="${d.dogId};
 		var popOption = "width=1000, height=600, resizable=no, scrollbars=yes, status=no;"; 
 		window.open(popUrl,"",popOption);
 	}

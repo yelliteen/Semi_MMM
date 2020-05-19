@@ -1,10 +1,11 @@
-<%@page import="notice.model.vo.NoticeImg"%>
+<%@page import="dog.model.vo.*"%>
+<%@page import="notice.model.vo.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import = "member.model.vo.*" %>
+<%@ page import = "dog.model.vo.*" %>
 
 				<%
 				Dog d = (Dog)request.getAttribute("dogImg");

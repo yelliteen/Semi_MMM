@@ -18,7 +18,7 @@ import org.jsoup.select.Elements;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import member.model.vo.Dog;
+import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.service.noticeService;
 
@@ -66,7 +66,7 @@ public class UpdateNoticeServlet extends HttpServlet {
 		
 		Notice n = new Notice(imgeNoticeNo, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, imgeNoticeViewCount, DogId, 0);
 		if(imgeNoticeImgName.equals("")) {
-			n.setNoticeImgs("/sm/img/dogImg/"+dog.getDogImg());
+			n.setNoticeImgs("/upload/dogImg/"+dog.getDogImg());
 			System.out.println(n.getNoticeImgs());
 		}
 		int result = new noticeService().noticeUpdate(n);

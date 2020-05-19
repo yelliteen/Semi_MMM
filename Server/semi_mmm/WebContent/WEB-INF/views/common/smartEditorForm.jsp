@@ -79,7 +79,7 @@ Dog d = (Dog)request.getAttribute("dog");
 		<table style=" margin: 0 auto;">
 			<tbody>
 			<tr>
-				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/sm/img/dogImg/<%=d.getDogImg()%>); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
+				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/<%=d.getDogImg()%>); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
 			</tr>
 			
 			

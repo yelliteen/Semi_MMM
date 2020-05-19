@@ -70,7 +70,7 @@ public class InsertNoticeServlet extends HttpServlet {
 		
 		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, DogId, 0);
 		if(imgeNoticeImgName.equals("")) {
-			n.setNoticeImgs("/sm/img/dogImg/"+dog.getDogImg());
+			n.setNoticeImgs("/upload/dogImg/"+dog.getDogImg());
 			System.out.println(n.getNoticeImgs());
 		}
 		int result = new noticeService().noticeWrite(n);
