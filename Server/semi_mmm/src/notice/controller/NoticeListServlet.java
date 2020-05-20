@@ -48,9 +48,7 @@ public class NoticeListServlet extends HttpServlet {
 			System.out.println(reqPage);
 			NoticePageDataImge pd = new noticeService().selectList(reqPage);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeList.jsp");
-			
-		
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/myNoticeList.jsp");
 
 			request.setAttribute("list", pd.getList());
 			request.setAttribute("pageNavi", pd.getPageNavi());
