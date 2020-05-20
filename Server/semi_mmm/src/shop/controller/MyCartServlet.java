@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.model.service.ShopService;
-import shop.model.vo.Product;
-import shop.model.vo.ShopViewData;
+import shop.model.vo.Cart;
+import shop.model.vo.ProductOption;
 
 /**
- * Servlet implementation class SellProductFrm2Servlet
+ * Servlet implementation class MyCartServlet
  */
-@WebServlet(name = "SellProductFrm2", urlPatterns = { "/sellProductFrm2" })
-public class SellProductFrm2Servlet extends HttpServlet {
+@WebServlet(name = "MyCart", urlPatterns = { "/myCart" })
+public class MyCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SellProductFrm2Servlet() {
+    public MyCartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,15 +36,12 @@ public class SellProductFrm2Servlet extends HttpServlet {
 		//1. 인코딩
 		request.setCharacterEncoding("utf-8");
 		//2. 변수에 값 저장
-		String bnMemberId = request.getParameter("memberId");
+		String orderMemberId = request.getParameter("orderMemberId");
 		//3. 비지니스로직
-		//ArrayList<Product> pl = new ShopService().selectMenuList(bnMemberId);
-		ArrayList<ShopViewData> sl = new ShopService().selectMenuListFrm(bnMemberId);
+		ArrayList<Cart> cartList = new ShopService().selectCartList(orderMemberId);
 		//4. 결과 처리
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/sellProductFrm.jsp");
-		request.setAttribute("loc", "/sellProductFrm?memberId="+bnMemberId);
-		request.setAttribute("sl", sl);
-		//request.setAttribute("pl", pl);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/mycart.jsp");
+		request.setAttribute("cartList", cartList);
 		rd.forward(request, response);
 	}
 
