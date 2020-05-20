@@ -1,6 +1,7 @@
 package admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
+import admin.model.vo.AdminFnaData;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminFnaListServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaList", urlPatterns = { "/adminFnaList" })
+public class AdminFnaListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminFnaListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +44,9 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		ArrayList<AdminFnaData> list = new AdminService().fnaSelectAll();
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminFnaList.jsp");
+		request.setAttribute("list", list);
 		rd.forward(request, response);
 	}
 

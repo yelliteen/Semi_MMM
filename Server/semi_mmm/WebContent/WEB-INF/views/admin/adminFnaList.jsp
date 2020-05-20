@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 사업자 회원 관리 페이지</title>
+<title>Adimn - F&A 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
@@ -147,93 +147,132 @@ nav a {
 			</nav>
 		</div>
         <style>
-            .member_table {
+            table {
                 width: 90%;
                 margin: 0 auto;
-                text-align: center;
                 margin-top: 20px;
-                margin-bottom: 20px;
             }
             
-            .member_table>tbody, .meber_table tr {
+            table>tbody, table tr {
                 width: 100%;
             }
             
-            .member_table tr {
+            table tr {
+                border-top: 1px solid rgba(0, 0, 0, 0.2);
+                padding-top: 10px;
+                padding-bottom: 10px;
                 height: 50px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.5);
             }
             
-            .member_table a {
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            tbody>tr:first-child {
+                text-align: center;
+                font-weight: bold;
             }
+            
+            tr>td:first-child, tr>td:nth-of-type(2) {
+                width: 5%;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            tr>td:nth-of-type(3), tr>td:last-child {
+                width: 45%;
+                padding-left: 5px;
+            	padding-right: 5px;
+            }
+            
+            .btnArea {
+            	text-align: center;
+            	margin: 30px;
+            }
+            
         </style>
-        <script>
-            function memberPopup(memberId) {
-                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
-                var title = "adminMemberInfo";
-                var url = "/adminMemberInfo";
-                var popup = window.open("", title, status);
-                
-                $("input[name=memberId]").val(memberId);
-                $("#page").attr("action", url);
-                $("#page").attr("method", "post");
-                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
-                $("#page").submit();
-            }
-        </script>
 		<div id="layoutSidenav_content">
 			<main>
-                <form id="page">
-                    <input type="hidden" name="memberId">
-                </form>
-				<h1 style="margin: 20px;">일반 회원 관리</h1>
-				<hr>
-				<table class="member_table">
+				<h1 style="margin: 20px;">F&A 관리</h1>
+                <table>
                     <tr>
-                        <th>아이디</th>
-                        <th>닉네임</th>
-                        <th>이름</th>
-                        <th>가입일</th>
-                        <th>전화번호</th>
+                        <td></td>
+                        <td>번호</td>
+                        <td>질문</td>
+                        <td>응답</td>
                     </tr>
-                    <c:forEach items="${data.list }" var="member">
-                    	<c:if test="${member.memberLevel eq 1 }">
-                    		<tr class="delete_false">
-                                <td><a class="delete_false" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId}</a></td>
-                                <td>${member.memberNickname}</td>
-                                <td>${member.memberName}</td>
-                                <td>${member.enrollDate}</td>
-                                <td>${member.phone}</td>
-                    		</tr>
-                    	</c:if>
-                    	<c:if test="${member.memberLevel eq 3 }">
-                    		<tr class="delete_true">
-                                <td><a class="delete_true" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId}</a></td>
-                                <td>${member.memberNickname}</td>
-                                <td>${member.memberName}</td>
-                                <td>${member.enrollDate}</td>
-                                <td>${member.phone}</td>
-                    		</tr>
-                    	</c:if>
+                    <c:forEach items="${list }" var="data">
+	                    <tr>
+	                        <td>
+	                            <input type="radio" name="radio">
+	                            <input type="hidden" value="${data.fna.qnaNo }">
+	                        </td>
+	                        <td>${data.rnum }</td>
+	                        <td>${data.fna.question }</td>
+	                        <td>${data.fna.answer }</td>
+	                    </tr>
                     </c:forEach>
                 </table>
-                <div class="pageNavi">
-                    ${data.pageNavi }
+                <div class="btnArea">
+                    <button id="insertBtn" class="btn btn-primary">추가</button>
+                    <button id="modifyBtn" class="btn btn-primary">수정</button>
+                    <button id="deleteBtn" class="btn btn-primary">삭제</button>
                 </div>
-                <div class="searchBox">
-                	<div>
-	                	<form action="/adminUserList" method="get">
-	                		<input type="hidden" name="reqPage" value="1">
-	                		<select name="type" class="form-control" style="width: 150px;">
-	                			<option value="member_id">아이디</option>
-	                			<option value="member_nickname">닉네임</option>
-	                		</select>
-	                		<input type="text" class="form-control" style="width: 300px" name="search">
-	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
-	                	</form>
-                	</div>
-                </div>
+                <form action="/adminFnaPopup" id="fna" method="post">
+                	<input type="hidden" name="type" id="type">
+                	<input type="hidden" id="qnaNo" name="qnaNo" >
+                </form>
+                <script>
+                	$("#insertBtn").click(function() {
+            			var status = "left=500px, top=100px, width=600px, height=400px, menubar=no, status=no,scrollbars=yes";
+            			var title = "adminFnaPopup";
+            			var popup = window.open("", title, status);
+            			
+                		$("#type").val("insert");
+            			$("#fna").attr("target", title);
+                		$("#fna").submit();
+                	});
+                	$("#modifyBtn").click(function() {
+                		var radio = $("input[type=radio]");
+                		var i;
+                		
+                		for (i = 0; i < radio.length; i++) {
+                			if (radio.eq(i).prop("checked") == true) {
+                				break;
+                			}
+                		}
+                		
+                		if (i == radio.length) {
+                			alert("수정할 항목을 선택하세요.");
+                			return;
+                		} else {
+                			var status = "left=500px, top=100px, width=600px, height=400px, menubar=no, status=no,scrollbars=yes";
+                			var title = "adminFnaPopup";
+                			var popup = window.open("", title, status);
+
+                			$("#type").val("modify");
+                			$("#qnaNo").val(radio.eq(i).next().val());
+                			$("#fna").attr("target", title);
+                			$("#fna").submit();
+                		}
+                		
+                	});
+                	$("#deleteBtn").click(function() {
+                		var radio = $("input[type=radio]");
+                		var i;
+                		
+                		for (i = 0; i < radio.length; i++) {
+                			if (radio.eq(i).prop("checked") == true) {
+                				break;
+                			}
+                		}
+                		
+                		if (i == radio.length) {
+                			alert("삭제할 항목을 선택하세요.");
+                			return;
+                		} else {
+                            if (confirm("해당 F&A를 삭제하시겠습니까?")) {
+                                location.href = "/adminFnaDelete?qnaNo=" + radio.eq(i).next().val();
+                            }
+                		}
+                	});
+                </script>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
 			<div class="container-fluid">
@@ -248,28 +287,6 @@ nav a {
 			</footer>
 		</div>
 	</div>
-    <script>
-        function check() {
-            if ($("input[name=search]").val() == "") {
-                alert("검색 내용을 입력하세요.");
-                return false;
-            }
-        }
-    </script>
-	<c:if test="${not empty search }">
-		<script>
-			var option = $("option");
-			for (var i = 0; i < option.length; i++) {
-                console.log(option.eq(i).val());
-				if (option.eq(i).val() == "${type}") {
-                    option.eq(i).prop("selected", "true");
-                    break;
-                }
-			}
-            
-            $("input[name=search]").val("${search}");
-		</script>
-	</c:if>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

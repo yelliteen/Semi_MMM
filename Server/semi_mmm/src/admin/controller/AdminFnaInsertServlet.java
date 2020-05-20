@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
+import fna.model.vo.Fna;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminFnaInsertServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaInsert", urlPatterns = { "/adminFnaInsert" })
+public class AdminFnaInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminFnaInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +43,20 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		String question = request.getParameter("question");
+		String answer = request.getParameter("answer");
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		Fna fna = new Fna(0, question, answer); 
+		int result = new AdminService().adminFnaInsert(fna);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "F&A를 등록하였습니다.");
+		} else {
+			request.setAttribute("msg", "F&A 등록에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 

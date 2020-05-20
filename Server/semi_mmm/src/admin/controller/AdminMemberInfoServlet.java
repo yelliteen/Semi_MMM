@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
+import admin.model.vo.AdminMemberData;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminMemberInfoServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminMemberInfo", urlPatterns = { "/adminMemberInfo" })
+public class AdminMemberInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminMemberInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +43,12 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		String memberId = request.getParameter("memberId");
+		System.out.println(memberId);
+		AdminMemberData data = new AdminService().adminMemberData(memberId);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/memberPopup.jsp");
+		request.setAttribute("data", data);
 		rd.forward(request, response);
 	}
 

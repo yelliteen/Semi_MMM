@@ -12,19 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
+import qna.model.vo.QnaAnswer;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminQnaAnswerServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminQnaAnswer", urlPatterns = { "/adminQnaAnswer" })
+public class AdminQnaAnswerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminQnaAnswerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,12 +42,12 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			((HttpServletRequest)request).setAttribute("loc", "/");
 			rd.forward(request, response);
 		}
+
+		int answerNo = Integer.parseInt(request.getParameter("answerNo"));
+		QnaAnswer answer = new AdminService().qnaAnswer(answerNo);
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/answerPopup.jsp");
+		request.setAttribute("answer", answer);
 		rd.forward(request, response);
 	}
 

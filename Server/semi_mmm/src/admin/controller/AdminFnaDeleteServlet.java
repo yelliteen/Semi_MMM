@@ -12,19 +12,18 @@ import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminFnaDeleteServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaDelete", urlPatterns = { "/adminFnaDelete" })
+public class AdminFnaDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminFnaDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +42,18 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		int result = new AdminService().adminFnaDelete(qnaNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("loc", "/adminFnaList");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "F&A를 삭제하였습니다.");
+		} else {
+			request.setAttribute("msg", "F&A 삭제에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 

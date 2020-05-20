@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
+import fna.model.vo.Fna;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminFnaPopupServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminFnaPopup", urlPatterns = { "/adminFnaPopup" })
+public class AdminFnaPopupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminFnaPopupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +43,16 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		String type = request.getParameter("type");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminFnaPopup.jsp");
+		request.setAttribute("type", type);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		if (!type.equals("insert")) {
+			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+			Fna fna = new AdminService().fnaSelect(qnaNo);
+			request.setAttribute("fna", fna);
+		}
+		
 		rd.forward(request, response);
 	}
 

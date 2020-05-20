@@ -12,19 +12,18 @@ import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminMemberDeleteServlet
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminMemberDelete", urlPatterns = { "/adminMemberDelete" })
+public class AdminMemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminMemberDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,12 +41,20 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			((HttpServletRequest)request).setAttribute("loc", "/");
 			rd.forward(request, response);
 		}
+
+		String memberId = request.getParameter("memberId");
+		int memberLevel = Integer.parseInt(request.getParameter("memberLevel"));
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		int result = new AdminService().adminMemberDelete(memberId, memberLevel);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/popupmsg.jsp");
+		
+		if (result > 0) {
+			request.setAttribute("msg", "계정을 정지시켰습니다.");
+		} else {
+			request.setAttribute("msg", "계정 정지에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 

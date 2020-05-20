@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 사업자 회원 관리 페이지</title>
+<title>Adimn - Q&A 질문 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
@@ -146,93 +146,32 @@ nav a {
 			</div>
 			</nav>
 		</div>
-        <style>
-            .member_table {
-                width: 90%;
-                margin: 0 auto;
-                text-align: center;
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .member_table>tbody, .meber_table tr {
-                width: 100%;
-            }
-            
-            .member_table tr {
-                height: 50px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-            }
-            
-            .member_table a {
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-            }
-        </style>
-        <script>
-            function memberPopup(memberId) {
-                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
-                var title = "adminMemberInfo";
-                var url = "/adminMemberInfo";
-                var popup = window.open("", title, status);
-                
-                $("input[name=memberId]").val(memberId);
-                $("#page").attr("action", url);
-                $("#page").attr("method", "post");
-                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
-                $("#page").submit();
-            }
-        </script>
+
 		<div id="layoutSidenav_content">
-			<main>
-                <form id="page">
-                    <input type="hidden" name="memberId">
-                </form>
-				<h1 style="margin: 20px;">일반 회원 관리</h1>
+			<main style="padding: 20px;">
+				<h3 style='margin-left: 20px; margin-right: 20px;'>제목 : ${qna.qnaNoticeTitle }</h3>
+                <hr>
+                <h5>
+                	<span style='margin-left: 10px; float: left;'>작성자 : ${qna.qnaNoticeWriter }</span>
+                	<span style='margin-right: 10px; float: right;'>작성일 : ${qna.qnaNoticeDate }</span>
+                </h5>
+                <br>
+                <hr>
+                <div style='margin: 30px'>
+                	${qna.qnaNoticeContent }
+				</div>
 				<hr>
-				<table class="member_table">
-                    <tr>
-                        <th>아이디</th>
-                        <th>닉네임</th>
-                        <th>이름</th>
-                        <th>가입일</th>
-                        <th>전화번호</th>
-                    </tr>
-                    <c:forEach items="${data.list }" var="member">
-                    	<c:if test="${member.memberLevel eq 1 }">
-                    		<tr class="delete_false">
-                                <td><a class="delete_false" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId}</a></td>
-                                <td>${member.memberNickname}</td>
-                                <td>${member.memberName}</td>
-                                <td>${member.enrollDate}</td>
-                                <td>${member.phone}</td>
-                    		</tr>
-                    	</c:if>
-                    	<c:if test="${member.memberLevel eq 3 }">
-                    		<tr class="delete_true">
-                                <td><a class="delete_true" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId}</a></td>
-                                <td>${member.memberNickname}</td>
-                                <td>${member.memberName}</td>
-                                <td>${member.enrollDate}</td>
-                                <td>${member.phone}</td>
-                    		</tr>
-                    	</c:if>
-                    </c:forEach>
-                </table>
-                <div class="pageNavi">
-                    ${data.pageNavi }
-                </div>
-                <div class="searchBox">
-                	<div>
-	                	<form action="/adminUserList" method="get">
-	                		<input type="hidden" name="reqPage" value="1">
-	                		<select name="type" class="form-control" style="width: 150px;">
-	                			<option value="member_id">아이디</option>
-	                			<option value="member_nickname">닉네임</option>
-	                		</select>
-	                		<input type="text" class="form-control" style="width: 300px" name="search">
-	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
-	                	</form>
-                	</div>
+				<div style="text-align: center">
+					<c:if test="${qna.qnaNoticeDeleteBool eq 0 }">
+	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                	background-color: black; color: white; font-size: 30px; border: none' onclick="deleteConfirm();">삭제</button>
+	                </c:if>
+	                <c:if test="${qna.qnaNoticeDeleteBool eq 1 }">
+	                	<button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                	background-color: black; color: white; font-size: 30px; border: none' onclick="recoveryConfirm();">복구</button>
+	                </c:if>
+	                <button style='width: 150px; height: 70px; margin-right: 10px; margin-left: 10px;
+	                background-color: black; color: white; font-size: 30px; border: none' onclick="history.go(-1)">취소</button>
                 </div>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
@@ -248,28 +187,19 @@ nav a {
 			</footer>
 		</div>
 	</div>
-    <script>
-        function check() {
-            if ($("input[name=search]").val() == "") {
-                alert("검색 내용을 입력하세요.");
-                return false;
+	<script>
+		function deleteConfirm() {
+			if (confirm("게시글을 삭제하시겠습니까?")) {
+                location.href='/adminQnaDelete?qnaNoticeNo=${qna.qnaNoticeNo}';
             }
-        }
-    </script>
-	<c:if test="${not empty search }">
-		<script>
-			var option = $("option");
-			for (var i = 0; i < option.length; i++) {
-                console.log(option.eq(i).val());
-				if (option.eq(i).val() == "${type}") {
-                    option.eq(i).prop("selected", "true");
-                    break;
-                }
-			}
-            
-            $("input[name=search]").val("${search}");
-		</script>
-	</c:if>
+		}
+		
+		function recoveryConfirm() {
+			if (confirm("게시글을 복구하시겠습니까?")) {
+                location.href='/adminQnaRecovery?qnaNoticeNo=${qna.qnaNoticeNo}';
+            }
+		}
+	</script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

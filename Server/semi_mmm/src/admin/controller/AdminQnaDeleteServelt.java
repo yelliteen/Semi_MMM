@@ -12,19 +12,18 @@ import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
 import member.model.vo.Member;
-import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class AdminNoticeCommentServlet
+ * Servlet implementation class AdminQnaDeleteServelt
  */
-@WebServlet(name = "AdminNoticeComment", urlPatterns = { "/adminNoticeComment" })
-public class AdminNoticeCommentServlet extends HttpServlet {
+@WebServlet(name = "AdminQnaDelete", urlPatterns = { "/adminQnaDelete" })
+public class AdminQnaDeleteServelt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminNoticeCommentServlet() {
+    public AdminQnaDeleteServelt() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +42,18 @@ public class AdminNoticeCommentServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		int noticeCommentNo = Integer.parseInt(request.getParameter("noticeCommentNo"));
-		NoticeComment comment = new AdminService().noticeComment(noticeCommentNo);
+		int qnaNoticeNo = Integer.parseInt(request.getParameter("qnaNoticeNo"));
+		int result = new AdminService().qnaNoticeDelete(qnaNoticeNo);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/commentPopup.jsp");
-		request.setAttribute("comment", comment);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("loc", "/adminQnaNoticeRead?qnaNoticeNo=" + qnaNoticeNo);
+		
+		if (result > 0) {
+			request.setAttribute("msg", "게시글을 삭제하였습니다.");
+		} else {
+			request.setAttribute("msg", "게시글 삭제에 실패하였습니다.");
+		}
+		
 		rd.forward(request, response);
 	}
 
