@@ -66,7 +66,7 @@ height: 0px;
                <c:if test="${not empty sessionScope.shop.memberId }">
                 <span style="font-size:20px;">
                 <img class="profile" src="/upload/memberImg/${sessionScope.shop.profileImg }">&nbsp;&nbsp;&nbsp;
-                <a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454;"class="userName">[ ${sessionScope.shop.memberNickname } ]&nbsp; 님</a></span>
+                <a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454; " class="userName">[ ${sessionScope.shop.memberNickname } ]&nbsp; 님</a></span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>  

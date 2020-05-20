@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -46,11 +47,23 @@
 				</a>
 			</div>
 		</div>
-		<div id="content" style="display: flex;">
+		<div id="content" style="display: flex; margin: 0 auto; width:1300px;">
 		<div id="community">
-		<div id="free-comm"><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
-		<div id="free-comm"><p>이곳을 후기 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p><p>이곳을 자유 게시판 미리보기<p></div>
-		</div>
+				<c:forEach items="${list }" var="n">
+						<c:choose>
+        <c:when test="${n.noticeImgs eq n.noticeImgs }">
+					<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
+					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
+					</a>
+					<div style="border: 1px solid black;">
+					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
+					<div><div style="float: left; margin-left: 1%; display: inline-block; color: gray;">${n.noticeWriter }</div><div style="text-align: right; margin-right: 1%;">${n.noticeDate }</div></div>
+					</div>
+				</div>
+				</c:when>
+			</c:choose>
+			</c:forEach>
+			</div>
 		<div id="market">
 		<p>이곳을 번개장터 미리보기<p>
 		</div>

@@ -50,8 +50,6 @@
 
 <div class="container">
 		<h1>커뮤니티 </h1>
-		
-	
 		<c:if test="${not empty sessionScope.member.memberId }">
 		  		<div style="text-align: right;">
 		  			<button id="logining" class="btn btn-lg btn-primary btn-block" style=" width:100px; height: 40px; line-height: 100%; display: inline-block; font-size: 20px; margin-bottom: 1%;" type="submit" onclick="location.href='/noticeDog?memberId=${sessionScope.member.memberId }'">글쓰기</button>
