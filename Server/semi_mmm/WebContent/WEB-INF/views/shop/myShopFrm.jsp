@@ -3,27 +3,30 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import = "shop.model.vo.*" %>
-    <%
-    	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
-    	ArrayList<ProductOption> subList = (ArrayList<ProductOption>)request.getAttribute("subList");
-    %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>myShopFrm</title>
-	<style>
-		#mypage{
-			width: 1000px;
-			margin: 0 auto;
-		}
-	</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<style>
+	body{
+		background-color: red;
+	}
+	div{
+		height: 150px;
+	}
+</style>
 </head>
 <body>
-	<div id="wrapper">
-  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-  	<div id="content">
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+	
+  	<div style="height: 500px;"></div>
+  	<div id="content" style="background-color:red;">
   		<c:if test="${not empty sessionScope.shop }">
+  	
 	  		<div>
 	  			<form action="/insertMenu" method="post">
 	  				<input type="hidden" name="productNo">
@@ -87,6 +90,7 @@
 	  						</c:forEach>
 	  					</select>
 	  			</form>
+	  			
 	  			<form name="updateSubMenu" action="/updateSubMenu" method="post" id="updateSubMenu">
 	  				<input type="hidden" name="optionNo" value="">
 	  				<input type="hidden" name="productNo" value="">
@@ -98,7 +102,8 @@
 	  		</div>
   		</c:if>
   	</div>
-  	</div>
+  	
+  
   	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script>
         function selectVal1(v){
@@ -120,5 +125,6 @@
         }
         
     </script>
+    
 </body>
 </html>
