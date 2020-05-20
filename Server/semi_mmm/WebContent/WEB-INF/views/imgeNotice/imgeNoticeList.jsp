@@ -51,16 +51,29 @@
 <section class="container">
 		<h1>커뮤니티</h1>
 	
-		<c:if test="${not empty sessionScope.member.memberId || not empty sessionScope.shop.memberId }">
-		  		<form action="/noticeWriteFrm" method="post">
+		<c:if test="${not empty sessionScope.member.memberId }">
 		  		<div style="text-align: right;">
-		  			<button id="logining" class="btn btn-lg btn-primary btn-block" style=" width:100px; height: 40px; line-height: 100%; display: inline-block; font-size: 20px; margin-bottom: 1%;" type="submit">글쓰기</button>
+		  			<button id="logining" class="btn btn-lg btn-primary btn-block" style=" width:100px; height: 40px; line-height: 100%; display: inline-block; font-size: 20px; margin-bottom: 1%;" type="submit" onclick="location.href='/noticeDog?memberId=${sessionScope.member.memberId }'">글쓰기</button>
+		  			<input type="hidden" name="memberId" value="${sessionScope.member.memberId }">
 		  		</div>
-		  		</form>
 		  	</c:if>
+		  	
+		  	<c:if test="${not empty sessionScope.shop.memberId }">
+		  		<div style="text-align: right;">
+		  			<button id="logining" class="btn btn-lg btn-primary btn-block" style=" width:100px; height: 40px; line-height: 100%; display: inline-block; font-size: 20px; margin-bottom: 1%;" type="submit" onclick="location.href='/noticeDog?memberId=${sessionScope.shop.memberId }'">글쓰기</button>
+		  			<input type="hidden" name="memberId" value="${sessionScope.shop.memberId }">
+		  		</div>
+
+		  	</c:if>
+		  	
+		  	
+		  	
+		  	
+		  	
+
 	
 
-			<div class="container">
+			<div>
 
 			<c:forEach items="${list }" var="n">
 			
@@ -126,7 +139,7 @@
 				success : function(data){
 					var html = "";
 					for(var i=0; i<data.length;i++){
-						html += "<div class='border border-dark' style='width:400px; margin:0 auto; margin-bottom:10px;'>";
+						html += "<div class='border border-dark' style='width350px; margin:0 auto; margin-bottom:10px;'>";
 						html += "<img src='/upload/photo/"+data[i].photoFilepath+"' width='100%'>";
 						html += "<p class='caption'>"+data[i].photoContent+"</p></div>";
 					}

@@ -1,6 +1,7 @@
 package notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,9 +37,8 @@ public class InsertNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
-		String dogId = request.getParameter("dogId");
+
+		String DogId = request.getParameter("dogId");
 		String imgeNoticeTitle = request.getParameter("imgeNoticeTitle");
 		String imgeNoticeWriter = request.getParameter("imgeNoticeWriter");
 		String imgeNoticeContent = request.getParameter("content");
@@ -56,18 +56,17 @@ public class InsertNoticeServlet extends HttpServlet {
 		System.out.println("값확인 : "+imgeNoticeWriter);
 		System.out.println("값확인 : "+imgeNoticeContent);
 		System.out.println("값확인 : "+imgeNoticeImgName);
+		
+	
+		
 
-		
-		
-		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, dogId, 0);
+		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, DogId, 0);
 		int result = new noticeService().noticeWrite(n);
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		request.setAttribute("loc", "/noticeList?reqPage=1");
 		
 		if (result > 0) {
 			request.setAttribute("msg", " 등록되었습니다.");
-
 		} else {
 			request.setAttribute("msg", "실패하셨습니다.");
 		}
