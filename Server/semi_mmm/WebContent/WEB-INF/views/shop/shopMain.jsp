@@ -67,8 +67,8 @@
 		<form action="/shopMain" method="get">
 			<%for(Member m : list) {%>
 	         <ul>
-	         	<li class="sell-list">
-	         		<a href="#">
+	         	<li class="sell-list"> 
+	         		<a onclick="location.href='/sellProductFrm2?memberId=<%=m.getMemberId() %>'"> <input type="hidden" name="memberId">
 	         			<div class="sell-list1"></div>
 	         			<div class="sell-list2">
 	         				<div><%=m.getMemberNickname() %></div>
@@ -79,7 +79,9 @@
 	         </ul>
 	         <%} %>
 		</form>
-
+		<div>
+		   	<a onclick="location.href='myCartFrm?memberId=${session.member.memberId}'">장바구니보기</a>
+	    </div>
          <!--<c:if test="${not empty sessionScope.member }"><!-- 글쓰기는 로그인 한 사람만 할수있게 -->
             <!--<button class="btn btn-outline-info" id="write-btn">글쓰기</button>-->
          <!--</c:if>-->
@@ -88,16 +90,6 @@
       </div>
       <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
-
-
-
-
-
-
-
-
-
-
 
 
 

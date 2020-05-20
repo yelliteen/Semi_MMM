@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class AdminNoticeRecoveryServlet
@@ -30,6 +32,15 @@ public class AdminNoticeRecoveryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+			System.out.println("뒤로가기");
+			RequestDispatcher rd = ((HttpServletRequest)request).getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			((HttpServletRequest)request).setAttribute("msg", "관리자 계정만 접근이 가능합니다.");
+			((HttpServletRequest)request).setAttribute("loc", "/");
+			rd.forward(request, response);
+		}
 
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		int result = new AdminService().noticeRecovery(noticeNo);

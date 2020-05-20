@@ -55,7 +55,7 @@ nav a {
 				class="fas fa-user fa-fw"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="login.html">Logout</a>
+				<a class="dropdown-item" href="/logout">Logout</a>
 			</div></li>
 	</ul>
 	</nav>
@@ -132,6 +132,12 @@ nav a {
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
 					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
+					</a>
 				</div>
 			</div>
 			<div class="sb-sidenav-footer">
@@ -143,7 +149,51 @@ nav a {
 
 		<div id="layoutSidenav_content">
 			<main>
-				
+				<h1 style="margin: 20px;">Q&A 질문 게시물 관리</h1>
+				<hr>
+				<table class="list_table article_notice">
+                    <tr>
+                        <th>게시물번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    <c:forEach items="${data.list }" var="qna">
+                    	<c:if test="${qna.qnaNoticeDeleteBool eq 0 }">
+                    		<tr class="delete_false">
+                    			<td>${qna.qnaNoticeNo }</td>
+                    			<td><a class="delete_false" href="/adminQnaNoticeRead?qnaNoticeNo=${qna.qnaNoticeNo }">${qna.qnaNoticeTitle }</a></td>
+                    			<td>${qna.qnaNoticeWriter }</td>
+                    			<td>${qna.qnaNoticeDate }</td>
+                    		</tr>
+                    	</c:if>
+                    	<c:if test="${qna.qnaNoticeDeleteBool eq 1 }">
+                    		<tr class="delete_true">
+                    			<td>${qna.qnaNoticeNo }</td>
+                    			<td><a class="delete_true" href="/adminQnaNoticeRead?qnaNoticeNo=${qna.qnaNoticeNo }">${qna.qnaNoticeTitle }</a></td>
+                    			<td>${qna.qnaNoticeWriter }</td>
+                    			<td>${qna.qnaNoticeDate }</td>
+                    		</tr>
+                    	</c:if>
+                    </c:forEach>
+                </table>
+                <div class="pageNavi">
+                    ${data.pageNavi }
+                </div>
+                <div class="searchBox">
+                	<div>
+	                	<form action="/adminQnaList" method="get">
+	                		<input type="hidden" name="reqPage" value="1">
+	                		<select name="type" class="form-control" style="width: 150px;">
+	                			<option value="qna_notice_Writer">작성자</option>
+	                			<option value="qna_notice_title">제목</option>
+	                			<option value="qna_notice_content">내용</option>
+	                		</select>
+	                		<input type="text" class="form-control" style="width: 300px" name="search">
+	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
+	                	</form>
+                	</div>
+                </div>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
 			<div class="container-fluid">
@@ -158,6 +208,28 @@ nav a {
 			</footer>
 		</div>
 	</div>
+	<script>
+        function check() {
+            if ($("input[name=search]").val() == "") {
+                alert("검색 내용을 입력하세요.");
+                return false;
+            }
+        }
+    </script>
+	<c:if test="${not empty search }">
+		<script>
+			var option = $("option");
+			for (var i = 0; i < option.length; i++) {
+                console.log(option.eq(i).val());
+				if (option.eq(i).val() == "${type}") {
+                    option.eq(i).prop("selected", "true");
+                    break;
+                }
+			}
+            
+            $("input[name=search]").val("${search}");
+		</script>
+	</c:if>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

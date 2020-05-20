@@ -9,7 +9,6 @@ import java.sql.Statement;
 public class JDBCTemplate {
 
    private static final String ipAddress = "192.168.10.25";
-//	private static final String ipAddress = "192.168.35.48";
    
    public static Connection getConnection() {
 
@@ -19,7 +18,6 @@ public class JDBCTemplate {
          Class.forName("oracle.jdbc.driver.OracleDriver");
 
          conn = DriverManager.getConnection("jdbc:oracle:thin:@" + ipAddress + ":1521:xe", "mmm", "1234");
-//         conn = DriverManager.getConnection("jdbc:oracle:thin:@" + ipAddress + ":1521:xe", "semi", "1234");
 
          conn.setAutoCommit(false);
 

@@ -25,14 +25,6 @@
         <input type="text" name="memberId" id="uid" class="form-control" placeholder="Your ID" required autofocus><BR>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="memberPw" id="upw" class="form-control" placeholder="Password" required><br>
-        <div class="checkbox">
-           <label>
-            <input type="radio" name="userlevel" value="1" required checked> 일반 이용자
-              </label>
-              <label>
-            <input type="radio" name="userlevel" value="2" required> 사업자
-        </label>
-        </div>
         <button id="logining" class="btn btn-lg btn-primary btn-block" type="submit">로 그 인</button>
 		</div>
 	</div>
@@ -65,7 +57,14 @@
 						$("#show-result").html("&nbsp;로그인 정보가 맞지않습니다");
 						$("#show-result").css("color","red");
 						$("#show-result").css("font-weight","bold");
-					} else {
+					} else if(data == 2) {
+						$("#show-result").html("&nbsp;정지된 계정입니다");
+						$("#show-result").css("color","red");
+						$("#show-result").css("font-weight","bold");
+					} else if(data == 0) {
+						window.location.href = "/admin";
+					}
+					else if (data == 3 ){
 						window.location.href = "/";
 					}
 				},

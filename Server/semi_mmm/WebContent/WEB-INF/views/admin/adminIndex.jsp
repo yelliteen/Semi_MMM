@@ -55,7 +55,7 @@ nav a {
 				class="fas fa-user fa-fw"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="login.html">Logout</a>
+				<a class="dropdown-item" href="/logout">Logout</a>
 			</div></li>
 	</ul>
 	</nav>
@@ -131,6 +131,12 @@ nav a {
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
+					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
 					</a>
 				</div>
 			</div>
@@ -276,12 +282,61 @@ nav a {
                 $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
                 $("#page").submit();
             }
+            
+            function answerPopup(answerNo) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminQnaAnswer";
+                var url = "/adminQnaAnswer";
+                var popup = window.open("", title, status);
+                
+                $("input[name=answerNo]").val(answerNo);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+            
+            function memberPopup(memberId) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminMemberInfo";
+                var url = "/adminMemberInfo";
+                var popup = window.open("", title, status);
+                
+                $("input[name=memberId]").val(memberId);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+            
+            function shopPopup(memberId) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminShopInfo";
+                var url = "/adminShopInfo";
+                var popup = window.open("", title, status);
+                
+                $("input[name=memberId]").val(memberId);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+            
+            $(function() {
+                var aTag = $(".table_tr>div:nth-of-type(2)").children();
+
+                for (var i = 0; i < aTag.length; i++) {
+                    aTag.eq(i).html(aTag.eq(i).html().replace(/(<([^>]+)>)/ig,""));
+                }
+            })
         </script>
 		<div id="layoutSidenav_content">
 			<main>
                 <form id="page">
                     <input type="hidden" name="articleCommentNo">
                     <input type="hidden" name="noticeCommentNo">
+                    <input type="hidden" name="answerNo">
+                    <input type="hidden" name="memberId">
                 </form>
 				<div class="notice_box">
                     <h2>자랑게시판 관리</h2>
@@ -357,14 +412,14 @@ nav a {
                             	<c:if test="${qna.qnaNoticeDeleteBool eq 0 }">
                             		<div class="table_tr delete_false">
                                         <div>${qna.qnaNoticeNo }</div>
-                                        <div><a class="delete_false" href="#">${qna.qnaNoticeTitle }</a></div>
+                                        <div><a class="delete_false" href="/adminQnaNoticeRead?qnaNoticeNo=${qna.qnaNoticeNo }">${qna.qnaNoticeTitle }</a></div>
                                         <div>${qna.qnaNoticeWriter }</div>
                             	   </div>
                             	</c:if>
                             	<c:if test="${qna.qnaNoticeDeleteBool eq 1 }">
                             		<div class="table_tr delete_true">
                                         <div>${qna.qnaNoticeNo }</div>
-                                        <div><a class="delete_true" href="#">${qna.qnaNoticeTitle }</a></div>
+                                        <div><a class="delete_true" href="/adminQnaNoticeRead?qnaNoticeNo=${qna.qnaNoticeNo }">${qna.qnaNoticeTitle }</a></div>
                                         <div>${qna.qnaNoticeWriter }</div>
                             	   </div>
                             	</c:if>
@@ -384,14 +439,14 @@ nav a {
                             	<c:if test="${qnaAnswer.answerDeleteBool eq 0 }">
                             		<div class="table_tr delete_false">
                                         <div>${qnaAnswer.answerNo }</div>
-                                        <div><a class="delete_false" href="#">${qnaAnswer.answerContent }</a></div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="answerPopup(${qnaAnswer.answerNo })">${qnaAnswer.answerContent }</a></div>
                                         <div>${qnaAnswer.answerWriter }</div>
                             	   </div>
                             	</c:if>
                             	<c:if test="${qnaAnswer.answerDeleteBool eq 1 }">
                             		<div class="table_tr delete_true">
                                         <div>${qnaAnswer.answerNo }</div>
-                                        <div><a class="delete_true" href="#">${qnaAnswer.answerContent }</a></div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="answerPopup(${qnaAnswer.answerNo })">${qnaAnswer.answerContent }</a></div>
                                         <div>${qnaAnswer.answerWriter }</div>
                             	   </div>
                             	</c:if>
@@ -472,14 +527,14 @@ nav a {
                             <c:forEach items="${info.member }" var="member">
                             	<c:if test="${member.memberLevel eq 1 }">
                             		<div class="member_tr delete_false">
-                                        <div><a class="delete_false" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId }</a></div>
                                         <div>${member.memberNickname }</div>
                                         <div>${member.enrollDate }</div>
                             	   </div>
                             	</c:if>
                             	<c:if test="${member.memberLevel eq 3 }">
                             		<div class="member_tr delete_true">
-                                        <div><a class="delete_true" href="javascript:void(0)" onclick="memberPopup(${member.memberId })">${member.memberId }</a></div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="memberPopup('${member.memberId }')">${member.memberId }</a></div>
                                         <div>${member.memberNickname }</div>
                                         <div>${member.enrollDate }</div>
                             	   </div>

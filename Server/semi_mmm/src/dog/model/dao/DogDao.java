@@ -119,4 +119,44 @@ public class DogDao {
 		}
 		return dog;
 	}
+
+	public int updateDog(Connection conn, String dogId, Dog dog) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update dog set dog_name = ?,variety=?,age = ?, dog_gender=?,dog_img=? where dog_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, dog.getDogName());
+			pstmt.setString(index++, dog.getVariety());
+			pstmt.setInt(index++, dog.getAge());
+			pstmt.setString(index++, dog.getDogGender());
+			pstmt.setString(index++, dog.getDogImg());
+			pstmt.setString(index++, dogId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteDog(Connection conn, String dogId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from dog where dog_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dogId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

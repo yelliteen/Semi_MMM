@@ -3,30 +3,31 @@ package dog.model.vo;
 public class Dog {
 	private String dogId;
 	private String dogMemberId;
-	private String dogName;
 	private String variety;
 	private int age;
 	private String dogGender;
 	private String dogImg;
 	private int dogBool;
-
+	private String dogName;
 	
 	public Dog() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Dog(String dogId, String dogMemberId, String variety, String dogName, int age, String dogGender, String dogImg,
-			int dogBool) {
+	
+	public Dog(String dogId, String dogMemberId, String variety, int age, String dogGender, String dogImg, int dogBool,
+			String dogName) {
 		super();
 		this.dogId = dogId;
 		this.dogMemberId = dogMemberId;
 		this.variety = variety;
-		this.dogName = dogName;
 		this.age = age;
 		this.dogGender = dogGender;
 		this.dogImg = dogImg;
 		this.dogBool = dogBool;
+		this.dogName = dogName;
 	}
+
 	public String getDogId() {
 		return dogId;
 	}

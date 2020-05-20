@@ -51,7 +51,6 @@ margin: 5px;
 						val : val
 					},
 					success : function(data) {
-						console.log(data);
 						if (data == true) {
 							what.css("border", "3px solid red");
 							$("#checkId").prop("type","text");

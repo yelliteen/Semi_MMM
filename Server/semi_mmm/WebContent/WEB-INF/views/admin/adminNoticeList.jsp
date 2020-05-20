@@ -55,7 +55,7 @@ nav a {
 				class="fas fa-user fa-fw"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="login.html">Logout</a>
+				<a class="dropdown-item" href="/logout">Logout</a>
 			</div></li>
 	</ul>
 	</nav>
@@ -131,6 +131,12 @@ nav a {
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
+					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
 					</a>
 				</div>
 			</div>
