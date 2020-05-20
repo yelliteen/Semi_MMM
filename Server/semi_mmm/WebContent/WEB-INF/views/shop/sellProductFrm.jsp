@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
@@ -30,7 +31,7 @@
 		  				</c:forEach>
 			  		</div>
 		  		<div id="price">
-		  			<input type="text" name="orderMemberId" value="${sessionScope.member.memberId }">
+		  			<input type="text" name="memberId" value="${sessionScope.member.memberId }">
 		  			<input type="text" name="totalPrice" id="totalPrice" value="" readonly>
 		  			<input type="text" name="bnMemberId" value="">
 		  			<input type="text" name="selectOpt" value="">
