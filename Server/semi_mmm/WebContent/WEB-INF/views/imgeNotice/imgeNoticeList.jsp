@@ -5,9 +5,6 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -51,10 +48,8 @@
 
  <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-<section class="container">
+<div class="container">
 		<h1>커뮤니티 </h1>
-		
-	
 		<c:if test="${not empty sessionScope.member.memberId }">
 		  		<div style="text-align: right;">
 		  			<button id="logining" class="btn btn-lg btn-primary btn-block" style=" width:100px; height: 40px; line-height: 100%; display: inline-block; font-size: 20px; margin-bottom: 1%;" type="submit" onclick="location.href='/noticeDog?memberId=${sessionScope.member.memberId }'">글쓰기</button>
@@ -114,10 +109,7 @@
 		  
 		</tr>
 		</table>
-		
-		
-		
-	</section>
+	</div>
 		
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	

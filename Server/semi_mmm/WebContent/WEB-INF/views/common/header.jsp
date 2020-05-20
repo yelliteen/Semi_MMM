@@ -13,7 +13,7 @@ width: 0px;
 height: 0px;
 }
 @media screen and (max-width: 1200px) {
-  #header .logout {
+  #header .logout, .userName{
     display: none;
   }
 }
@@ -57,14 +57,16 @@ height: 0px;
             <c:if test="${not empty sessionScope.member.memberId }">
                 <span style="font-size:20px;" >
                 <img class="profile" src="/upload/memberImg/${sessionScope.member.profileImg }">&nbsp;&nbsp;&nbsp;
-                <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;">
-                [ ${sessionScope.member.memberNickname } ]</a>&nbsp; 님 </span>
+                <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;" class="userName">
+                [ ${sessionScope.member.memberNickname } ]&nbsp; 님</a> </span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>
                 </c:if>
                <c:if test="${not empty sessionScope.shop.memberId }">
-                <span style="font-size:20px;"><a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;">
+                <img class="profile" src="/upload/memberImg/${sessionScope.shop.profileImg }">&nbsp;&nbsp;&nbsp;
+                <a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454; " class="userName">[ ${sessionScope.shop.memberNickname } ]&nbsp; 님</a></span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>  

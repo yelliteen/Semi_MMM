@@ -50,7 +50,6 @@ public class NoticeListServlet extends HttpServlet {
 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeList.jsp");
 			
-		
 			request.setAttribute("list", pd.getList());
 			request.setAttribute("pageNavi", pd.getPageNavi());
 			request.setAttribute("memberId", memberId);
