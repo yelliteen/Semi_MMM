@@ -42,9 +42,6 @@ public class MyShopFrmServlet extends HttpServlet {
 		//int productNo = Integer.parseInt(request.getParameter("productNo"));
 		//3. 비지니스로직
 		ArrayList<Product> list = new ShopService().selectMenuList(bnMemberId);
-		//ArrayList<ProductOption> subList = new ShopService().selectMenuList(bnMemberId);
-		//ArrayList<ProductOption> subList = new ShopService().selectSubMenuList(productNo,bnMemberId);
-		//ShopViewData list = new ShopService().selectSubMenuList(productNo, bnMemberId)
 		//4. 결과 처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/myShopFrm.jsp");
 		request.setAttribute("list", list);

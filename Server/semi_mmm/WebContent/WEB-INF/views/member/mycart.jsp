@@ -34,6 +34,7 @@
 	<div id="wrapper">
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	  	<div id="content">
+	  	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	  		<c:if test="${not empty sessionScope.member }">
 	  		
 	  			
