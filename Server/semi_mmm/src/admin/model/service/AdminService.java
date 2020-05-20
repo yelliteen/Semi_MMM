@@ -14,14 +14,12 @@ import admin.model.vo.AdminMemberList;
 import admin.model.vo.AdminNoticeCommentList;
 import admin.model.vo.AdminNoticeList;
 import admin.model.vo.AdminQnaList;
-import article.model.dao.ArticleNoticeDao;
 import article.model.vo.ArticleNotice;
 import article.model.vo.ArticleNoticeComment;
 import common.JDBCTemplate;
 import dog.model.vo.Dog;
 import fna.model.vo.Fna;
 import member.model.vo.Member;
-import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 import qna.model.vo.QnaAnswer;
@@ -201,7 +199,7 @@ public class AdminService {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int numPerPage = 10;	//한페이지당 게시물 수
-		int totalCount = new ArticleNoticeDao().getTotalCount(conn);
+		int totalCount = new AdminDao().getTotalCount(conn);
 		int totalPage = 0;
 		
 		//총 페이지수를 연산
@@ -479,7 +477,7 @@ public class AdminService {
 	public AdminNoticeList noticeList(int reqPage) {
 		Connection conn = JDBCTemplate.getConnection();
 		int numPerPage = 10;	//한페이지당 게시물 수
-		int totalCount = new NoticeDao().totalCount(conn);
+		int totalCount = new AdminDao().totalCount(conn);
 		int totalPage = 0;
 		
 		//총 페이지수를 연산
