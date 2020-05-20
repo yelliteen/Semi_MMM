@@ -142,4 +142,21 @@ public class DogDao {
 		}
 		return result;
 	}
+
+	public int deleteDog(Connection conn, String dogId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from dog where dog_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dogId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

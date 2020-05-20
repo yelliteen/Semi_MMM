@@ -72,7 +72,12 @@ function sub() {
 		return true;	
 	}
 	return false;
-	
+}
+function deleteDog(dogId) {
+	var result = confirm("정말 삭제하실 건가요?");
+	if(result) {
+		window.location.href="/deleteDog?dogId="+dogId;
+	} 
 }
 </script>
 <body>
@@ -128,7 +133,7 @@ function sub() {
   </div>
 
 <button type="submit" style="float:right; margin: 20px;" class="btn btn-primary" onclick="return sub();">수정하기</button>
-<button type="button" style="float:right; margin: 20px;" class="btn btn-sumarry" onclick="location.href'/deleteDog'">삭제하기</button>
+<button type="button" style="float:right; margin: 20px;" class="btn btn-sumarry" onclick="deleteDog('${oneDog.dogId }');">삭제하기</button>
   </form>
   </div>
 </body>

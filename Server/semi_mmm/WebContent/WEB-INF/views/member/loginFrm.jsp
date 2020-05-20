@@ -64,7 +64,7 @@
 					} else if(data == 0) {
 						window.location.href = "/admin";
 					}
-					else {
+					else if (data == 3 ){
 						window.location.href = "/";
 					}
 				},

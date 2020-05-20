@@ -26,6 +26,7 @@ public class DogService {
 		} else {
 			JDBCTemplate.rollback(conn);
 		}
+		JDBCTemplate.close(conn);
 		return result;
 	}
 
@@ -51,6 +52,19 @@ public class DogService {
 		} else {
 			JDBCTemplate.rollback(conn);
 		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int deleteDog(String dogId) {
+		Connection conn = new JDBCTemplate().getConnection();
+		int result = new DogDao().deleteDog(conn, dogId);
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
 		return result;
 	}
 

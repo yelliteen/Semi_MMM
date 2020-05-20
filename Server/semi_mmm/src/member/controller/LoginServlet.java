@@ -47,9 +47,11 @@ public class LoginServlet extends HttpServlet {
 			if (m.getMemberLevel() == 1) {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", m);
+				response.getWriter().print(3);
 			} else if (m.getMemberLevel() == 2) {
 				HttpSession session = request.getSession();
 				session.setAttribute("shop", m);
+				response.getWriter().print(3);
 			} else if(m.getMemberLevel() == 3 || m.getMemberLevel() == 4) {
 				response.setContentType("applicaion/json");
 				response.setCharacterEncoding("utf-8");
