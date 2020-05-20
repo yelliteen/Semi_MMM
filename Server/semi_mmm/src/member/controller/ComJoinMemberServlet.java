@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
+import member.model.vo.Shop;
 
 /**
  * Servlet implementation class JoinMemberServlet
@@ -57,7 +57,13 @@ public class ComJoinMemberServlet extends HttpServlet {
 		m.setAddr(request.getParameter("roadAddr")+"/"+request.getParameter("jibunAddr")+"/"+request.getParameter("detailAddr"));
 		m.setMemberLevel(2);
 		m.setProfileImg(null);
-		int result = new MemberService().insertMember(m);
+		new MemberService().insertMember(m);
+		Shop shop = new Shop();
+		shop.setShopId(request.getParameter("shopId"));
+		shop.setShopMemberId(request.getParameter("id"));
+		shop.setShopBank(request.getParameter("shopBank"));
+		shop.setShopBankAccount(request.getParameter("shopBankAccount"));
+		new MemberService().insertShop(shop);
 		request.getRequestDispatcher("/WEB-INF/views/member/joinFinish.jsp").forward(request, response);
 	}
 

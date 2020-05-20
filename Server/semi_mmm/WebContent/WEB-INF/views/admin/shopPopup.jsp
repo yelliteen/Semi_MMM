@@ -43,6 +43,11 @@
 	<h4>사업자 번호 : ${data.shop.shopId }</h4>
 	<h4>사업자 은행 : ${data.shop.shopBank }</h4>
 	<h4>사업자 계좌 : ${data.shop.shopBankAccount }</h4>
+	<h4>프로필 이미지 : 
+		<c:if test="${not empty data.member.profileImg }">
+			<img src="/upload/memberImg/${data.member.profileImg }" style="width: 200px;">
+		</c:if>
+	</h4>
 	<hr>
 	<c:forEach items="${data.products }" var="product">
 		<h4>제품명 : ${product.product.productTitle }</h4>

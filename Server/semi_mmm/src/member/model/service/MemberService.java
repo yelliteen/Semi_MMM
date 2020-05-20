@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import common.JDBCTemplate;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import member.model.vo.Shop;
 
 public class MemberService {
 	public Member selectOneMember(String memberId, String memberPw) {
@@ -63,6 +64,21 @@ public class MemberService {
 		} else {
 			JDBCTemplate.rollback(conn);
 		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int insertShop(Shop shop) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MemberDao().insertShop(conn, shop);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
 		JDBCTemplate.close(conn);
 		return result;
 	}
