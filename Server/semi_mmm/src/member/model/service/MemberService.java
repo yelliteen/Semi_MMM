@@ -1,6 +1,7 @@
 package member.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import member.model.dao.MemberDao;
@@ -10,6 +11,13 @@ public class MemberService {
 	public Member selectOneMember(String memberId, String memberPw) {
 		Connection conn = JDBCTemplate.getConnection();
 		Member m = new MemberDao().selectOneMember(conn, memberId, memberPw);
+		JDBCTemplate.close(conn);
+		return m;
+	}
+	
+	public ArrayList<Member> selectMember(String memberId) {
+		Connection conn = new JDBCTemplate().getConnection();
+		ArrayList<Member> m = new MemberDao().selectMember(conn, memberId);
 		JDBCTemplate.close(conn);
 		return m;
 	}
