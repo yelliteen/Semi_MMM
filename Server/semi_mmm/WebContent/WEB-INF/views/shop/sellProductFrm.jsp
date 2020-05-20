@@ -11,6 +11,7 @@
 <style>
     select{
         width: 170px;
+        margin-bottom: 10px;
     }
     label{
         width: 100px;
