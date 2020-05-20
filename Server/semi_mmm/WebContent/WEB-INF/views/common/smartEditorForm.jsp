@@ -64,20 +64,20 @@
               <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:600px;">
               
 			<c:forEach items="${sessionScope.dog }" var="d">
-		<table style=" margin: 0 auto; margin-bottom: 2%; border: 1px solid #B6EAFA; border-radius: 20px;">
+		<table style=" margin: 0 auto; margin-bottom: 2%; margin-top: 5%; border: 1px solid #B6EAFA; border-radius: 20px;">
 
 			
 			<tbody>
 			
-
+				<br><br>
 			<tr>
-				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/${d.dogImg }); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
+				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/${d.dogImg }); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px; margin-top: 2.5%;"></p></td>
 			</tr>
 				
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : ${dog.dogMemberId }</p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : ${d.dogGender }</p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : ${d.dogName } <input type="hidden" name="dogId" value="${d.dogId }"></p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : ${d.age }살</p></td></tr>
+			<tr><td style=" width:300px; height:30px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : ${dog.dogMemberId }</p></td></tr>
+			<tr><td style=" width:300px; height:30px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : ${d.dogGender }</p></td></tr>
+			<tr><td style=" width:300px; height:30px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : ${d.dogName } <input type="hidden" name="dogName" value="${d.dogName }"></p></td></tr>
+			<tr><td style=" width:300px; height:30px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : ${d.age }살</p></td></tr>
 
 			
 		</tbody>

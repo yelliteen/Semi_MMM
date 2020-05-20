@@ -457,7 +457,6 @@ public class NoticeDao {
 				d.setDogImg(rset.getString("dog_img"));
 				d.setDogBool(rset.getInt("dog_bool"));
 				d.setDogName(rset.getString("dog_name"));
-
 			}
 			
 		} catch (SQLException e) {

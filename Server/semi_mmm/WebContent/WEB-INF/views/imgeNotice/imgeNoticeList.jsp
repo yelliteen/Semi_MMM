@@ -72,7 +72,8 @@
 						<c:choose>
         <c:when test="${n.noticeImgs eq n.noticeImgs }">
 					<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
-					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
+					<a href="/noticeView?noticeNo=${n.noticeNo }&memberId=${n.noticeWriter }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
+					
 					</a>
 					<div style="border: 1px solid black;">
 					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
