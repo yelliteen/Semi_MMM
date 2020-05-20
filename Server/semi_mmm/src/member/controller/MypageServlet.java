@@ -34,9 +34,9 @@ public class MypageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String shopId = request.getParameter("memberId");
-		request.setAttribute("shopId", shopId);
-		request.getRequestDispatcher("/WEB-INF/views/shop/checkShopPage.jsp").forward(request, response);
+		String memberId = request.getParameter("memberId");
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMyPage.jsp").forward(request, response);
 	}
 
 	/**
