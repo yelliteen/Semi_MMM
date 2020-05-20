@@ -55,7 +55,7 @@ nav a {
 				class="fas fa-user fa-fw"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="login.html">Logout</a>
+				<a class="dropdown-item" href="/logout">Logout</a>
 			</div></li>
 	</ul>
 	</nav>
@@ -85,8 +85,8 @@ nav a {
 					<div class="collapse" id="collapseLayouts"
 						aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav"> <a class="nav-link"
-							href="/adminNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminCommentList">댓글 관리</a> </nav>
+							href="/adminNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapsePages" aria-expanded="false"
@@ -102,8 +102,8 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionPages"> <a class="nav-link"
-							href="/adminQnaList">질문 관리</a> <a class="nav-link"
-							href="/adminAnswerList">응답 관리</a> </nav>
+							href="/adminQnaList?reqPage=1">질문 관리</a> <a class="nav-link"
+							href="/adminAnswerList?reqPage=1">응답 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapseArticle" aria-expanded="false"
@@ -119,18 +119,24 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionArticle"> <a class="nav-link"
-							href="/adminArticleNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminArticleCommentList">댓글 관리</a> </nav>
+							href="/adminArticleNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminArticleCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<div class="sb-sidenav-menu-heading">회원관리</div>
-					<a class="nav-link" href="/adminUserList">
+					<a class="nav-link" href="/adminUserList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 일반 회원
-					</a> <a class="nav-link" href="/adminBusinessList">
+					</a> <a class="nav-link" href="/adminBusinessList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
+					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
 					</a>
 				</div>
 			</div>

@@ -33,6 +33,18 @@
 		function page() {
 			opener.parent.location.href = "/adminArticleRead?articleNoticeNo=${comment.articleRef}";
 		}
+		
+		function deleteConfirm() {
+			if (confirm("댓글 삭제하시겠습니까?")) {
+				location.href = "/adminArticleCommentDelete?articleCommentNo=${comment.articleCommentNo}";
+			}
+		}
+		
+		function recoveryConfirm() {
+			if (confirm("댓글을 복구하시겠습니까?")) {
+				location.href = "/adminArticleCommentRecovery?articleCommentNo=${comment.articleCommentNo}";
+			}
+		}
 	</script>
 </body>
 </html>

@@ -55,7 +55,7 @@ nav a {
 				class="fas fa-user fa-fw"></i></a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="login.html">Logout</a>
+				<a class="dropdown-item" href="/logout">Logout</a>
 			</div></li>
 	</ul>
 	</nav>
@@ -85,8 +85,8 @@ nav a {
 					<div class="collapse" id="collapseLayouts"
 						aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav"> <a class="nav-link"
-							href="/adminNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminCommentList">댓글 관리</a> </nav>
+							href="/adminNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapsePages" aria-expanded="false"
@@ -102,8 +102,8 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionPages"> <a class="nav-link"
-							href="/adminQnaList">질문 관리</a> <a class="nav-link"
-							href="/adminAnswerList">응답 관리</a> </nav>
+							href="/adminQnaList?reqPage=1">질문 관리</a> <a class="nav-link"
+							href="/adminAnswerList?reqPage=1">응답 관리</a> </nav>
 					</div>
 					<a class="nav-link collapsed" data-toggle="collapse"
 						data-target="#collapseArticle" aria-expanded="false"
@@ -119,18 +119,24 @@ nav a {
 						aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav accordion"
 							id="sidenavAccordionArticle"> <a class="nav-link"
-							href="/adminArticleNoticeList">게시글 관리</a> <a class="nav-link"
-							href="/adminArticleCommentList">댓글 관리</a> </nav>
+							href="/adminArticleNoticeList?reqPage=1">게시글 관리</a> <a class="nav-link"
+							href="/adminArticleCommentList?reqPage=1">댓글 관리</a> </nav>
 					</div>
 					<div class="sb-sidenav-menu-heading">회원관리</div>
-					<a class="nav-link" href="/adminUserList">
+					<a class="nav-link" href="/adminUserList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 일반 회원
-					</a> <a class="nav-link" href="/adminBusinessList">
+					</a> <a class="nav-link" href="/adminBusinessList?reqPage=1">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-columns"></i>
 						</div> 사업자 회원
+					</a>
+					<div class="sb-sidenav-menu-heading">사이트관리</div>
+					<a class="nav-link" href="/adminFnaList?reqPage=1">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-columns"></i>
+						</div> F&A 관리
 					</a>
 				</div>
 			</div>
@@ -140,10 +146,73 @@ nav a {
 			</div>
 			</nav>
 		</div>
-
+        <script>
+            function answerPopup(answerNo) {
+                var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+                var title = "adminQnaAnswer";
+                var url = "/adminQnaAnswer";
+                var popup = window.open("", title, status);
+                
+                $("input[name=answerNo]").val(answerNo);
+                $("#page").attr("action", url);
+                $("#page").attr("method", "post");
+                $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+                $("#page").submit();
+            }
+        </script>
 		<div id="layoutSidenav_content">
 			<main>
-				
+                <form id="page">
+                    <input type="hidden" name="answerNo">
+                </form>
+				<h1 style="margin: 20px;">Q&A 응답 관리</h1>
+				<hr>
+				<table class="list_table comment_notice">
+                    <tr>
+                        <th>댓글번호</th>
+                        <th>게시물번호</th>
+                        <th>내용</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    <c:forEach items="${data.list }" var="comment">
+                    	<c:if test="${comment.answerDeleteBool eq 0 }">
+                    		<tr class="delete_false">
+                    			<td>${comment.answerNo }</td>
+                    			<td><a class="delete_false" href="/adminArticleRead?articleNoticeNo=${comment.qnaNoticeNo }">${comment.qnaNoticeNo }</a></td>
+                                <td><a class="delete_false" href="javascript:void(0)" onclick="answerPopup(${comment.answerNo })">${comment.answerContent }</a></td>
+                    			<td>${comment.answerWriter }</td>
+                    			<td>${comment.answerDate }</td>
+                    		</tr>
+                    	</c:if>
+                    	<c:if test="${comment.answerDeleteBool eq 1 }">
+                    		<tr class="delete_true">
+                    			<td>${comment.answerNo }</td>
+                    			<td><a class="delete_true" href="/adminArticleRead?articleNoticeNo=${comment.qnaNoticeNo }">${comment.qnaNoticeNo }</a></td>
+                                <td><a class="delete_true" href="javascript:void(0)" onclick="answerPopup(${comment.answerNo })">${comment.answerContent }</a></td>
+                    			<td>${comment.answerWriter }</td>
+                    			<td>${comment.answerDate }</td>
+                    		</tr>
+                    	</c:if>
+                    </c:forEach>
+                </table>
+                <div class="pageNavi">
+                    ${data.pageNavi }
+                </div>
+                <div class="searchBox">
+                	<div>
+	                	<form action="/adminAnswerList" method="get">
+	                		<input type="hidden" name="reqPage" value="1">
+	                		<select name="type" class="form-control" style="width: 150px;">
+	                			<option value="qna_notice_no">질문 번호</option>
+	                			<option value="answer_writer">작성자</option>
+	                			<option value="answer_content">내용</option>
+	                		</select>
+	                		<input type="text" class="form-control" style="width: 300px" name="search">
+	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
+	                	</form>
+                	</div>
+                </div>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
 			<div class="container-fluid">
@@ -158,6 +227,41 @@ nav a {
 			</footer>
 		</div>
 	</div>
+    <script>
+        $(function() {
+            var aTag = $("tr>td:nth-of-type(3)").children();
+            
+            for (var i = 0; i < aTag.length; i++) {
+                aTag.eq(i).html(aTag.eq(i).html().replace(/(<([^>]+)>)/ig,""));
+            }
+        });
+        function check() {
+            if ($("input[name=search]").val() == "") {
+                alert("검색 내용을 입력하세요.");
+                return false;
+            }
+            
+            var regExp = /\D/;
+            if ($("option:selected").val() == "qna_notice_no" && regExp.test($("input[name=search]").val())) {
+                alert("숫자를 입력하세요.");
+                return false;
+            }
+        }
+    </script>
+    <c:if test="${not empty search}">
+        <script>
+            var option = $("option");
+			for (var i = 0; i < option.length; i++) {
+                console.log(option.eq(i).val());
+				if (option.eq(i).val() == "${type}") {
+                    option.eq(i).prop("selected", "true");
+                    break;
+                }
+			}
+            
+            $("input[name=search]").val("${search}");
+        </script>
+    </c:if>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>

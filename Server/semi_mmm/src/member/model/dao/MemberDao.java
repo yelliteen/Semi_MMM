@@ -1,6 +1,7 @@
 package member.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -114,14 +115,13 @@ public class MemberDao {
 	public Member selectOneMember(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Member m = null;
+		Member m = new Member();
 		String query = "select * from member where member_id = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberId);
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
-				m = new Member();
 				m.setMemberId(rset.getString("member_id"));
 				m.setMemberPw(rset.getString("member_pw"));
 				m.setMemberNickname(rset.getString("member_nickname"));
@@ -141,5 +141,29 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return m;
+	}
+
+	public int updateMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update member set member_pw=?,member_name=?,member_nickname = ?, phone=? ,addr=?, profile_img=? where member_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, m.getMemberPw());
+			pstmt.setString(index++, m.getMemberName());
+			pstmt.setString(index++, m.getMemberNickname());
+			pstmt.setString(index++, m.getPhone());
+			pstmt.setString(index++, m.getAddr());
+			pstmt.setString(index++, m.getProfileImg());
+			pstmt.setString(index++, m.getMemberId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 }

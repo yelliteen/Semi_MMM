@@ -21,8 +21,8 @@ public class NoticePageData {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
+
+
 	public ArrayList<Notice> getList() {
 		return list;
 	}

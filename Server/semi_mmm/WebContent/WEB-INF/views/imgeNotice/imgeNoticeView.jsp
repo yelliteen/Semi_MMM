@@ -1,3 +1,4 @@
+<%@page import="notice.model.vo.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -76,7 +77,7 @@
 				<tr>
 					<th colspan="2" style="text-align: center">
 						<c:if test="${sessionScope.member.memberNickname == n.noticeWriter || sessionScope.shop.memberNickname == n.noticeWriter}">
-							<a class="btn btn-outline-primary btn sm" href="updateImgeNoticeFrm?noticeNo=${n.noticeNo }">수정하기</a>
+							<a class="btn btn-outline-primary btn sm" href="updateNoticeFrm?noticeNo=${n.noticeNo }">수정하기</a>
 							<!-- href="javascript:void(0); : 클릭이벤트 취소시킴 -->
 							<a class="btn btn-outline-primary btn sm" href="javascript:void(0);" onclick="deleteNotice('${n.noticeNo }');">삭제하기</a>
 						</c:if>
@@ -86,16 +87,26 @@
 				</tr>
 			</table>
 		</div>
+		
+		
+		
+		
+		<!-- ----------------------------------------------------------댓글창------------------------------------------------- -->
+		
 		<!-- 로그인이 되면 생성 -->
-		<c:if test="${not empty sessionScope.member.memberId || not empty sessionScope.shop.memberId }">
+		<c:if test="${not empty sessionScope.member.memberId }">
 		<!-- 댓글 작성창 -->
 		<div class="comment-wrapper">
 			<form action="/noticeCommentInsert" method="post">
 			<!-- 작성자, 게시글번호, 댓글레벨, 댓글번호 -->
-			<input type="hidden" name="noticeCommentWriter" value="${sessionScope.member.memberId || sessionScope.shop.memberId }">
-			<input type="hidden" name="noticeRef" value="${n.noticeNo }">
+			<input type="hidden" name="noticeCommentWriter" value="${sessionScope.member.memberId }">
+			<input type="hidden" name="noticeCommentWriterNickname" value="${sessionScope.member.memberNickname }">
+			<input type="hidden" name="noticeCommentRef" value="${n.noticeNo }">
+			<input type="hidden" name="dogId" value="${n.dogId }">
 			<input type="hidden" name="noticeCommentLevel" value="1">
-			<input type="hidden" name="noticeCommentRef" value="0">
+			<input type="hidden" name="noticeCommentNo" value="0">
+			<input type="hidden" name="noticeCommentRefTwo" value="0">
+			
 				<table class="table">
 					<tr>
 						<td width="85%">
@@ -110,70 +121,117 @@
 				</form>
 			</div>
 		</c:if>
+		
+		
+				<c:if test="${not empty sessionScope.shop.memberId }">
+		<!-- 댓글 작성창 -->
+		<div class="comment-wrapper">
+			<form action="/noticeCommentInsert" method="post">
+			<!-- 작성자, 게시글번호, 댓글레벨, 댓글번호 -->
+			<input type="hidden" name="noticeCommentWriter" value="${sessionScope.shop.memberId }">
+			<input type="hidden" name="noticeCommentWriterNickname" value="${sessionScope.shop.memberNickname }">
+			<input type="hidden" name="noticeCommentRef" value="${n.noticeNo }">
+			<input type="hidden" name="dogId" value="${n.dogId }">
+			<input type="hidden" name="noticeCommentLevel" value="1">
+			<input type="hidden" name="noticeCommentNo" value="0">
+			<input type="hidden" name="noticeCommentRefTwo" value="0">
+			
+				<table class="table">
+					<tr>
+						<td width="85%">
+							<input type="text" class="form-control" name="noticeCommentContent">
+						</td>
+						
+						<td width="15%">
+							<button type="submit" class="btn btn-primary">등록 ${n.dogImg }</button>
+						</td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</c:if>
  
 		<div class="comment-wrapper">
 			<c:forEach items="${list }" var="nc">
+			
+
+	
 			<c:if test="${nc.noticeCommentLevel eq 1 }">
-				<ul class="commentList">
-					<li style="width:5%; text-align:center;" >
-						<span>${nc.noticeCommentWriter }</span>
-					</li>
+				<c:if test="${nc.noticeCommentBool eq 0 }">
+				<div class="commentList" style="margin-bottom: 1%; ">
+					<div style="width:5%; text-align:center;" >
+						<div style="display: inline-block;">
+						${nc.noticeCommentWriter}
+						</div>
+						<input type="hidden" value="${nc.noticeCommentWriter }" name="noticeCommentWriter">
+					</div>
 					
-					<li style="width:65%">
+					<div style="width:65%; display: inline-block;">
 						<span>${nc.noticeCommentContent }</span>
 						<input type="text" class="form-control" name="noticeCommentContent" value="${nc.noticeCommentContent }"
 						style="display:none;">
-						
-					</li>
+					</div>
 					
-					<li style="width:10%; text-align:center;">
+					<div style="width:10%; text-align:center; display: inline-block;">
 						<span>${nc.noticeCommentDate }</span>
-					</li>
+						<input type="hidden" value="${nc.noticeCommentDate }" name="noticeCommentDate">
+					</div>
 					
-					<li style="width:20%; text-align:center;">
-						<c:if test="${not empty sessionScope.member || not empty sessionScope.shop }">
-							<a href="javascript:void(0)" onclick="insertComment(this,'${nc.noticeCommentNo }','${n.noticeNo }','${sessionScope.Member.memberId }')">댓글달기</a>
-							<c:if test="${sessionScope.member.memberNickname == nc.noticeCommentWriter || sessionScope.shop.memberNickname == nc.noticeCommentWriter}">
+					<div style="width:20%; text-align:center; display: inline-block;">
+						<c:if test="${not empty sessionScope.member.memberId}">
+							<a href="javascript:void(0)" onclick="insertComment(this,'${nc.noticeCommentNo }','${n.noticeNo }','${sessionScope.member.memberId }', '${n.dogId }')">댓글달기</a>
+							<c:if test="${sessionScope.member.memberId == nc.noticeCommentWriter || sessionScope.member.memberId == nc.noticeCommentWriter}">
 								<a href="javascript:void(0)" onclick="modifyComment(this, '${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">수정</a>
 								<a href="javascript:void(0)" onclick="deleteComment('${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">삭제</a>
 							</c:if>
 						</c:if>
-					</li>
-				</ul>
+						
+						<c:if test="${not empty sessionScope.shop.memberId}">
+							<a href="javascript:void(0)" onclick="insertComment(this,'${nc.noticeCommentNo }','${n.noticeNo }','${sessionScope.shop.memberId }', '${n.dogId }')">댓글달기</a>
+							<c:if test="${sessionScope.member.memberId == nc.noticeCommentWriter || sessionScope.shop.memberId == nc.noticeCommentWriter}">
+								<a href="javascript:void(0)" onclick="modifyComment(this, '${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">수정</a>
+								<a href="javascript:void(0)" onclick="deleteComment('${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">삭제</a>
+							</c:if>
+						</c:if>
+					</div>
+				</div>
+			</c:if>
 			</c:if>
 				<c:forEach items="${list }" var="ncc">
 					<c:if test="${ncc.noticeCommentLevel eq 2 && nc.noticeCommentNo eq ncc.noticeCommentRefTwo }">
-						<ul class="commentList">
-							<li style="width:5%; text-align: center">
-								<span>└─</span>
-							</li>
+						<c:if test="${nc.noticeCommentBool eq 0 }">
+						<div class="commentList">
+							<div style="width:5%; text-align: center">
+							</div>
 							
-							<li style="width:10%; text-align: center">
+							<div style="width:10%; text-align: center">
 								<span>${ncc.noticeCommentWriter }</span>
-							</li>
-							<li style="width:50%">
+							</div>
+							<div style="width:50%">
 								<span>${ncc.noticeCommentContent }</span>
 								<input type="text" class="form-control" name="noticeCommentContent" value="${ncc.noticeCommentContent }"
 						style="display:none;">
-							</li>
+							</div>
 							
-							<li style="width:10%; text-align: center">
+							<div style="width:10%; text-align: center">
 								<span>${ncc.noticeCommentDate }</span>
-							</li>
+							</div>
 							
-							<li style="width:20%; text-align:center;">
+							<div style="width:20%; text-align:center;">
 								<c:if test="${not empty sessionScope.member && sessionScope.member.memberNickname eq ncc.noticeCommentWriter }">
-									<a href="javascript:void(0)" onclick="modifyComment(this, '${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }')">수정</a>
+
+									<a href="javascript:void(0)" onclick="modifyComment(this, '${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }', '${ncc.noticeCommentContent }')">수정</a>
 									<a href="javascript:void(0)" onclick="deleteComment('${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }')">삭제</a>
 								</c:if>
 								
 								<c:if test="${not empty sessionScope.shop && sessionScope.shop.memberNickname eq ncc.noticeCommentWriter }">
-									<a href="javascript:void(0)" onclick="modifyComment(this, '${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }')">수정</a>
+									<a href="javascript:void(0)" onclick="modifyComment(this, '${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }' '${ncc.noticeCommentContent }')">수정</a>
 									<a href="javascript:void(0)" onclick="deleteComment('${ncc.noticeCommentNo }', '${ncc.noticeCommentRef }')">삭제</a>
 								</c:if>
-							</li>
-						</ul>
+							</div>
+						</div>
 					</c:if>
+				</c:if>
 				</c:forEach>
 		</c:forEach>
 	</div>
@@ -188,7 +246,7 @@
 				location.href="/deleteNotice?noticeNo="+noticeNo;
 			}
 		}
-		function insertComment(obj,commentNo,noticeNo,memberId){
+		function insertComment(obj,commentNo,noticeNo,memberId, dogId){
 			$(obj).parent().hide();
 			var $form = $("<form action='/noticeCommentInsert' method='post'></form>");
 			var $ul = $("<ul class='commentList'></ul>");
@@ -196,10 +254,12 @@
 			$form.append($("<input type='hidden' name='noticeCommentRef' value='"+noticeNo+"'>"));
 			$form.append($("<input type='hidden' name='noticeCommentLevel' value='2'>"));
 			$form.append($("<input type='hidden' name='noticeCommentRefTwo' value='"+commentNo+"'>"));
-			var $li1 = $("<li style='width:5%'>└─</li>");
-			var $li2 = $("<li style='width:75%'></li>");
+			$form.append($("<input type='hidden' name='noticeCommentNo' value='0'>"));
+			$form.append($("<input type='hidden' name='dogId' value='"+dogId+"'>"));
+			var $li1 = $("<div>여기에 화살표 넣어야함.</div>");
+			var $li2 = $("<div style='width:75%'></div>");
 			$li2.append($("<input type='text' name='noticeCommentContent' class='form-control'>"));
-			var $li3 = $("<li style='width:20%'></li>");
+			var $li3 = $("<div style='width:20%'></div>");
 			$li3.append($("<button type='submit' class='btn btn-link btn-sm'>등록</button>"));
 			$li3.append($("<button type='button' class='btn btn-link btn-sm' onclick='insertCancel(this)'>취소</button>"));
 			$ul.append($li1).append($li2).append($li3);
@@ -208,18 +268,17 @@
 		}
 		
 		function insertCancel(obj){
-			$(obj).parents('form').prev().children().last().show();
-			$(obj).parents('form').remove();
+			location.href="/noticeList?reqPage=1";
 		}
 		
 		function deleteComment(noticeCommentNo, noticeCommentRef){
 			location.href="/noticeCommentDelete?noticeCommentNo="+noticeCommentNo+"&noticeCommentRef="+noticeCommentRef;
 		}
 		
-		function modifyComment(obj, noticeCommentNo, noticeCommentRef){
+		function modifyComment(obj, noticeCommentNo, noticeCommentRef, noticeCommentContent){
 			$(obj).prev().hide();
 			$(obj).html('수정완료');
-			$(obj).attr('onclick','modifyComplete(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'")');
+			$(obj).attr('onclick','modifyComplete(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'" , "'+noticeCommentContent+'")');
 			$(obj).next().html('취소');
 			$(obj).next().attr('onclick','modifyCancel(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'")');
 			$(obj).parent().parent().find('input').show();
@@ -236,10 +295,11 @@
 			$(obj).parent().parent().find('input').prev().show();
 		}
 		
-		function modifyComplete(obj, noticeCommentNo, noticeCommentRef){
+		function modifyComplete(obj, noticeCommentNo, noticeCommentRef ,noticeCommentContent){
 			var $form=$("<form action='/noticeCommentUpdate' method='post'></form>");
-			$form.append($("<input type='text' name='noticeCommentNo' valur='"+noticeCommentNo+"'>"));
-			$form.append($("<input type='text' name='noticeCommentRef' valur='"+noticeCommentRef+"'>"));
+			$form.append($("<input type='text' name='noticeCommentNo' value='"+noticeCommentNo+"'>"));
+			$form.append($("<input type='text' name='noticeCommentRef' value='"+noticeCommentRef+"'>"));
+
 			$form.append($(obj).parent().parent().find('input'));
 			$('body').append($form);
 			$form.submit();
