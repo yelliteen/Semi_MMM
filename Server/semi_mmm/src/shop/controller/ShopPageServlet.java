@@ -10,23 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dog.model.service.DogService;
+import dog.model.vo.Dog;
+import member.model.service.MemberService;
 import member.model.vo.Member;
-import shop.model.service.ShopService;
-import shop.model.vo.Product;
-import shop.model.vo.ProductOption;
-import shop.model.vo.ShopViewData;
 
 /**
- * Servlet implementation class MyShopFrmServlet
+ * Servlet implementation class MypageServlet
  */
-@WebServlet(name = "MyShopFrm", urlPatterns = { "/myShopFrm" })
-public class MyShopFrmServlet extends HttpServlet {
+@WebServlet(name = "ShopPage", urlPatterns = { "/shopPage" })
+public class ShopPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyShopFrmServlet() {
+    public ShopPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,18 +34,9 @@ public class MyShopFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-		request.setCharacterEncoding("utf-8");
-		//2. 변수에 값 저장
-		String bnMemberId = request.getParameter("bnMemberId");
-		//int productNo = Integer.parseInt(request.getParameter("productNo"));
-		//3. 비지니스로직
-		ArrayList<Product> list = new ShopService().selectMenuList(bnMemberId);
-		//4. 결과 처리
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/myShopFrm.jsp");
-		request.setAttribute("list", list);
-		//request.setAttribute("subList", subList);
-		rd.forward(request, response);
+		String shopId = request.getParameter("memberId");
+		request.setAttribute("shopId", shopId);
+		request.getRequestDispatcher("/WEB-INF/views/shop/checkShopPage.jsp").forward(request, response);
 	}
 
 	/**

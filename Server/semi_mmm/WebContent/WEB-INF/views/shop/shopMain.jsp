@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%
-    	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+       ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -62,10 +62,11 @@
 			<%for(Member m : list) {%>
 	         <ul>
 	         	<li class="sell-list"> 
-	         		<a onclick="location.href='/sellProductFrm2?memberId=<%=m.getMemberId() %>'"> <input type="hidden" name="memberId">
+	         		<a onclick="location.href='/sellProductFrm2?memberId=<%=m.getMemberId() %>'">
+	         			<input type="hidden" name="memberId">
 	         			<div class="sell-list1"></div>
 	         			<div class="sell-list2">
-	         				<div><%=m.getMemberNickname() %></div>
+	         				<div name="memberNickname"><%=m.getMemberNickname() %></div>
 	         				<div><%=m.getMemberName() %></div>
 	         			</div>
 	         		</a>

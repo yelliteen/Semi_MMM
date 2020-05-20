@@ -46,7 +46,7 @@ height: 0px;
                         <a href="/shopMain" class="openbtn">디저트</a>
                         <a href="/noticeList?reqPage=1" class="openbtn">커뮤니티</a>
                         <a href="/map" class="openbtn">함께 할 수 있는 곳</a>
-                        <a href="/fna" class="openbtn">F&A</a>
+                        <a href="/fna" class="openbtn">F & A</a>
                     </div>
 
                 </div>
@@ -57,7 +57,7 @@ height: 0px;
             <c:if test="${not empty sessionScope.member.memberId }">
                 <span style="font-size:20px;" >
                 <img class="profile" src="/upload/memberImg/${sessionScope.member.profileImg }">&nbsp;&nbsp;&nbsp;
-                <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;" class="userName">
+                <a href="/myPage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;" class="userName">
                 [ ${sessionScope.member.memberNickname } ]&nbsp; 님</a> </span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
@@ -66,7 +66,7 @@ height: 0px;
                <c:if test="${not empty sessionScope.shop.memberId }">
                 <span style="font-size:20px;">
                 <img class="profile" src="/upload/memberImg/${sessionScope.shop.profileImg }">&nbsp;&nbsp;&nbsp;
-                <a onclick="location.href='/myShopFrm?memberId=${sessionScope.shop.memberId}'" style="text-decoration:none; color:#545454; " class="userName">[ ${sessionScope.shop.memberNickname } ]&nbsp; 님</a></span>
+                 <a href="/shopPage?memberId=${sessionScope.shop.memberId }"  style="text-decoration:none; color:#545454; " class="userName">[ ${sessionScope.shop.memberNickname } ]&nbsp; 님</a></span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>  

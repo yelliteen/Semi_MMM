@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>마이페이지 ?memberId=${sessionScope.member.memberId }</title>
+<title>마이페이지 ?shopId=${sessionScope.shop.memberId }</title>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -15,7 +15,7 @@
 				<label for="checkPw2" style="font-size: 20px;">비밀번호 확인
 					:&nbsp;&nbsp;</label><input type="password" id="checkPw2" class="input-lg"
 					style="border: 1px solid #ccc;"> <input type="hidden"
-					value="${memberId}" id="memberId"> <input type="button"
+					value="${shopId}" id="memberId"> <input type="button"
 					class="btn btn-lg btn-primary btn-lg signup-btn" id="success"
 					value="확인">
 				<button class="btn btn-lg btn-summarry btn-lg signup-btn"
@@ -42,7 +42,7 @@
 				if (data == false) {
 					$("#result").html("비밀번호가 틀렸습니다");
 				} else {
-					location.href='/mypageMain?memberId=${memberId}';
+					location.href='/shopPageMain?shopId=${shopId}';
 				}
 			}
 		});

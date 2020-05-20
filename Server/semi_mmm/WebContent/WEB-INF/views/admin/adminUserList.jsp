@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 사업자 회원 관리 페이지</title>
+<title>Adimn - 일반 회원 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"

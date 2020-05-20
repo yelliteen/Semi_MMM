@@ -20,10 +20,8 @@
     	}
     </style>
     <div style="width:100%; height:50px;">
-<ul style="list-style:none; margin:0 auto; text-align:center;" class="mypage-menu">
-	<li><a href="/mypageMain?memberId=${member.memberId }">개인정보</a></li>
-	<li><a href="/myDog?memberId=${member.memberId }">내 강아지 등록</a></li>
-	<li><a href="/showMyList?memberId=${member.memberId }&reqPage=1">내 글보기</a></li>
-	<li><a href="/myCart?memberId=${member.memberId }">장바구니</a></li>
-</ul>
-</div>
+		<ul style="list-style:none; margin:0 auto; text-align:center;" class="mypage-menu">
+			<li><a href="/shopPageMain?memberId=${shop.memberId }">개인정보</a></li>
+			<li><a href="/myShopFrm?memberId=${shop.memberId }">내 가게 수정</a></li>
+		</ul>
+	</div>

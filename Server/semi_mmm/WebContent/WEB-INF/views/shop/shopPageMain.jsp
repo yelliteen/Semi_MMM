@@ -12,7 +12,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 <div id="mypageArea" style="margin: 0 auto; width:1100px;border: 1px solid  #E4E8EB;">
-<jsp:include page="/WEB-INF/views/member/mypageMenu.jsp" />
+<jsp:include page="/WEB-INF/views/shop/shopPageMenu.jsp" />
  <style>.mypage-menu>li:first-child {background-color: #B6EAFA;}
 #joinForm{width: 1000px;margin: 0 auto;padding-top: 50px; padding-bottom: 50px;padding-right:20px;}
 .input-lg {width:80%; border: 1px solid black;}
@@ -168,9 +168,9 @@
   <div><label for="pwchk">비번 확인  &nbsp;</label><input type="password" id="pwchk" name="pwchk"  class="input-lg" />
    <input type="hidden" id="checkPw" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly></div><br>
     <div><label for="name">이름  &nbsp;</label><input type="text" name="name" id="name" class="input-lg" value="${m.memberName }"/></div><br>
-  <div><label for="nick">닉네임  &nbsp;</label><input type="text" name="nickname" id="nick" class="input-lg" value="${m.memberNickname }"/>
+  <div><label for="nick">샵이름  &nbsp;</label><input type="text" name="nickname" id="nick" class="input-lg" value="${m.memberNickname }"/>
   <input type="hidden" id="checkNick" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly></div><br>
-     <div><label for="birth">생년월일  &nbsp;</label> <input type="text" name="birth" id="birth" class="input-lg" value="${m.memberBirth }" readonly/>
+     <div><label for="birth">창업날짜  &nbsp;</label> <input type="text" name="birth" id="birth" class="input-lg" value="${m.memberBirth }" readonly/>
      <input type="hidden" id="checkBirth" style="border:0px; color:red;font-size:11px;margin-left:20px;" size="30" readonly></div><br>
  <div id="phone_area" style="float:right; width:100%;">
   <label for="ph2" style="width:15%;">연락처  &nbsp;</label>

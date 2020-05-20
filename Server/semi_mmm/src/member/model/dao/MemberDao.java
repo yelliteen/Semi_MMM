@@ -1,7 +1,6 @@
 package member.model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import member.model.vo.Member;
+import member.model.vo.Shop;
 
 public class MemberDao {
 
@@ -232,5 +232,29 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return list;
+	}
+
+	public int insertShop(Connection conn, Shop shop) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into shop values(?, ?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, shop.getShopId());
+			pstmt.setString(index++, shop.getShopMemberId());
+			pstmt.setString(index++, shop.getShopBank());
+			pstmt.setString(index++, shop.getShopBankAccount());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 }

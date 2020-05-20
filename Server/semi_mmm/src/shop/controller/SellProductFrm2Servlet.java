@@ -37,6 +37,7 @@ public class SellProductFrm2Servlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		//2. 변수에 값 저장
 		String bnMemberId = request.getParameter("memberId");
+		String memberNickname = request.getParameter("memberNickname");
 		//3. 비지니스로직
 		//ArrayList<Product> pl = new ShopService().selectMenuList(bnMemberId);
 		ArrayList<ShopViewData> sl = new ShopService().selectMenuListFrm(bnMemberId);
@@ -44,7 +45,8 @@ public class SellProductFrm2Servlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/sellProductFrm.jsp");
 		request.setAttribute("loc", "/sellProductFrm?memberId="+bnMemberId);
 		request.setAttribute("sl", sl);
-		//request.setAttribute("pl", pl);
+		request.setAttribute("bnMemberId", bnMemberId);
+		request.setAttribute("memberNickname", memberNickname);
 		rd.forward(request, response);
 	}
 
