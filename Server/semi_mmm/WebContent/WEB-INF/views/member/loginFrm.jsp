@@ -40,8 +40,6 @@
 			var level = $('input[name="userlevel"]:checked').val();
 			var memberId = $("#uid").val();
 			var memberPw = $("#upw").val();
-			console.log(memberId);
-			console.log(memberPw);
 			var user = {
 					level : level,
 					memberId : memberId,

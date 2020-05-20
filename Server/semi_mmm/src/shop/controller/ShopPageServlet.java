@@ -18,7 +18,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MypageServlet
  */
-@WebServlet(name = "Mypage", urlPatterns = { "/mypage" })
+@WebServlet(name = "ShopPage", urlPatterns = { "/shopPage" })
 public class ShopPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
