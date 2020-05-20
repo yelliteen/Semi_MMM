@@ -16,7 +16,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Adimn - 일반 회원 관리 페이지</title>
+<title>Adimn - 사업자 회원 관리 페이지</title>
 <link href="/admin/css/tg_styles.css" rel="stylesheet" />
 <link
 	href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
@@ -146,10 +146,95 @@ nav a {
 			</div>
 			</nav>
 		</div>
+		<style>
+            .member_table {
+                width: 90%;
+                margin: 0 auto;
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .member_table>tbody, .meber_table tr {
+                width: 100%;
+            }
+            
+            .member_table tr {
+                height: 50px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+            }
+            
+            .member_table a {
+                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            }
+        </style>
+        <script>
+	        function shopPopup(memberId) {
+	            var status = "left=500px, top=100px, width=1200px, height=800px, menubar=no, status=no,scrollbars=yes";
+	            var title = "adminShopInfo";
+	            var url = "/adminShopInfo";
+	            var popup = window.open("", title, status);
+	            
+	            $("input[name=memberId]").val(memberId);
+	            $("#page").attr("action", url);
+	            $("#page").attr("method", "post");
+	            $("#page").attr("target", title); //새로 열린 popup창과 form 태그를 연결
+	            $("#page").submit();
+	        }
+        </script>
 
 		<div id="layoutSidenav_content">
 			<main>
-				
+				<form id="page">
+                    <input type="hidden" name="memberId">
+                </form>
+				<h1 style="margin: 20px;">사업자 회원 관리</h1>
+				<hr>
+				<table class="member_table">
+                    <tr>
+                        <th>아이디</th>
+                        <th>닉네임</th>
+                        <th>이름</th>
+                        <th>가입일</th>
+                        <th>전화번호</th>
+                    </tr>
+                    <c:forEach items="${data.list }" var="member">
+                    	<c:if test="${member.memberLevel eq 2 }">
+                    		<tr class="delete_false">
+                                <td><a class="delete_false" href="javascript:void(0)" onclick="shopPopup('${member.memberId }')">${member.memberId}</a></td>
+                                <td>${member.memberNickname}</td>
+                                <td>${member.memberName}</td>
+                                <td>${member.enrollDate}</td>
+                                <td>${member.phone}</td>
+                    		</tr>
+                    	</c:if>
+                    	<c:if test="${member.memberLevel eq 4 }">
+                    		<tr class="delete_true">
+                                <td><a class="delete_true" href="javascript:void(0)" onclick="shopPopup('${member.memberId }')">${member.memberId}</a></td>
+                                <td>${member.memberNickname}</td>
+                                <td>${member.memberName}</td>
+                                <td>${member.enrollDate}</td>
+                                <td>${member.phone}</td>
+                    		</tr>
+                    	</c:if>
+                    </c:forEach>
+                </table>
+                <div class="pageNavi">
+                    ${data.pageNavi }
+                </div>
+                <div class="searchBox">
+                	<div>
+	                	<form action="/adminUserList" method="get">
+	                		<input type="hidden" name="reqPage" value="1">
+	                		<select name="type" class="form-control" style="width: 150px;">
+	                			<option value="member_id">아이디</option>
+	                			<option value="member_nickname">닉네임</option>
+	                		</select>
+	                		<input type="text" class="form-control" style="width: 300px" name="search">
+	                		<input type="submit" class="btn btn-primary" style="width: 80px; height: 40px" value="검색" onclick="return check();">
+	                	</form>
+                	</div>
+                </div>
 			</main>
 			<footer class="py-4 bg-light mt-auto">
 			<div class="container-fluid">
