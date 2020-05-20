@@ -213,6 +213,7 @@
   <br>
   <br><br>
 		  <div style="width:100%; text-align:center; padding:20px;">
+		    <input type="hidden" value="${m.memberLevel }" name="memberLevel">
   <button class="btn btn-lg btn-secondary btn signup-btn" type="button" style="width:300px;" onclick="location.href='/'">나가기</button>
   <button class="btn btn-lg btn-primary btn signup-btn" type="submit" style="width:300px;" onclick="return sub();">내 정보 수정</button>
 </div>
