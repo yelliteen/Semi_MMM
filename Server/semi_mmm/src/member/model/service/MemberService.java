@@ -9,7 +9,7 @@ import member.model.vo.Member;
 
 public class MemberService {
 	public Member selectOneMember(String memberId, String memberPw) {
-		Connection conn = new JDBCTemplate().getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 		Member m = new MemberDao().selectOneMember(conn, memberId, memberPw);
 		JDBCTemplate.close(conn);
 		return m;
@@ -23,14 +23,14 @@ public class MemberService {
 	}
 
 	public boolean selectId(String id) {
-		Connection conn = new JDBCTemplate().getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 		boolean result = new MemberDao().selectId(conn, id);
 		JDBCTemplate.close(conn);
 		return result;
 	}
 
 	public boolean selectNick(String nick) {
-		Connection conn = new JDBCTemplate().getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 		boolean result = new MemberDao().selectNick(conn, nick);
 		JDBCTemplate.close(conn);
 		return result;
