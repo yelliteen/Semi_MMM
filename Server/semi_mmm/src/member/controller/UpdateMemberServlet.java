@@ -46,7 +46,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		String memberNickName = mRequest.getParameter("nickname");
 		String phone = (mRequest.getParameter("phone1")+mRequest.getParameter("phone2")+mRequest.getParameter("phone3"));
 		String addr = (mRequest.getParameter("roadAddr")+"/"+mRequest.getParameter("jibunAddr")+"/"+mRequest.getParameter("detailAddr"));
-		int level = Integer.parseInt(mRequest.getParameter("memberLevel"));
+		
 		Member m = new Member();
 		m.setMemberId(memberId);
 		m.setMemberPw(memberPW);
@@ -60,11 +60,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			m.setProfileImg(mRequest.getParameter("memberOriginImg"));
 		}
 		HttpSession session = request.getSession(false);
-		if (level == 1) {
 		session.setAttribute("member", m);
-		} else if (level == 2) {
-			session.setAttribute("shop", m);
-		}
 		
 		int result = new MemberService().updateMember(m);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");

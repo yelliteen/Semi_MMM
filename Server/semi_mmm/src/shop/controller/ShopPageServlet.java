@@ -18,7 +18,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MypageServlet
  */
-@WebServlet(name = "ShopPage", urlPatterns = { "/shopPage" })
+@WebServlet(name = "Mypage", urlPatterns = { "/mypage" })
 public class ShopPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,8 +35,8 @@ public class ShopPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
-		request.setAttribute("shopId", memberId);
-		request.getRequestDispatcher("/WEB-INF/views/shop/checkShopPage.jsp").forward(request, response);
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMypage.jsp").forward(request, response);
 	}
 
 	/**

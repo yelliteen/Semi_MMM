@@ -57,7 +57,7 @@ height: 0px;
             <c:if test="${not empty sessionScope.member.memberId }">
                 <span style="font-size:20px;" >
                 <img class="profile" src="/upload/memberImg/${sessionScope.member.profileImg }">&nbsp;&nbsp;&nbsp;
-                <a href="/myPage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;" class="userName">
+                <a href="/mypage?memberId=${sessionScope.member.memberId }" style="text-decoration:none; color:#545454;" class="userName">
                 [ ${sessionScope.member.memberNickname } ]&nbsp; 님</a> </span>
                 <span style="font-size:20px;" >
                 <a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a>
