@@ -67,7 +67,7 @@ height: 0px;
                 <a onclick="location.href='/logout'" style="cursor: pointer;"><img src="/img/logout.png"class="logoutImg"></a></span>
                 </c:if>
                <c:if test="${not empty sessionScope.shop.memberId }">
-                <span style="font-size:20px;"><a href="#" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
+                <span style="font-size:20px;"><a onclick="location.href='myShopFrm?memberId=${session.shop.memberId}'" style="text-decoration:none; color:#545454;">[ ${sessionScope.shop.memberNickname } ]</a>&nbsp; 님 어서오세요!</span>
                 <span style="font-size:20px;" ><a onclick="location.href='/logout'" style="cursor: pointer;" class="logout">로그아웃</a></span>         
                 </c:if>  
                 <c:if test="${empty sessionScope.member.memberId && empty sessionScope.shop.memberId }">
@@ -77,5 +77,4 @@ height: 0px;
             </div>
         </div>
     </div>
-    
 
