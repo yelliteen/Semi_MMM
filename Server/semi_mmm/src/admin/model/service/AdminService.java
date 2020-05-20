@@ -13,17 +13,22 @@ import admin.model.vo.AdminMemberData;
 import admin.model.vo.AdminMemberList;
 import admin.model.vo.AdminNoticeCommentList;
 import admin.model.vo.AdminNoticeList;
+import admin.model.vo.AdminProduct;
 import admin.model.vo.AdminQnaList;
+import admin.model.vo.AdminShopData;
 import article.model.vo.ArticleNotice;
 import article.model.vo.ArticleNoticeComment;
 import common.JDBCTemplate;
 import dog.model.vo.Dog;
 import fna.model.vo.Fna;
 import member.model.vo.Member;
+import member.model.vo.Shop;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 import qna.model.vo.QnaAnswer;
 import qna.model.vo.QnaNotice;
+import shop.model.vo.Product;
+import shop.model.vo.ProductOption;
 
 public class AdminService {
 
@@ -1303,6 +1308,138 @@ public class AdminService {
 		AdminMemberList data = new AdminMemberList(list, pageNavi.toString());
 		
 		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminMemberList shopList(int reqPage) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().shopTotal(conn);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<Member> list = new AdminDao().shopList(conn, start, end);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage="+ (pageNo - pageNaviSize) + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage=" + pageNo + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage=" + pageNo + "'>다음</a>");
+		}
+		
+		AdminMemberList data = new AdminMemberList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminMemberList shopList(int reqPage, String type, String search) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int numPerPage = 10;	//한페이지당 게시물 수
+		int totalCount = new AdminDao().shopTotal(conn, type, search);
+		int totalPage = 0;
+		
+		//총 페이지수를 연산
+		if (totalCount % numPerPage == 0 ) {
+			totalPage = totalCount / numPerPage;
+		} else {
+			totalPage = totalCount / numPerPage + 1;
+		}
+		
+		//조회해 올 게시물의 첫번호(start)와 끝번호(end)연산
+		int start = (reqPage - 1) * numPerPage + 1;
+		int end = reqPage * numPerPage;
+		
+		//해당 페이지의 게시물들 조회
+		ArrayList<Member> list = new AdminDao().shopList(conn, start, end, type, search);
+		
+		//페이지 네비게이션 제작
+		StringBuffer pageNavi = new StringBuffer("");
+		
+		int pageNaviSize = 10;
+		int pageNo = ((reqPage - 1) / pageNaviSize) * pageNaviSize + 1;
+		
+		if (pageNo != 1) {
+			pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage="+ (pageNo - pageNaviSize) + "&type=" + type + "&search=" + search + "'>이전</a>");
+		}
+		
+		for (int i = 0; i < pageNaviSize; i++) {
+			if (reqPage == pageNo) {
+				pageNavi.append("<span class='selectPage'>" + pageNo + "</span>");
+			} else {
+				pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>" + pageNo + "</a>");
+			}
+
+			pageNo++;
+			
+			if (pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		if (pageNo <= totalPage) {
+			pageNavi.append("<a class='btn' href='/adminBusinessList?reqPage=" + pageNo + "&type=" + type + "&search=" + search + "'>다음</a>");
+		}
+		
+		AdminMemberList data = new AdminMemberList(list, pageNavi.toString());
+		
+		JDBCTemplate.close(conn);
+		
+		return data;
+	}
+
+	public AdminShopData adminShopData(String memberId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		Member member = new AdminDao().getMember(conn, memberId);
+		ArrayList<Product> list = new AdminDao().getProducts(conn, memberId);
+		ArrayList<AdminProduct> products = new ArrayList<AdminProduct>();
+		
+		Shop shop = new AdminDao().getShop(conn, memberId);
+		
+		for (int i = 0; i < list.size(); i++) {
+			ArrayList<ProductOption> options = new AdminDao().getOptions(conn, list.get(i).getProductNo());
+			AdminProduct aProduct = new AdminProduct(list.get(i), options);
+			products.add(aProduct);
+		}
+		
+		AdminShopData data = new AdminShopData(member, shop, products);
 		
 		return data;
 	}

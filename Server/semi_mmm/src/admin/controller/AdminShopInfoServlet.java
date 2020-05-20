@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import admin.model.service.AdminService;
-import admin.model.vo.AdminMemberList;
+import admin.model.vo.AdminShopData;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class AdminBusinessListServlet
+ * Servlet implementation class AdminShopInfoServlet
  */
-@WebServlet(name = "AdminBusinessList", urlPatterns = { "/adminBusinessList" })
-public class AdminBusinessListServlet extends HttpServlet {
+@WebServlet(name = "AdminShopInfo", urlPatterns = { "/adminShopInfo" })
+public class AdminShopInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminBusinessListServlet() {
+    public AdminShopInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,23 +42,12 @@ public class AdminBusinessListServlet extends HttpServlet {
 			((HttpServletRequest)request).setAttribute("loc", "/");
 			rd.forward(request, response);
 		}
-
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String type = request.getParameter("type");
-		String search = request.getParameter("search");
-		AdminMemberList list = null;
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminBusinessList.jsp");
 		
-		if (type == null) {
-			list = new AdminService().shopList(reqPage);
-		} else {
-			list = new AdminService().shopList(reqPage, type, search);
-			request.setAttribute("type", type);
-			request.setAttribute("search", search);
-		}
+		String memberId = request.getParameter("memberId");
+		AdminShopData data = new AdminService().adminShopData(memberId);
 		
-		request.setAttribute("data", list);
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/shopPopup.jsp");
+		request.setAttribute("data", data);
 		rd.forward(request, response);
 	}
 
