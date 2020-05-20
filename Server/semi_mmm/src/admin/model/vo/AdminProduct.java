@@ -2,8 +2,8 @@ package admin.model.vo;
 
 import java.util.ArrayList;
 
-import dessert.model.vo.Product;
-import dessert.model.vo.ProductOption;
+import shop.model.vo.Product;
+import shop.model.vo.ProductOption;
 
 public class AdminProduct {
 
