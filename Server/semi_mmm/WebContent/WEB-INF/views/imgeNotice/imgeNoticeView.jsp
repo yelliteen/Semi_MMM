@@ -66,7 +66,7 @@
 				
 				<tr>
 					<th>강아지 이름</th>
-					<td>${n.dogId }</td>
+					<td>${dog.dogName }</td>
 				</tr>
 		
 				<tr>
@@ -81,7 +81,6 @@
 							<!-- href="javascript:void(0); : 클릭이벤트 취소시킴 -->
 							<a class="btn btn-outline-primary btn sm" href="javascript:void(0);" onclick="deleteNotice('${n.noticeNo }');">삭제하기</a>
 						</c:if>
-						
 						<a href="/noticeList?reqPage=1" class="btn btn-outline-primary btn sm">목록으로</a>
 					</th>
 				</tr>
@@ -106,6 +105,7 @@
 			<input type="hidden" name="noticeCommentLevel" value="1">
 			<input type="hidden" name="noticeCommentNo" value="0">
 			<input type="hidden" name="noticeCommentRefTwo" value="0">
+			<input type="hidden" name="dogName" value="${dog.dogName }">
 			
 				<table class="table">
 					<tr>
@@ -135,6 +135,7 @@
 			<input type="hidden" name="noticeCommentLevel" value="1">
 			<input type="hidden" name="noticeCommentNo" value="0">
 			<input type="hidden" name="noticeCommentRefTwo" value="0">
+			<input type="hidden" name="dogName" value="${dog.dogName }">
 			
 				<table class="table">
 					<tr>
@@ -143,7 +144,7 @@
 						</td>
 						
 						<td width="15%">
-							<button type="submit" class="btn btn-primary">등록 ${n.dogImg }</button>
+							<button type="submit" class="btn btn-primary">등록 </button>
 						</td>
 					</tr>
 				</table>
@@ -188,7 +189,7 @@
 						
 						<c:if test="${not empty sessionScope.shop.memberId}">
 							<a href="javascript:void(0)" onclick="insertComment(this,'${nc.noticeCommentNo }','${n.noticeNo }','${sessionScope.shop.memberId }', '${n.dogId }')">댓글달기</a>
-							<c:if test="${sessionScope.member.memberId == nc.noticeCommentWriter || sessionScope.shop.memberId == nc.noticeCommentWriter}">
+							<c:if test="${sessionScope.shop.memberId == nc.noticeCommentWriter || sessionScope.shop.memberId == nc.noticeCommentWriter}">
 								<a href="javascript:void(0)" onclick="modifyComment(this, '${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">수정</a>
 								<a href="javascript:void(0)" onclick="deleteComment('${nc.noticeCommentNo }', '${nc.noticeCommentRef }')">삭제</a>
 							</c:if>
@@ -280,22 +281,22 @@
 			$(obj).html('수정완료');
 			$(obj).attr('onclick','modifyComplete(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'" , "'+noticeCommentContent+'")');
 			$(obj).next().html('취소');
-			$(obj).next().attr('onclick','modifyCancel(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'")');
+			$(obj).next().attr('onclick','modifyCancel(this, "'+noticeCommentNo+'", "'+noticeCommentRef+'" , "'+noticeCommentContent+'")');
 			$(obj).parent().parent().find('input').show();
 			$(obj).parent().parent().find('input').prev().hide();
 		}
 		
-		function modifyCancel(obj, noticeCommentNo, noticeCommentRef){
+		function modifyCancel(obj, noticeCommentNo, noticeCommentRef, noticeCommentContent){
 			$(obj).prev().prev().show();
 			$(obj).prev().html('수정');
-			$(obj).prev().attr('onclick','modifyComment(this,"'+noticeCommentNo+'", "'+noticeCommentRef+'")');
+			$(obj).prev().attr('onclick','modifyComment(this,"'+noticeCommentNo+'", "'+noticeCommentRef+'", "'+noticeCommentContent+'")');
 			$(obj).html('삭제');
 			$(obj).attr('onclick','deleteComment("'+noticeCommentNo+'", "'+noticeCommentRef+'")');
 			$(obj).parent().parent().find('input').hide();
 			$(obj).parent().parent().find('input').prev().show();
 		}
 		
-		function modifyComplete(obj, noticeCommentNo, noticeCommentRef ,noticeCommentContent){
+		function modifyComplete(obj, noticeCommentNo, noticeCommentRef){
 			var $form=$("<form action='/noticeCommentUpdate' method='post'></form>");
 			$form.append($("<input type='text' name='noticeCommentNo' value='"+noticeCommentNo+"'>"));
 			$form.append($("<input type='text' name='noticeCommentRef' value='"+noticeCommentRef+"'>"));

@@ -3,6 +3,7 @@ package notice.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.annotation.Generated;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,13 +39,16 @@ public class InsertNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 
+		String DogName = request.getParameter("dogName");
 		
-		
-		String DogId = request.getParameter("dogId");
+		System.out.println("강아지 이름 : "+DogName);
 		String imgeNoticeTitle = request.getParameter("imgeNoticeTitle");
 		String imgeNoticeWriter = request.getParameter("imgeNoticeWriter");
 		String imgeNoticeContent = request.getParameter("content");
+		
 		String imgeNoticeImgName = "";
 		Document doc = Jsoup.parse(imgeNoticeContent);
 		Elements imgs = doc.getElementsByTag("img");
@@ -52,6 +56,7 @@ public class InsertNoticeServlet extends HttpServlet {
 			imgeNoticeImgName = imgs.get(0).attr("src");
 			System.out.println(imgeNoticeImgName);
 		}
+		
 		
 		Dog dog = new noticeService().noticeDogWrite(imgeNoticeWriter);
 		//NoticeImg ni = new NoticeImg();
@@ -67,27 +72,31 @@ public class InsertNoticeServlet extends HttpServlet {
 		System.out.println("값확인 : "+imgeNoticeImgName);
 		System.out.println("값확인 : "+dog.getDogImg());
 
-		
-		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, DogId, 0);
+
+		Notice n = new Notice(0, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, 0, dog.getDogId(), 0);
 		if(imgeNoticeImgName.equals("")) {
 			n.setNoticeImgs("/upload/dogImg/"+dog.getDogImg());
 			System.out.println(n.getNoticeImgs());
 		}
+
 		int result = new noticeService().noticeWrite(n);
 		
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		request.setAttribute("loc", "/noticeList?reqPage=1");
-	
+		
+		
+
 		
 		if (result > 0) {
 			request.setAttribute("msg", " 등록되었습니다.");
+			request.setAttribute("dogName", DogName);
 			request.setAttribute("loc", "/noticeList?reqPage=1");
+			System.out.println("강아지 이름 : "+DogName);
 			
 		} else {
 				request.setAttribute("msg", "제목을 입력해 주세요.");
-				request.setAttribute("loc", "/noticeDog?memberId="+imgeNoticeWriter+"");
+				request.setAttribute("loc", "/noticeDog?memberId="+imgeNoticeWriter);
 		}
 		rd.forward(request, response);	
 	}

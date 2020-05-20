@@ -5,11 +5,7 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import = "dog.model.vo.*" %>
 
-				<%
-				Dog d = (Dog)request.getAttribute("dogImg");
-				%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -56,7 +52,8 @@
  <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <section class="container">
-		<h1>커뮤니티</h1>
+		<h1>커뮤니티 </h1>
+		
 	
 		<c:if test="${not empty sessionScope.member.memberId }">
 		  		<div style="text-align: right;">
@@ -75,34 +72,23 @@
 		  	
 
 	
-
+	
 				<c:forEach items="${list }" var="n">
+						<c:choose>
+        <c:when test="${n.noticeImgs eq n.noticeImgs }">
 					<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
-					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;"><input type="hidden" value="${n.noticeWriter }" name="memberNickname"></a>
+					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
+					</a>
 					<div style="border: 1px solid black;">
 					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
 					<div><div style="float: left; margin-left: 1%; display: inline-block; color: gray;">${n.noticeWriter }</div><div style="text-align: right; margin-right: 1%;">${n.noticeDate }</div></div>
 					</div>
-					</div>
-	
+				</div>
+				</c:when>
+			</c:choose>
 			</c:forEach>
 			
-			
-			
-			
-			<!--<c:forEach items="${list }" var="n">
-			
-		<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
-					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs }" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;"></a>
-					<div style="border: 1px solid black;">
-					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
-					<div><div style="float: left; margin-left: 1%; display: inline-block; color: gray;">${n.noticeWriter }</div><div style="text-align: right; margin-right: 1%;">${n.noticeDate }</div></div>
-					</div>
-		</div>
-			</c:forEach>-->
-	
-	
-			</div>
+
 		
 		<div id="pageNavi" style=" margin-top: 3%;">${pageNavi }</div>
 		

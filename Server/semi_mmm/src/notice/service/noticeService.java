@@ -192,4 +192,12 @@ public class noticeService {
 		return result;
 	}
 
+	public Dog noticeDogName(String noticeWriter) {
+		Connection conn = JDBCTemplate.getConnection();
+		Dog dogList = new NoticeDao().noticeDogName(conn, noticeWriter);
+		
+		JDBCTemplate.close(conn);
+		return dogList;
+	}
+
 }

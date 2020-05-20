@@ -92,7 +92,7 @@ public class NoticeDao {
 		
 		
 		
-		String query="select * from(select rownum as rnum, n.* from(select * from notice join member on(notice.notice_writer = member.member_id) join dog on (member.member_Id = dog.dog_member_id) where NOTICE_DELETE_BOOL=0 order by notice_no desc)n)where rnum between ? and ?";
+		String query="select * from(select rownum as rnum, n.* from(select notice_no,notice_title,member_nickname,notice_content,notice_date,notice_imgs,notice_view_count,notice_delete_bool from notice join member on(notice.notice_writer = member.member_id)where NOTICE_DELETE_BOOL=0 order by notice_no desc)n)where rnum between ? and ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 
@@ -103,7 +103,6 @@ public class NoticeDao {
 			
 			while(rset.next()) {
 				Notice n = new Notice();
-				Dog d= new Dog();
 				n.setNoticeNo(rset.getInt("notice_no"));
 				n.setNoticeTitle(rset.getString("notice_title"));
 				n.setNoticeWriter(rset.getString("member_nickname"));
@@ -111,9 +110,7 @@ public class NoticeDao {
 				n.setNoticeDate(rset.getDate("notice_date"));
 				n.setNoticeImgs(rset.getString("notice_imgs"));
 				n.setNoticeViewCount(rset.getInt("notice_view_count"));
-				n.setDogId(rset.getString("dog_id"));
 				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
-				d.setDogImg(rset.getString("dog_img"));
 				list.add(n);
 				
 				
@@ -207,7 +204,6 @@ public class NoticeDao {
 				n.setNoticeViewCount(rset.getInt("notice_view_count"));
 				n.setDogId(rset.getString("dog_id"));
 				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
-				System.out.println("강아지 이름 : "+n.getDogId());
 
 			}
 		} catch (SQLException e) {
@@ -272,7 +268,7 @@ public class NoticeDao {
 			pstmt.setString(2, nc.getNoticeCommentWriter());
 			pstmt.setInt(3, nc.getNoticeCommentLevel());
 			pstmt.setInt(4, nc.getNoticeCommentRef());
-			//pstmt.setInt(5, nc.getNoticeCommentRef());
+			//pstmt.setInt(5, nc.getNoticeCommentRefTwo());
 			//null이 들어올 경우를 대비해서 삼항연산자로 표현해서 사용가능.
 			pstmt.setString(5, nc.getNoticeCommentRefTwo()==0?null:String.valueOf(nc.getNoticeCommentRefTwo()));
 			pstmt.setString(6, nc.getDogId());
@@ -311,8 +307,8 @@ public class NoticeDao {
 				d.setDogGender(rset.getString("dog_gender"));
 				d.setDogImg(rset.getString("dog_img"));
 				d.setDogBool(rset.getInt("dog_bool"));
-				System.out.println(d.getDogId());
-				System.out.println("강아지 이미지 : "+d.getDogImg());
+				d.setDogName(rset.getString("dog_name"));
+
 			}
 			
 		} catch (SQLException e) {
@@ -437,6 +433,41 @@ public class NoticeDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+
+	public Dog noticeDogName(Connection conn, String noticeWriter) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Dog d = new Dog();
+		String query = "select * from dog join member on(dog.dog_member_id = member.member_id) where member.member_nickname=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, noticeWriter);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				d.setDogId(rset.getString("dog_id"));
+				d.setDogMemberId(rset.getString("member_nickname"));
+				d.setVariety(rset.getString("variety"));
+				d.setAge(rset.getInt("age"));
+				d.setDogGender(rset.getString("dog_gender"));
+				d.setDogImg(rset.getString("dog_img"));
+				d.setDogBool(rset.getInt("dog_bool"));
+				d.setDogName(rset.getString("dog_name"));
+
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return d;
 	}
 
 

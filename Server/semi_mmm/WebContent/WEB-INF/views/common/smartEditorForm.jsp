@@ -3,19 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <%@ page import = "member.model.vo.*" %>
-<%
-    String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
-%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-<%
-
-Dog d = (Dog)request.getAttribute("dog");
-
-%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -64,7 +52,6 @@ Dog d = (Dog)request.getAttribute("dog");
 
 <div class="contentBox">
 
-
 <div class="context">
    
 
@@ -76,36 +63,39 @@ Dog d = (Dog)request.getAttribute("dog");
               
               <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:600px;">
               
+			<c:forEach items="${sessionScope.dog }" var="d">
+		<table style=" margin: 0 auto; margin-bottom: 2%; border: 1px solid #B6EAFA; border-radius: 20px;">
+
 			
-		<table style=" margin: 0 auto;">
-		
 			<tbody>
+			
+
 			<tr>
-				
-				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/${dog.dogImg }); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
+				<td rowspan="5" style="width: 700px;"><p style="width:600px; height:400px; background-image: url(/upload/dogImg/${d.dogImg }); background-position: center; background-size: cover; margin: 0 auto; margin-bottom:10px;"></p></td>
 			</tr>
 				
 			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>주인 : ${dog.dogMemberId }</p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : ${dog.dogGender }</p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : ${dog.dogName }</p></td></tr>
-			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : ${dog.age }살</p></td></tr>
-		
-		</tbody>
-		
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>성별 : ${d.dogGender }</p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>이름 : ${d.dogName } <input type="hidden" name="dogId" value="${d.dogId }"></p></td></tr>
+			<tr><td style=" width:300px; height:50px; font-size: 25px; font-weight:bold; text-align: center; border-radius: 20px; background-color:#B6EAFA;"><p>나이 : ${d.age }살</p></td></tr>
+
 			
+		</tbody>
+			
+
 	</table>
-	
+		</c:forEach>
 			
               </textarea>
-
+	
+				
             </td>
         </tr>
+
 </table>
 	
-		<input type="hidden" name="memberId" value="<%=d.getDogMemberId() %>"/>
-		<input type="hidden" name="dogGender" value="<%=d.getDogGender() %>"/>
-		<input type="hidden" name="dogId" value="<%=d.getDogId() %>"/>
-		<input type="hidden" name="age" value="<%=d.getAge() %>"/>
+
+		
 </div>
 </div>
 

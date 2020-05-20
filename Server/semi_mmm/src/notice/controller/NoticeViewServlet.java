@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dog.model.vo.Dog;
 import notice.model.vo.NoticeNickname;
 import notice.model.vo.noticeViewData;
 import notice.service.noticeService;
@@ -35,27 +36,30 @@ public class NoticeViewServlet extends HttpServlet {
 		//1. 인코딩
 				request.setCharacterEncoding("utf-8");
 				//2. 변수에 값 저장
+
+				
 				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 				String nickName = request.getParameter("memberNickname");
 				
-				System.out.println("뷰에서 확인 : "+nickName);
 
 				
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
-	
+
+				Dog dogList = new noticeService().noticeDogName(nvd.getN().getNoticeWriter());
+				
+				
 				//4. 결과처리
 				if(nvd.getN() != null) {
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeView.jsp");
+					
 					request.setAttribute("n", nvd.getN());
 					request.setAttribute("list", nvd.getList());
 					request.setAttribute("nickName", nickName);
-
+					request.setAttribute("dog", dogList);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeView.jsp");
 					rd.forward(request, response);
-					
-					
-					
 					System.out.println("성공");
+					
 				}else {
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 					request.setAttribute("loc", "/noticeList?reqPage=1");

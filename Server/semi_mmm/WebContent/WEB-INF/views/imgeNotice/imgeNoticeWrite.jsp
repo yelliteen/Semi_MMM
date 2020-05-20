@@ -24,6 +24,7 @@
 							작성자 : ${sessionScope.member.memberNickname }
 								   ${sessionScope.shop.memberNickname }
 								  
+								  
 							</div>
 							
 							
@@ -38,6 +39,7 @@
 							<!--  <input type="hidden" name="imgeNoticeWriter" value="${sessionScope.shop.memberId }"> -->
 							<input type="text" class="form-control" name="imgeNoticeTitle" style="width: 85%;" placeholder="제목을 입력해주세요.">
 							<input type="hidden" name="imgeNoticeNo" value="${noticeNo }">
+							<input type="hidden" name="dogName" value="${dog.dogName }">
 						</td>
 					</tr>
 					

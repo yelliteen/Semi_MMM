@@ -39,7 +39,7 @@ public class NoticeCommentDeleteServlet extends HttpServlet {
 		//3. 비지니스 로직
 		int result = new noticeService().deleteNoticeCommentNo(noticeCommentNo);
 		//4. 결과 처리
-		
+		System.out.println("확인 글번호: "+noticeCommentNo+"댓글번호 : "+noticeCommentRef);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		
 		if(result>0) {

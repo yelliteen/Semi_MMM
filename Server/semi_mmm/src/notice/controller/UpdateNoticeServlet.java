@@ -52,7 +52,6 @@ public class UpdateNoticeServlet extends HttpServlet {
 		int imgeNoticeNo = Integer.parseInt(request.getParameter("imgeNoticeNo"));
 		int imgeNoticeViewCount = Integer.parseInt(request.getParameter("imgeNoticeViewCount"));
 
-		
 		String imgeNoticeImgName = "";
 		Document doc = Jsoup.parse(imgeNoticeContent);
 		Elements imgs = doc.getElementsByTag("img");
@@ -70,16 +69,13 @@ public class UpdateNoticeServlet extends HttpServlet {
 		if(imgeNoticeImgName.equals("")) {
 			n.setNoticeImgs("/upload/dogImg/"+dog.getDogImg());
 			System.out.println(n.getNoticeImgs());
-			
-			
-			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 		}
+			
 		int result = new noticeService().noticeUpdate(n);
 		
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		request.setAttribute("loc", "/noticeList?reqPage=1");
 	
 		
 		if (result > 0) {
@@ -94,6 +90,7 @@ public class UpdateNoticeServlet extends HttpServlet {
 		rd.forward(request, response);	
 
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

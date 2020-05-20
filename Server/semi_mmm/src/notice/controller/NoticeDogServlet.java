@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dog.model.service.DogService;
 import dog.model.vo.Dog;
 import notice.model.vo.dogList;
 import notice.service.noticeService;
@@ -39,9 +41,13 @@ public class NoticeDogServlet extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		Dog dogList = new noticeService().noticeDogWrite(memberId);
 		
+		ArrayList<Dog> dog = new DogService().selectDog(memberId);
+		HttpSession session = request.getSession(false);
+		
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
-
+		session.setAttribute("dog", dog);
 		request.setAttribute("dog", dogList);
 
 
