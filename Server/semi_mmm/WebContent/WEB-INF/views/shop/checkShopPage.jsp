@@ -47,5 +47,11 @@
 			}
 		});
 	});
+	$("#checkPw2").keydown(function(key) {
+
+		if (key.keyCode == 13) {
+			$("#success").click();
+		}
+		});
 </script>
 </html>
