@@ -12,6 +12,11 @@ public class NoticeComment {
 	private int noticeCommentRefTwo;
 	private String dogId;
 	private int noticeCommentBool;
+	
+	public String getContentBr() {
+		return noticeCommentContent.replaceAll("\r\n", "<br>");
+	}
+	
 	public NoticeComment() {
 		super();
 		// TODO Auto-generated constructor stub

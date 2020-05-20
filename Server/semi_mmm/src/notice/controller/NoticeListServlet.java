@@ -9,7 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+
+import dog.model.vo.Dog;
+import notice.model.vo.Notice;
 import notice.model.vo.NoticePageData;
+import notice.model.vo.NoticePageDataImge;
 import notice.service.noticeService;
 
 /**
@@ -33,14 +41,17 @@ public class NoticeListServlet extends HttpServlet {
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 			request.setCharacterEncoding("utf-8");
+
 			
 			int reqPage = Integer.parseInt(request.getParameter("reqPage"));
 			String memberId = request.getParameter("memberId");
 			System.out.println(reqPage);
-			NoticePageData pd = new noticeService().selectList(reqPage);
+			NoticePageDataImge pd = new noticeService().selectList(reqPage);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeList.jsp");
 			
+		
+
 			request.setAttribute("list", pd.getList());
 			request.setAttribute("pageNavi", pd.getPageNavi());
 			request.setAttribute("memberId", memberId);

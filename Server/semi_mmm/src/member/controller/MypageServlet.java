@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dog.model.service.DogService;
+import dog.model.vo.Dog;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
@@ -32,12 +35,8 @@ public class MypageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
-		Member m = new MemberService().selectOneMember(memberId);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp");
-		request.setAttribute("m", m);
-		rd.forward(request, response);
-		System.out.println("1"+ memberId);
-		System.out.println("2"+ m);
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMypage.jsp").forward(request, response);
 	}
 
 	/**

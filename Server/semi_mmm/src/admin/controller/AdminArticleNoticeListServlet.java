@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import admin.model.service.AdminService;
+import admin.model.vo.AdminArticleList;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class AdminArticleNoticeListServlet
@@ -29,8 +34,30 @@ public class AdminArticleNoticeListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+			System.out.println("뒤로가기");
+			RequestDispatcher rd = ((HttpServletRequest)request).getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			((HttpServletRequest)request).setAttribute("msg", "관리자 계정만 접근이 가능합니다.");
+			((HttpServletRequest)request).setAttribute("loc", "/");
+			rd.forward(request, response);
+		}
+				
+		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
+		String type = request.getParameter("type");
+		String search = request.getParameter("search");
+		AdminArticleList list = null;
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminArticleNoticeList.jsp");
 		
+		if (type == null) {
+			list = new AdminService().articleList(reqPage);
+		} else {
+			list = new AdminService().articleSearchList(reqPage, type, search);
+			request.setAttribute("type", type);
+			request.setAttribute("search", search);
+		}
+		
+		request.setAttribute("data", list);
 		rd.forward(request, response);
 	}
 
