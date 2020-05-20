@@ -8,47 +8,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
 <style>
     select{
         width: 170px;
-        margin-bottom: 10px;
     }
     label{
-        width: 100px;
+        width: 120px;
         text-align: right;
     }
     #shopTitle{
-    	color: dimgray;
+    	color: white;
     	width: 150px;
     	height: 60px;
-        line-height: 50px;
+        line-height: 60px;
     	font-size: 30px;
-        border: 5px solid dimgray;
+        background-color: lightblue;
         text-align: center;
         border-radius: 5px;
         margin-top: 20px;
         
     }
     #divLoc{
-        width: 500px;
+        width: 400px;
         height: 500px;
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 50px;
     }
     #divLoc1{
         background-color: yellow;
     }
     #divLoc2{
         background-color: red;
-        margin-top: 50px;
+        margin-top: 10px;
+        margin-right: 500px;
+        height: 50px;
+    }
+    #totalPrice{
+    	text-align: right;
+    	font-size: 30px;
+    	height: 50px;
+    	font-weight: 900;
     }
 </style>
 </head>
 
 <body>
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-
 
 	  	<section class="container">
 		<div id="shopTitle">${bnMemberId }</div>
@@ -58,7 +63,7 @@
                         <div id="divLoc1">
                             <c:forEach items="${sl }" var="list1" varStatus="status">
                                 <label>${list1.productTitle }</label>
-                                <select name="st" onchange=selectOpt(this.value)>
+                                <select name="st" onchange=selectOpt(this.value) style="margin:20px; border:2px solid black;">
                                     <option value=","></option>
                                     <c:forEach items="${list1.subList }" var="list2">
                                         <option value="${list2.optionPrice},${list2.optionTitle },${list2.bnMemberId},${list1.productTitle}" }>${list2.optionTitle } (+${list2.optionPrice }원)</option>
@@ -71,15 +76,13 @@
                         <input type="hidden" name="memberId" value="${sessionScope.member.memberId }">
                         <input type="text" name="totalPrice" id="totalPrice" value="" readonly>
                         <input type="hidden" name="bnMemberId" value="">
-                        <input type="text" name="selectOpt" value="">
+                        <input type="hidden" name="selectOpt" value="">
                     </div>
                     </c:if>
                     <button type="submit" class="btn btn-primary">장바구니에 담기</button>
                 </form>
             </div>
-	  		
-    </section>
-	  
+	  </section>
 	  	
 	  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script>

@@ -12,7 +12,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div class="container">
 <div id="mypageArea" style="margin: 0 auto; width:1100px;border: 1px solid  #E4E8EB;">
- <style>
+<jsp:include page="/WEB-INF/views/shop/shopPageMenu.jsp" />
+ <style>.mypage-menu>li:first-child {background-color: #B6EAFA;}
 #joinForm{width: 1000px;margin: 0 auto;padding-top: 50px; padding-bottom: 50px;padding-right:20px;}
 .input-lg {width:80%; border: 1px solid black;}
 #left>div>label {width:15%;}
@@ -213,6 +214,7 @@
   <br>
   <br><br>
 		  <div style="width:100%; text-align:center; padding:20px;">
+		  <input type="hidden" value="${m.memberLevel }" name="memberLevel">
   <button class="btn btn-lg btn-secondary btn signup-btn" type="button" style="width:300px;" onclick="location.href='/'">나가기</button>
   <button class="btn btn-lg btn-primary btn signup-btn" type="submit" style="width:300px;" onclick="return sub();">내 정보 수정</button>
 </div>

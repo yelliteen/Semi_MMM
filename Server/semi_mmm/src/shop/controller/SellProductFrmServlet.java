@@ -44,6 +44,7 @@ public class SellProductFrmServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/sellProductFrm.jsp");
 		request.setAttribute("loc", "/sellProductFrm?memberId="+bnMemberId);
 		request.setAttribute("sublist", svd.getSubList());
+		//request.setAttribute("bnMemberId", bnMemberId);
 		rd.forward(request, response);
 	}
 
