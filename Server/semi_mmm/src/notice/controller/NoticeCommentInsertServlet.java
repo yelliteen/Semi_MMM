@@ -51,9 +51,9 @@ public class NoticeCommentInsertServlet extends HttpServlet {
 				nc.setNoticeCommentNo(Integer.parseInt(request.getParameter("noticeCommentNo")));
 				nc.setNoticeCommentRefTwo(Integer.parseInt(request.getParameter("noticeCommentRefTwo")));
 				
+				
 
 				nc.setDogId(request.getParameter("dogId"));
-				
 				System.out.println("강이지 이름 값 : "+nc.getDogId());
 				System.out.println("게시글 번호 : "+nc.getNoticeCommentRef());
 				System.out.println("댁글 번호 : "+nc.getNoticeCommentNo());
@@ -65,6 +65,8 @@ public class NoticeCommentInsertServlet extends HttpServlet {
 				int result = new noticeService().noticeCommentInsert(nc);
 				
 			
+				nc.setNoticeCommentWriter(request.getParameter("noticeCommentWriterNickname"));
+				System.out.println(nc.getNoticeCommentWriter());
 				//4. 결과처리
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 				
