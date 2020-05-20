@@ -73,6 +73,15 @@
 				}
 			});
 		});
+		$("#upw").keydown(function(key) {
+
+			if (key.keyCode == 13) {
+				$("#logining").click();
+			}
+			});
+
+
+
 	</script>
 </body>
 
