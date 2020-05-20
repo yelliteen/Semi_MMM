@@ -29,13 +29,13 @@
 				<!-- The slideshow -->	
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img src="/img/doghos.png" alt="Los Angeles">
+						<img src="/img/doghos.png" alt="병원이래">
 					</div>
 					<div class="carousel-item">
-						<img src="/img/doghos.png" alt="Chicago">
+						<img src="/img/dogpark.png" alt="공원이래">
 					</div>
 					<div class="carousel-item">
-						<img src="/img/doghos.png" alt="New York">
+						<img src="/img/parkwan.png" alt="박완규">
 					</div>
 				</div>
 				<!-- Left and right controls -->

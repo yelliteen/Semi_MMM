@@ -23,7 +23,6 @@
 <ul style="list-style:none; margin:0 auto; text-align:center;" class="mypage-menu">
 	<li><a href="/mypageMain?memberId=${member.memberId }">개인정보</a></li>
 	<li><a href="/myDog?memberId=${member.memberId }">내 강아지 등록</a></li>
-	<li><a href="">내 번개장터</a></li>
-	<li><a href="">보완</a></li>
+	<li><a href="/showMyList?memberId=${member.memberId }&reqPage=1">내 글보기</a></li>
 </ul>
 </div>
