@@ -1,6 +1,7 @@
-package member.controller;
+package shop.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notice.model.vo.NoticePageDataImge;
-import notice.service.noticeService;
+import shop.model.service.ShopService;
+import shop.model.vo.Cart;
+import shop.model.vo.ProductOption;
 
 /**
- * Servlet implementation class ShowMyListServlet
+ * Servlet implementation class MyCartServlet
  */
-@WebServlet(name = "ShowMyList", urlPatterns = { "/showMyList" })
-public class ShowMyListServlet extends HttpServlet {
+@WebServlet(name = "MyCart", urlPatterns = { "/myCart" })
+public class MyCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowMyListServlet() {
+    public MyCartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +33,15 @@ public class ShowMyListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
-		String memberId = request.getParameter("memberId");
-		NoticePageDataImge pd = new noticeService().selectList(reqPage, memberId);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/myNoticeList.jsp");
-		request.setAttribute("list", pd.getList());
-		request.setAttribute("pageNavi", pd.getPageNavi());
-		request.setAttribute("memberId", memberId);
+		//1. 인코딩
+		request.setCharacterEncoding("utf-8");
+		//2. 변수에 값 저장
+		String orderMemberId = request.getParameter("orderMemberId");
+		//3. 비지니스로직
+		ArrayList<Cart> cartList = new ShopService().selectCartList(orderMemberId);
+		//4. 결과 처리
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/mycart.jsp");
+		request.setAttribute("cartList", cartList);
 		rd.forward(request, response);
 	}
 

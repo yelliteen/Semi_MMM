@@ -42,7 +42,7 @@ public class SellProductFrm2Servlet extends HttpServlet {
 		ArrayList<ShopViewData> sl = new ShopService().selectMenuListFrm(bnMemberId);
 		//4. 결과 처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/shop/sellProductFrm.jsp");
-		request.setAttribute("loc", "/sellProductFrm2?memberId="+bnMemberId);
+		request.setAttribute("loc", "/sellProductFrm?memberId="+bnMemberId);
 		request.setAttribute("sl", sl);
 		//request.setAttribute("pl", pl);
 		rd.forward(request, response);

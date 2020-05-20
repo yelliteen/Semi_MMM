@@ -471,6 +471,72 @@ public class NoticeDao {
 	}
 
 
+	public int totalCount(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+
+		
+		String query="select count(*) as cnt from notice where NOTICE_DELETE_BOOL=0 and notice_writer = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("cnt");
+				System.out.println("count 값 : "+result);		
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+
+	public ArrayList<Notice> selectList(Connection conn, int start, int end, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		
+		
+		
+		String query="select * from(select rownum as rnum, n.* from(select notice_no,notice_title,member_nickname,notice_content,notice_date,notice_imgs,notice_view_count,notice_delete_bool from notice join member on(notice.notice_writer = member.member_id)where NOTICE_DELETE_BOOL=0 and notice_writer = ? order by notice_no desc)n)where rnum between ? and ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Notice n = new Notice();
+				n.setNoticeNo(rset.getInt("notice_no"));
+				n.setNoticeTitle(rset.getString("notice_title"));
+				n.setNoticeWriter(rset.getString("member_nickname"));
+				n.setNoticeContent(rset.getString("notice_content"));
+				n.setNoticeDate(rset.getDate("notice_date"));
+				n.setNoticeImgs(rset.getString("notice_imgs"));
+				n.setNoticeViewCount(rset.getInt("notice_view_count"));
+				n.setNoticeDeleteBool(rset.getInt("notice_delete_bool"));
+				list.add(n);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+
 }
 	
 	

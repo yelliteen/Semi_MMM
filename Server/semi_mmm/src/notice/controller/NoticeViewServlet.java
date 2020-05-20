@@ -1,6 +1,7 @@
 package notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dog.model.vo.Dog;
+import member.model.service.MemberService;
+import member.model.vo.Member;
 import notice.model.vo.NoticeNickname;
 import notice.model.vo.noticeViewData;
 import notice.service.noticeService;
@@ -45,9 +48,10 @@ public class NoticeViewServlet extends HttpServlet {
 				
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
-
+				
 				Dog dogList = new noticeService().noticeDogName(nvd.getN().getNoticeWriter());
 				
+
 				
 				//4. 결과처리
 				if(nvd.getN() != null) {

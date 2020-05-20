@@ -156,4 +156,11 @@ public class ShopService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+
+	public ArrayList<Cart> selectCartList(String orderMemberId) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Cart> cartList = new ShopDao().selectCartList(conn,orderMemberId);
+		JDBCTemplate.close(conn);
+		return cartList;
+	}
 }
