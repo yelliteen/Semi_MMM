@@ -554,14 +554,14 @@ nav a {
                             <c:forEach items="${info.shop }" var="shop">
                             	<c:if test="${shop.memberLevel eq 2 }">
                             		<div class="member_tr delete_false">
-                                        <div><a class="delete_false" href="javascript:void(0)" onclick="shopPopup(${shop.memberId })">${shop.memberId }</a></div>
+                                        <div><a class="delete_false" href="javascript:void(0)" onclick="shopPopup('${shop.memberId }')">${shop.memberId }</a></div>
                                         <div>${shop.memberNickname }</div>
                                         <div>${shop.enrollDate }</div>
                             	   </div>
                             	</c:if>
                             	<c:if test="${shop.memberLevel eq 4 }">
                             		<div class="member_tr delete_true">
-                                        <div><a class="delete_true" href="javascript:void(0)" onclick="shopPopup(${shop.memberId })">${shop.memberId }</a></div>
+                                        <div><a class="delete_true" href="javascript:void(0)" onclick="shopPopup('${shop.memberId }')">${shop.memberId }</a></div>
                                         <div>${shop.memberNickname }</div>
                                         <div>${shop.enrollDate }</div>
                             	   </div>

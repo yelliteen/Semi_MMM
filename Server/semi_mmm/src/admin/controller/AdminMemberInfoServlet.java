@@ -44,7 +44,7 @@ public class AdminMemberInfoServlet extends HttpServlet {
 		}
 		
 		String memberId = request.getParameter("memberId");
-		System.out.println(memberId);
+//		System.out.println(memberId);
 		AdminMemberData data = new AdminService().adminMemberData(memberId);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/memberPopup.jsp");

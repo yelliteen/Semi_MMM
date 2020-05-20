@@ -14,10 +14,13 @@ import common.JDBCTemplate;
 import dog.model.vo.Dog;
 import fna.model.vo.Fna;
 import member.model.vo.Member;
+import member.model.vo.Shop;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
 import qna.model.vo.QnaAnswer;
 import qna.model.vo.QnaNotice;
+import shop.model.vo.Product;
+import shop.model.vo.ProductOption;
 
 public class AdminDao {
 	
@@ -1656,4 +1659,237 @@ public class AdminDao {
 		return list;
 	}
 
+	public int getTotalCount(Connection conn) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from article_notice WHERE ARTICLE_NOTICE_DELETE_BOOL = 0";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int totalCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+
+		String query="select count(*) as cnt from notice where NOTICE_DELETE_BOOL=0";
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("cnt");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int shopTotal(Connection conn) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from member where member_level = 2 or member_level = 4";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Member> shopList(Connection conn, int start, int end) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from member where member_level = 2 or member_level = 4 order by ENROLL_DATE desc) S) where rnum between ? and ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = setMember(rset, 2);
+				list.add(member);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int shopTotal(Connection conn, String type, String search) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = "select count(*) from member where (member_level = 2 or member_level = 4) and " + type + " like ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Member> shopList(Connection conn, int start, int end, String type, String search) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		String query = "select * from (select rownum as rnum, s.* from "
+				+ "(select * from member where (member_level = 2 or member_level = 4) and " + type + " like ? order by ENROLL_DATE desc) S) where rnum between ? and ?";
+				
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = setMember(rset, 2);
+				list.add(member);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Product> getProducts(Connection conn, String memberId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> list = new ArrayList<Product>();
+		String query = "select * from product where bn_member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				Product p = new Product(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5));
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+		
+	}
+
+	public ArrayList<ProductOption> getOptions(Connection conn, int productNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<ProductOption> options = new ArrayList<ProductOption>();
+		String query = "select * from product_option where product_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, productNo);
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				ProductOption option = new ProductOption(rset.getInt(1), rset.getInt(2), rset.getString(3), rset.getString(4), rset.getInt(5));
+				options.add(option);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return options;
+	}
+
+	public Shop getShop(Connection conn, String memberId) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Shop shop = null;
+		String query = "select * from shop where shop_member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				shop = new Shop(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return shop;
+	}
 }
