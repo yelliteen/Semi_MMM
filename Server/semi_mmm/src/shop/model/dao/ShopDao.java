@@ -375,6 +375,34 @@ public class ShopDao {
 		
 		return result;
 	}
+
+	public ArrayList<Cart> selectCartList(Connection conn, String orderMemberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Cart> list = new ArrayList<Cart>();
+		String query = "select * from cart where order_member_id=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderMemberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Cart c = new Cart();
+				c.setBnMemberId(rset.getString("bn_member_id"));
+				c.setCartNo(rset.getInt("cart_no"));
+				c.setOrderMemberId(rset.getString("order_member_id"));
+				c.setTotalPrice(rset.getInt("total_price"));
+				c.setSelectOpt(rset.getString("select_opt"));
+				list.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
 	
 	
 }

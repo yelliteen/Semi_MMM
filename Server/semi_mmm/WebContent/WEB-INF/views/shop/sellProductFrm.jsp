@@ -10,22 +10,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="wrapper">
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	  	<div id="content">
+
+	
+	  	<div class="container">
 	  		<form id="toCart" name="toCart" action="/toCart" method="post">
 		  		<c:if test="${not empty sessionScope.member }">
 		  			<div>
 		  				<c:forEach items="${sl }" var="list1" varStatus="status">
-		  					<c:out value="${status.index }"/>
 		  					<label>${list1.productTitle }</label>
 		  					<select name="st" onchange=selectOpt(this.value)>
 		  						<option value=","></option>
 		  						<c:forEach items="${list1.subList }" var="list2">
-		  							<option value="${list2.optionPrice},${list2.optionTitle },${list2.bnMemberId}">${list2.optionTitle } (+${list2.optionPrice }원)</option>
+		  							<option value="${list2.optionPrice},${list2.optionTitle },${list2.bnMemberId},${list1.productTitle}" }>${list2.optionTitle } (+${list2.optionPrice }원)</option>
 		  							
 		  						</c:forEach>
-		  					</select>
+		  					</select><br>
 		  				</c:forEach>
 			  		</div>
 		  		<div id="price">
@@ -38,8 +38,9 @@
 		  		<button type="submit" class="btn btn-primary">장바구니에 담기</button>
 		  	</form>
 	  		
-	  	</div>
 	  </div>
+	  
+	  	
 	  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script>
 	    $(function(){
@@ -48,13 +49,20 @@
 		    	var etcs2 = "";
 		    	var etcs3 = "";
 		    	var s = "";
+		    	var pt = "";
 		    	$("select[name=st] option:selected").each(function(index){
 		    		s = $(this).attr("value");
 		    		s = s.split(",");
+		    		if(s[3]==null){
+		    			etcs = Number(etcs) + Number(s[0]);
+			    		etcs2 = etcs2 + s[1] + " ";
+			    		etcs3 = s[2];
+		    		}else{
+			    		etcs = Number(etcs) + Number(s[0]);
+			    		etcs2 = etcs2 + s[3] + ":" + s[1] + " ";
+			    		etcs3 = s[2];
+		    		}
 		    		
-		    		etcs = Number(etcs) + Number(s[0]);
-		    		etcs2 = etcs2 + s[1] + " ";
-		    		etcs3 = s[2];
 		    	});
 		    	$("input[name=totalPrice]").attr("value",etcs);
 		    	$("input[name=selectOpt]").attr("value",etcs2);
