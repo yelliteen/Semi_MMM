@@ -36,7 +36,7 @@ public class MypageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
 		request.setAttribute("memberId", memberId);
-		request.getRequestDispatcher("/WEB-INF/views/member/checkMyPage.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMypage.jsp").forward(request, response);
 	}
 
 	/**
