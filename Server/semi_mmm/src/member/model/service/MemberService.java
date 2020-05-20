@@ -16,7 +16,7 @@ public class MemberService {
 	}
 	
 	public ArrayList<Member> selectMember(String memberId) {
-		Connection conn = new JDBCTemplate().getConnection();
+		Connection conn = JDBCTemplate.getConnection();
 		ArrayList<Member> m = new MemberDao().selectMember(conn, memberId);
 		JDBCTemplate.close(conn);
 		return m;

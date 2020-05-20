@@ -1,4 +1,4 @@
-package member.controller;
+package shop.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MypageServlet
  */
-@WebServlet(name = "ShopPage", urlPatterns = { "/shopPage" })
-public class MypageServlet extends HttpServlet {
+@WebServlet(name = "Mypage", urlPatterns = { "/mypage" })
+public class ShopPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MypageServlet() {
+    public ShopPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,9 +34,9 @@ public class MypageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String shopId = request.getParameter("memberId");
-		request.setAttribute("shopId", shopId);
-		request.getRequestDispatcher("/WEB-INF/views/shop/checkShopPage.jsp").forward(request, response);
+		String memberId = request.getParameter("memberId");
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/views/member/checkMypage.jsp").forward(request, response);
 	}
 
 	/**

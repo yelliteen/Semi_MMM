@@ -137,7 +137,7 @@ function sub() {
 <input type="radio" id="dogGenderW" name="dogGender" value="w"/>&nbsp;W</div><br>
   </div>
   <div id="right" style="width:30%; text-align:center; border:1px solid black; border-left: 0px;"><p style="margin:10px; font-weight:bold;">* 댕댕이 사진</p>
-  <div style="border: 1px solid black">
+  <div style="border-bottom: 1px solid black;border-top: 1px solid black">
   	<div style="width:100%;  padding:30px; margin:0 auto;">
   	  	<img src="/upload/dogImg/noDogImg.png"  style="width:100%; height:90%;">
   	</div><input type="file" value="사진 선택" name="dogImg" style="border:0px; margin: 10px;">
