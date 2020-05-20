@@ -32,13 +32,8 @@
 </head>
 <body>
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-<<<<<<< HEAD
-	  	<div id="content">
-	  	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-=======
 	  	<div class="container">
 	  	<div id="mypageArea" style="margin: 0 auto; width:1100px; height: 500px; border: 1px solid  #E4E8EB;">
->>>>>>> master
 	  		<c:if test="${not empty sessionScope.member }">
 	  		
 	  			
