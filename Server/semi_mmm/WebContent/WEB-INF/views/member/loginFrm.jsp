@@ -54,11 +54,11 @@
 				type : "post",
 				success : function(data) {
 					if(data == 1) {
-						$("#show-result").html("&nbsp;로그인 정보가 맞지않습니다");
+						$("#show-result").html("&nbsp;로그인 정보가 맞지않습니다!");
 						$("#show-result").css("color","red");
 						$("#show-result").css("font-weight","bold");
 					} else if(data == 2) {
-						$("#show-result").html("&nbsp;정지된 계정입니다");
+						$("#show-result").html("&nbsp;정지된 계정입니다!");
 						$("#show-result").css("color","red");
 						$("#show-result").css("font-weight","bold");
 					} else if(data == 0) {
@@ -73,6 +73,15 @@
 				}
 			});
 		});
+		$("#upw").keydown(function(key) {
+
+			if (key.keyCode == 13) {
+				$("#logining").click();
+			}
+			});
+
+
+
 	</script>
 </body>
 
