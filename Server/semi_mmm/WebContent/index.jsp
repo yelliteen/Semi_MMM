@@ -35,7 +35,7 @@
 						<img src="/img/dogpark.png" alt="공원이래">
 					</div>
 					<div class="carousel-item">
-						<img src="/img/parkwan.png" alt="박완규">
+						<img src="/img/parkwan.png" alt="박완규잉">
 					</div>
 				</div>
 				<!-- Left and right controls -->

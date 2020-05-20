@@ -33,17 +33,12 @@ public class ShowMyListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
 		String memberId = request.getParameter("memberId");
-		NoticePageDataImge pd = new noticeService().selectList(reqPage);
-
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeList.jsp");
-		
-	
-
+		NoticePageDataImge pd = new noticeService().selectList(reqPage, memberId);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/member/myNoticeList.jsp");
 		request.setAttribute("list", pd.getList());
 		request.setAttribute("pageNavi", pd.getPageNavi());
 		request.setAttribute("memberId", memberId);
 		rd.forward(request, response);
-	
 	}
 
 	/**
