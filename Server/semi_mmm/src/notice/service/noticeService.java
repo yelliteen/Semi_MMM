@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import dog.model.vo.Dog;
+import member.model.dao.MemberDao;
 import notice.model.dao.NoticeDao;
 import notice.model.vo.NoticePageData;
 import notice.model.vo.NoticePageDataImge;
@@ -255,4 +256,13 @@ public class noticeService {
 				
 				return pd;
 			}
+
+	public int getDogCount(String memberId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int count = new MemberDao().getDogCount(conn, memberId);
+		
+		JDBCTemplate.close(conn);
+		return count;
+	}
 } 

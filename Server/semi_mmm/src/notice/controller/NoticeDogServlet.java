@@ -37,21 +37,30 @@ public class NoticeDogServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		String memberId = request.getParameter("memberId");
-		Dog dogList = new noticeService().noticeDogWrite(memberId);
-		
-		ArrayList<Dog> dog = new DogService().selectDog(memberId);
+
 		HttpSession session = request.getSession(false);
+		int count = new noticeService().getDogCount((String)session.getAttribute("memberId"));
 		
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
-		session.setAttribute("dog", dog);
-		request.setAttribute("dog", dogList);
+		if (count == 0 ) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			request.setAttribute("msg", "강아지를 등록하세요.");
+			request.setAttribute("loc", "/");
+			rd.forward(request, response);
+		} else {
+			String memberId = request.getParameter("memberId");
+			Dog dogList = new noticeService().noticeDogWrite(memberId);
+			
+			ArrayList<Dog> dog = new DogService().selectDog(memberId);
+			
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeWrite.jsp");
+			session.setAttribute("dog", dog);
+			request.setAttribute("dog", dogList);
 
 
-		rd.forward(request, response);	
+		rd.forward(request, response);
+		}
 	}
 
 	/**
