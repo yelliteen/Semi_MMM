@@ -21,9 +21,3 @@ body {
   #carousel-area {
   width:100%;
   }
-  #content>div {
-  width: calc(1300px/3);
-  height: 500px;
-  display: inline-block;
-  text-align: center;
-}
