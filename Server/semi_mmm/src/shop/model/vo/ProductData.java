@@ -1,7 +1,5 @@
 package shop.model.vo;
 
-import java.util.ArrayList;
-
 public class ProductData {
 	private int optionNo;
 	private int productNo;

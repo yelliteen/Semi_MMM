@@ -12,7 +12,6 @@ import notice.model.vo.dogList;
 import notice.model.vo.noticeViewData;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
-import notice.model.vo.NoticeImg;
 import notice.model.vo.NoticeNickname;
 
 

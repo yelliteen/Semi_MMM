@@ -49,7 +49,7 @@
 	<h4><a href="javascirpt:void(0)" onclick="page6();">중고장터 댓글 목록 보기</a></h4>
 	<h4>프로필 이미지 : 
 		<c:if test="${not empty data.member.profileImg }">
-			<img src="${data.member.profileImg }" style="width: 200px;">
+			<img src="/upload/memberImg/${data.member.profileImg }" style="width: 200px;">
 		</c:if>
 	</h4>
 	<br>

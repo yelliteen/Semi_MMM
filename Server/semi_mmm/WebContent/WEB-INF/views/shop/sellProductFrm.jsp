@@ -93,9 +93,7 @@
                     <button type="submit" id="cartBtn" class="btn btn-primary">장바구니에 담기</button>
                 </form>
             </div>
-	  		
 	  </section>
-	  
 	  	
 	  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script>

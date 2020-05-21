@@ -9,7 +9,6 @@ import common.JDBCTemplate;
 import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
-import notice.model.vo.NoticeImg;
 import notice.model.vo.NoticeNickname;
 import notice.model.vo.dogList;
 
@@ -457,7 +456,6 @@ public class NoticeDao {
 				d.setDogImg(rset.getString("dog_img"));
 				d.setDogBool(rset.getInt("dog_bool"));
 				d.setDogName(rset.getString("dog_name"));
-
 			}
 			
 		} catch (SQLException e) {
