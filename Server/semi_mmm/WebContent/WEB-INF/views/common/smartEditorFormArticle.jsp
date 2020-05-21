@@ -51,7 +51,7 @@
 <div class="contentBox">
     <div class="context">
 
-        <table width="100%">
+        <table width="100%" style="text-align: center;">
             <tr>
                 <td><input type="text" id="title" name="title" style="width: 1100px; height: 30px;" placeholder="제목을 입력하세요." required /></td>
             </tr>
