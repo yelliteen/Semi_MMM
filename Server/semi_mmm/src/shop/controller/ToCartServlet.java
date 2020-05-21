@@ -49,9 +49,9 @@ public class ToCartServlet extends HttpServlet {
 		//4. 결과 처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
-			request.setAttribute("msg", "메뉴 추가 성공");
+			request.setAttribute("msg", "장바구니 담기 성공");
 		}else {
-			request.setAttribute("msg", "메뉴 추가 실패");
+			request.setAttribute("msg", "장바구니 담기 실패");
 		}
 		request.setAttribute("loc", "/sellProductFrm2?memberId="+c.getBnMemberId());
 		rd.forward(request, response);

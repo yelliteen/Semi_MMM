@@ -1,6 +1,7 @@
 package notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,11 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import dog.model.service.DogService;
 import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
@@ -64,8 +67,11 @@ public class NoticeCommentInsertServlet extends HttpServlet {
 				//3. 비지니스 로직
 				int result = new noticeService().noticeCommentInsert(nc);
 				
+				
+				Dog dogList = new noticeService().noticeDogWrite(nc.getNoticeCommentWriter());
+
 			
-				nc.setNoticeCommentWriter(request.getParameter("noticeCommentWriterNickname"));
+				//nc.setNoticeCommentWriter(request.getParameter("noticeCommentWriterNickname"));
 				System.out.println(nc.getNoticeCommentWriter());
 				//4. 결과처리
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
@@ -74,6 +80,8 @@ public class NoticeCommentInsertServlet extends HttpServlet {
 				
 				if(result>0) {
 					request.setAttribute("msg", "댓글등록성공");
+					request.setAttribute("nc", nc);
+					request.setAttribute("dog", dogList);
 					
 				}else {
 					request.setAttribute("msg", "댓글등록실패");

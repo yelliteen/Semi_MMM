@@ -39,27 +39,23 @@ public class NoticeViewServlet extends HttpServlet {
 		//1. 인코딩
 				request.setCharacterEncoding("utf-8");
 				//2. 변수에 값 저장
-
+				
 				
 				int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-				String nickName = request.getParameter("memberNickname");
-				
-
+				String memberId = request.getParameter("memberId");
 				
 				//3. 비지니스로직
 				noticeViewData nvd = new noticeService().selectOneNotice(noticeNo);
 				
-				Dog dogList = new noticeService().noticeDogName(nvd.getN().getNoticeWriter());
-				
-
+				Dog dogList = new noticeService().noticeDogName(memberId);
 				
 				//4. 결과처리
 				if(nvd.getN() != null) {
 					
 					request.setAttribute("n", nvd.getN());
 					request.setAttribute("list", nvd.getList());
-					request.setAttribute("nickName", nickName);
 					request.setAttribute("dog", dogList);
+
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/imgeNotice/imgeNoticeView.jsp");
 					rd.forward(request, response);
 					System.out.println("성공");
