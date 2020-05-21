@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.model.service.AdminService;
+import admin.model.vo.AdminMemberList;
 import member.model.vo.Member;
 
 /**
@@ -41,7 +43,21 @@ public class AdminBusinessListServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 
+		int reqPage = Integer.parseInt(request.getParameter("reqPage"));
+		String type = request.getParameter("type");
+		String search = request.getParameter("search");
+		AdminMemberList list = null;
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminBusinessList.jsp");
+		
+		if (type == null) {
+			list = new AdminService().shopList(reqPage);
+		} else {
+			list = new AdminService().shopList(reqPage, type, search);
+			request.setAttribute("type", type);
+			request.setAttribute("search", search);
+		}
+		
+		request.setAttribute("data", list);
 		
 		rd.forward(request, response);
 	}

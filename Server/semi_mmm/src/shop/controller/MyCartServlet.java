@@ -36,7 +36,7 @@ public class MyCartServlet extends HttpServlet {
 		//1. 인코딩
 		request.setCharacterEncoding("utf-8");
 		//2. 변수에 값 저장
-		String orderMemberId = request.getParameter("orderMemberId");
+		String orderMemberId = request.getParameter("memberId");
 		//3. 비지니스로직
 		ArrayList<Cart> cartList = new ShopService().selectCartList(orderMemberId);
 		//4. 결과 처리

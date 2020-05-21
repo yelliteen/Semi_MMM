@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.jsoup.Jsoup;
@@ -63,7 +64,7 @@ public class UpdateNoticeServlet extends HttpServlet {
 		
 		Dog dog = new noticeService().noticeDogWrite(imgeNoticeWriter);
 
-		
+		HttpSession session = request.getSession(false);
 		
 		Notice n = new Notice(imgeNoticeNo, imgeNoticeTitle, imgeNoticeWriter, imgeNoticeContent, null, imgeNoticeImgName, imgeNoticeViewCount, DogId, 0);
 		if(imgeNoticeImgName.equals("")) {
@@ -80,7 +81,9 @@ public class UpdateNoticeServlet extends HttpServlet {
 		
 		if (result > 0) {
 			request.setAttribute("msg", " 등록되었습니다.");
+			session.setAttribute("dog", dog);
 			request.setAttribute("loc", "/noticeList?reqPage=1");
+
 			
 		} else {
 				request.setAttribute("msg", "제목을 입력해 주세요.");

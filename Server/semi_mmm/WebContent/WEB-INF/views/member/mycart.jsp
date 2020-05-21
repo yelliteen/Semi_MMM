@@ -10,30 +10,57 @@
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <style>
+    table{
+        margin: 0 auto;
+        margin-top: 100px;
+    }
 	table tr th{
 		text-align:center;
+        height: 70px;
 	}
+    table tr td{
+        height: 40px;
+    }
 	table tr td:nth-child(1){
 		text-align:center;
+        width: 50px;
 	}
 	table tr td:nth-child(2){
 		text-align:center;
+        width: 100px;
 	}
 	table tr td:nth-child(3){
 		text-align:center;
+        width: 100px;
 	}
 	table tr td:nth-child(4){
-		font-size: 5px;
+		font-size: 10px;
+        width: 500px;
+        padding-left: 10px;
 	}
 	table tr td:nth-child(5){
-		text-align:center;
+		text-align:right;
+        width: 100px;
+        padding-right: 10px;
 	}
+	#priceIs{
+		text-align: left;
+        padding-left: 760px;
+        height: 70px;
+        line-height: 80px;
+        font-weight: 900;
+        font-size: 20px;
+	}
+    #paymentBtn{
+        padding-left: 890px;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
-	<div id="wrapper">
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	  	<div id="content">
+	  	<div class="container">
+	  	<div id="mypageArea" style="margin: 0 auto; width:1100px; height: 500px; border: 1px solid  #E4E8EB;">
 	  		<c:if test="${not empty sessionScope.member }">
 	  		
 	  			
@@ -44,7 +71,7 @@
 				  					<th>주문번호</th>
 				  					<th>판매자</th>
 				  					<th>선택상품</th>
-				  					<th>가격</th>
+				  					<th>가격(원)</th>
 				  				</tr>
 			  				<c:forEach items="${cartList }" var="c">
 				  				<tr>
@@ -56,13 +83,13 @@
 				  				</tr>
 				  			</c:forEach>
 			  			</table>
-			  			<div>총 결제 금액 : <span></span></div>
-			  			<button class="btn btn-danger">결제하기</button>
+			  			<div id="priceIs">총 결제 금액 : <span></span></div>
+                        <div id="paymentBtn"><button class="btn btn-danger">결제하기</button></div>
 			  			<p id="paymentResult"></p>
 			  		</div>
 	  		</c:if>
 	  	</div>
-	</div>
+	  	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <script>
         $(function(){

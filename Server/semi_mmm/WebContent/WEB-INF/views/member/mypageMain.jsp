@@ -203,7 +203,7 @@
 		<input id="detailAddr" name="detailAddr" style="display: inline-block; width:100%;" type="text" class="input-lg" value="${addr[2] }">
   </div>
   <div id="right" style="width:30%; text-align:center; border:1px solid black; border-left: 0px;"><p style="margin:10px; font-weight:bold;">프로필 사진</p>
-  <div style="border: 1px solid black">
+  <div style="border-top: 1px solid black;border-bottom: 1px solid black">
   	<div style="width:100%;  padding:30px; margin:0 auto;">
   	<img src="/upload/memberImg/${m.profileImg }"  style="width:100%; height:90%;">
   	<input type="hidden" value="${m.profileImg }" name="memberOriginImg">
@@ -214,6 +214,7 @@
   <br>
   <br><br>
 		  <div style="width:100%; text-align:center; padding:20px;">
+		  <input type="hidden" value="${m.memberLevel }" name="memberLevel">
   <button class="btn btn-lg btn-secondary btn signup-btn" type="button" style="width:300px;" onclick="location.href='/'">나가기</button>
   <button class="btn btn-lg btn-primary btn signup-btn" type="submit" style="width:300px;" onclick="return sub();">내 정보 수정</button>
 </div>

@@ -403,6 +403,25 @@ public class ShopDao {
 		}
 		return list;
 	}
+
+	public int deleteSubMenu(Connection conn, int productNo, String bnMemberId, int optionNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "delete from product_option where product_no=? and bn_member_id=? and option_no=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, productNo);
+			pstmt.setString(2, bnMemberId);
+			pstmt.setInt(3, optionNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

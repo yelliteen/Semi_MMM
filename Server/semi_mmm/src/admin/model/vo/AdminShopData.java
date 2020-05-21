@@ -1,8 +1,8 @@
 package admin.model.vo;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 
+import member.model.vo.Member;
 import member.model.vo.Shop;
 
 public class AdminShopData {

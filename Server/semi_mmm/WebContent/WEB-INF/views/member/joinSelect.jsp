@@ -35,9 +35,9 @@ $(function(){
 <div class="container">
   <div style="padding: 30px; border:.5px solid #E4E8EB; text-align:center;" >
 	<h3>회원가입</h3>
-	<hr stlye="border: .5px solid #E4E8EB;"><br>
+	<hr style="border: .5px solid #E4E8EB;"><br>
 	<table style="margin:0 auto;">
-		<tr padding: 40px;>
+		<tr style="padding: 40px;">
 		<td colspan="2"><p style="font-size: 30px; display:block; padding-left:130px;" >안녕하세요</p></td><td colspan="2"><p style="font-size: 30px; color:#76D5FF; padding-right:150px;">MMM 입니다!</p></td>
 		<tr>
 		<tr><td colspan="4"><p style="font-size: 15px;  text-align:center;">저희 MMM은 개인회원과 사업자으로 구분되어지며,</p></td></tr>
