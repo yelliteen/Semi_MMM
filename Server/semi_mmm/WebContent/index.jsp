@@ -8,7 +8,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-
+#content>div {
+margin:0 auto;
+}
 </style>
 
 <head>
@@ -18,7 +20,7 @@
 
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<div class="container">
+	<div class="container"  style="overflow:hidden;">
 		<div id="carousel-area">
 			<div id="demo" class="carousel slide" data-ride="carousel">
 				<!-- Indicators -->
@@ -47,31 +49,22 @@
 				</a>
 			</div>
 		</div>
-		<div id="content" style="display: flex; margin: 0 auto; width:1300px;">
-		<div id="community">
-				<c:forEach items="${list }" var="n">
-						<c:choose>
-        <c:when test="${n.noticeImgs eq n.noticeImgs }">
-					<div style="width: 33%; height: 400px; display: inline-block; margin-bottom: 2%;">
-					<a href="/noticeView?noticeNo=${n.noticeNo }"><img src="${n.noticeImgs}" class="rounded" alt="Cinque Terre" style="width: 100%; height: 100%;">
-					</a>
-					<div style="border: 1px solid black;">
-					<div style=" margin: 0 auto; text-align: center; overflow:hidden; width:350px; text-overflow: ellipsis; white-space:nowrap;  font-weight: bold;">${n.noticeTitle }</div>
-					<div><div style="float: left; margin-left: 1%; display: inline-block; color: gray;">${n.noticeWriter }</div><div style="text-align: right; margin-right: 1%;">${n.noticeDate }</div></div>
-					</div>
-				</div>
-				</c:when>
-			</c:choose>
-			</c:forEach>
+		<div id="content" style="margin: 0 auto; width: 100%; height: 800px;padding:30px; display:flex;">
+		<div id="hoone">
+		<p style="font-size:30px; font-weight:bold;">유기견 후원</p>
+					<img src="/img/index.png" style="width:500px; height: 700px; cursor:pointer;" onclick="location.href='https://www.wadiz.kr/web/campaign/detail/18944'">	
 			</div>
-		<div id="market">
-		<p>이곳을 번개장터 미리보기<p>
-		</div>
-	<div id="dessert-show">
-	<p>이곳을 디저트 샵<p></div>
+			<div id="gang">
+			<p style="font-size:30px; font-weight:bold;">강형욱 프리미엄 훈육</p>
+			<img src="/img/gang.png" style="width:500px; height: 500px; cursor:pointer;" onclick="location.href='https://www.bodeum.co.kr/html/edu_movie/teach/edu_detail_package.php?idx=58'">	
+				</div>
 	</div>
+		<div id="read" style="padding:80px; margin:0 auto;">
+			<p style="font-size:30px; font-weight:bold;">강아지 시그널</p>
+			<img src="/img/dogsig.png" style="cursor:pointer; width:1300px; height: 500px;" onclick="location.href='https://www.dogmate.co.kr/blog/2018/11/19/%EA%B0%95%EC%95%84%EC%A7%80%EC%9D%98-%EC%96%B8%EC%96%B4-%EC%B9%B4%EB%B0%8D%EC%8B%9C%EA%B7%B8%EB%84%90-%ED%95%B4%EC%84%9D%EB%B2%95/'">	
+				</div>
+	<br><br><br><br><br><br><br>
 	</div>
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
-
 </html>
