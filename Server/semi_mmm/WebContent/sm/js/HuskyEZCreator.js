@@ -71,7 +71,7 @@ nhn.husky.EZCreator = new (function(){
 			
 				nEditorWidth = elIFrame.contentWindow.document.body.scrollWidth || "500px";
 				nEditorHeight = elIFrame.contentWindow.document.body.scrollHeight + 12;
-				elIFrame.style.width =  "700px";
+				elIFrame.style.width =  "100%";
 				elIFrame.style.height = nEditorHeight+ "px";
 				elIFrame.contentWindow.document.body.style.margin = "0";
 			}catch(e){
@@ -110,7 +110,7 @@ nhn.husky.EZCreator = new (function(){
 			elBlocker.style.top = 0;
 			elBlocker.style.left = 0;
 			elBlocker.style.backgroundColor = "#FFFFFF";
-			elBlocker.style.width = "700px";
+			elBlocker.style.width = "100%";
 
 			document.body.appendChild(elBlocker);
 			
