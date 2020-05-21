@@ -55,6 +55,13 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 		return m;
 	}
+	
+	public Member MemberImge(String memberId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Member m = new MemberDao().MemberImge(conn, memberId);
+		JDBCTemplate.close(conn);
+		return m;
+	}
 
 	public int updateMember(Member m) {
 		Connection conn = JDBCTemplate.getConnection();

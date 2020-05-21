@@ -143,6 +143,37 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
+	public Member MemberImge(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member m = new Member();
+		String query = "select * from member where member_id=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				m.setMemberId(rset.getString("member_id"));
+				m.setMemberPw(rset.getString("member_pw"));
+				m.setMemberNickname(rset.getString("member_nickname"));
+				m.setMemberName(rset.getString("member_name"));
+				m.setMemberBirth(rset.getDate("member_birth"));
+				m.setPhone(rset.getString("phone"));
+				m.setAddr(rset.getString("addr"));
+				m.setEnrollDate(rset.getDate("enroll_date"));
+				m.setMemberLevel(rset.getInt("member_level"));
+				m.setProfileImg(rset.getString("profile_img"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return m;
+	}
 
 	public int updateMember(Connection conn, Member m) {
 		PreparedStatement pstmt = null;
