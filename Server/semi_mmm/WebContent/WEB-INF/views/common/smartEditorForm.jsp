@@ -56,12 +56,12 @@
    
 
 
-<table width="100%">
+<table width="1350px;" style="margin: 0 auto;">
 
         <tr>
             <td>
               
-              <textarea rows="10" cols="30" id="ir1" name="content" style="width:100%; height:600px;">
+              <textarea rows="10" cols="30" id="ir1" name="content"  style="width:1300px; height:600px; margin: 0 auto;">
               
 			<c:forEach items="${sessionScope.dog }" var="d">
 		<table style=" margin: 0 auto; margin-bottom: 2%; margin-top: 5%; border: 1px solid #B6EAFA; border-radius: 20px;">
