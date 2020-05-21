@@ -151,6 +151,7 @@ nav a {
                 width: 90%;
                 margin: 0 auto;
                 margin-top: 20px;
+                white-space: pre-line;
             }
             
             table>tbody, table tr {

@@ -17,6 +17,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>F&A</title>
 <style>
+    table {
+        white-space: pre-line;
+    }
 </style>
 </head>
 <body>

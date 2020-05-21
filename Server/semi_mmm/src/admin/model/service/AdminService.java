@@ -129,7 +129,9 @@ public class AdminService {
 	public int noticeDelete(int noticeNo) {
 		
 		Connection conn = JDBCTemplate.getConnection();
+		System.out.println("test2");
 		int result = new AdminDao().noticeDelete(conn, noticeNo);
+		System.out.println("test");
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

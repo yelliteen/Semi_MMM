@@ -49,15 +49,15 @@
 		/*이미지 랜덤*/
         var num = Math.floor(Math.random() * 1000);
         var check = 0;
-        if (num >= 0 && num < 300) {
+        if (num >= 0 && num < 330) {
             check = 0;
-        } else if (num < 600) {
+        } else if (num < 660) {
             check =4;
-        } else if (num < 900) {
+        } else if (num < 990) {
             check =5;
-        } else if (num < 930) {
+        } else if (num < 993) {
             check =1;
-        } else if (num < 960) {
+        } else if (num < 996) {
             check =2;
         } else {
             check =3;

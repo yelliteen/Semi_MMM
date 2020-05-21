@@ -45,6 +45,18 @@ public class CharsetEncodingFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		System.out.println("요청 url : " + req.getRequestURI());
+		
+		HttpSession session = req.getSession(false);
+		if (session != null && ((Member)session.getAttribute("member")) != null && ((Member)session.getAttribute("member")).getMemberId() != null) {
+			Member m = new MemberService().selectOneMember(((Member)session.getAttribute("member")).getMemberId());
+			if (m.getMemberLevel() == 3 || m.getMemberLevel() == 4) {
+				session.invalidate();
+				RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+				req.setAttribute("msg", "정지된 회원입니다.");
+				req.setAttribute("loc", "/");
+				rd.forward(req, (HttpServletResponse)response);
+			}
+		}
 
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
