@@ -69,13 +69,14 @@ public class MemberDao {
 	public boolean selectNick(Connection conn, String nick) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		boolean result = false;
 		String query = "select member_nickname from member";
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				if(rset.getString("member_nickname").equals(nick)) {
-					return true;
+					result = true;
 				}
 			}
 		} catch (SQLException e) {
@@ -84,7 +85,7 @@ public class MemberDao {
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		return false;
+		return result;
 	}
 
 	public int insertMember(Connection conn, Member m) {
