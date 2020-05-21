@@ -163,4 +163,16 @@ public class ShopService {
 		JDBCTemplate.close(conn);
 		return cartList;
 	}
+
+	public int deleteSubMenu(int productNo, String bnMemberId, int optionNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ShopDao().deleteSubMenu(conn,productNo,bnMemberId,optionNo);
+		if(result>0) {
+				JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
 }

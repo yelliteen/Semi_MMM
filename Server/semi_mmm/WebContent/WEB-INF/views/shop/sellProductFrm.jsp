@@ -32,10 +32,15 @@
         width: 400px;
         height: 500px;
         margin: 0 auto;
-        margin-top: 50px;
+        margin-top: 20px;
+    }
+    #divLocTitle{
+        font-size: 50px;
+        font-weight: 900;
+        margin-bottom: 30px;
     }
     #divLoc1{
-        background-color: yellow;
+        background-color: #E4E8EB;
     }
     #divLoc2{
         background-color: red;
@@ -45,9 +50,14 @@
     }
     #totalPrice{
     	text-align: right;
-    	font-size: 30px;
+    	font-size: 25px;
     	height: 50px;
     	font-weight: 900;
+        border: 0px;
+    }
+    #cartBtn{
+        margin-top: 10px;
+        margin-left: 260px;
     }
 </style>
 </head>
@@ -58,6 +68,7 @@
 	  	<section class="container">
 		<div id="shopTitle">${bnMemberId }</div>
             <div id="divLoc">
+                <div id="divLocTitle">재료 선택</div>
                 <form id="toCart" name="toCart" action="/toCart" method="post">
                     <c:if test="${not empty sessionScope.member }">
                         <div id="divLoc1">
@@ -73,13 +84,13 @@
                             </c:forEach>
                         </div>
                     <div id="divLoc2">
-                        <input type="hidden" name="memberId" value="${sessionScope.member.memberId }">
+                        <input type="hidden" name="orderMemberId" value="${sessionScope.member.memberId }">
                         <input type="text" name="totalPrice" id="totalPrice" value="" readonly>
                         <input type="hidden" name="bnMemberId" value="">
                         <input type="hidden" name="selectOpt" value="">
                     </div>
                     </c:if>
-                    <button type="submit" class="btn btn-primary">장바구니에 담기</button>
+                    <button type="submit" id="cartBtn" class="btn btn-primary">장바구니에 담기</button>
                 </form>
             </div>
 	  		
@@ -100,11 +111,11 @@
 		    		s = s.split(",");
 		    		if(s[3]==null){
 		    			etcs = Number(etcs) + Number(s[0]);
-			    		etcs2 = etcs2 + s[1] + " ";
+			    		etcs2 = etcs2 + s[1] + "   ";
 			    		etcs3 = s[2];
 		    		}else{
 			    		etcs = Number(etcs) + Number(s[0]);
-			    		etcs2 = etcs2 + s[3] + ":" + s[1] + " ";
+			    		etcs2 = etcs2 + s[3] + ":" + s[1] + "   ";
 			    		etcs3 = s[2];
 		    		}
 		    		
