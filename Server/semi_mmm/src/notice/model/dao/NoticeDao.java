@@ -9,7 +9,6 @@ import common.JDBCTemplate;
 import dog.model.vo.Dog;
 import notice.model.vo.Notice;
 import notice.model.vo.NoticeComment;
-import notice.model.vo.NoticeImg;
 import notice.model.vo.NoticeNickname;
 import notice.model.vo.dogList;
 
