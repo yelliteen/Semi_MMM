@@ -60,7 +60,7 @@
 <body>
 	  	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	  	<div class="container">
-	  	<div id="mypageArea" style="margin: 0 auto; width:1100px; height: 500px; border: 1px solid  #E4E8EB;">
+	  	<div id="mypageArea" style="margin: 0 auto; width:1100px; height: 700px; border: 1px solid  #E4E8EB;">
 	  		<c:if test="${not empty sessionScope.member }">
 	  		
 	  			
