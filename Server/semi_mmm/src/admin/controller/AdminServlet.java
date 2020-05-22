@@ -1,11 +1,18 @@
 package admin.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import admin.model.service.AdminService;
+import admin.model.vo.AdminIndexInfo;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class AdminServlet
@@ -26,8 +33,21 @@ public class AdminServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/admin/adminIndex.jsp").forward(request, response);
+		
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("member") == null || !((Member)session.getAttribute("member")).getMemberId().equals("admin")) {
+			System.out.println("뒤로가기");
+			RequestDispatcher rd = ((HttpServletRequest)request).getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			((HttpServletRequest)request).setAttribute("msg", "관리자 계정만 접근이 가능합니다.");
+			((HttpServletRequest)request).setAttribute("loc", "/");
+			rd.forward(request, response);
+		}
+		
+		AdminIndexInfo info = new AdminService().getInfo();
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/admin/adminIndex.jsp");
+		request.setAttribute("info", info);
+		rd.forward(request, response);
 	}
 
 	/**
